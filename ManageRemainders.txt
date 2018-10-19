@@ -1,0 +1,827 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://bajajelect.sharepoint.com/sites/AnugamDev/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+
+
+
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>  
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.jqueryui.min.css" />  
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+	
+	
+
+
+
+
+    <style>
+        .errorBorder-color {
+            padding: 0px !important;
+            color: red;
+            font-size: 19px;
+            margin-left: 33px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .opacity-0 {
+            opacity: 0;
+        }
+
+        .padding-0 {
+            padding: 0 !important;
+        }
+
+        .margin-0 {
+            margin: 0 !important;
+        }
+
+        .margin-top-0 {
+            margin-top: 0 !important;
+        }
+
+        .margin-bottom-0 {
+            margin-bottom: 0 !important;
+        }
+
+        .btn-primary {
+            color: #fff !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px !important;
+            margin-bottom: 0 !important;
+            font-size: 14px !important;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .margin-top-5 {
+            margin-top: 5px !important;
+        }
+
+        .margin-top-10 {
+            margin-top: 10px !important;
+        }
+
+        .margin-top-15 {
+            margin-top: 15px !important;
+        }
+
+        .modal-dialog {
+            width: 800px !important;
+            margin: 30px auto !important;
+        }
+
+        .requiredfieldsstyle {
+            padding-left: 15px !important;
+            font-size: 12px;
+            font-style: italic;
+        }
+        
+        .datepicker-inline		
+		{		
+			margin-right: 25px;		
+		}
+    </style>
+<div>
+        <div class="col-md-12 padding-0 page-content-header-style-1">
+            <h1 style="font-size:25px !Important; margin-left: 25px !Important;">
+                Manage Reminders
+            </h1>
+        </div>
+        
+         <div class="col-md-12">
+            <div id="divErrorMessage" class="errorBorder-color"></div>
+            <div class="col-md-6 margin-top-15">
+                <label>
+                    Program Name
+                </label>
+                <select id="ProgramNameDynDropDown" class="form-control"></select>
+            </div><br/><br/><br/><br/><br/><br/>
+             <div class="col-md-3" id="Div_rem" style="padding-top: 24px;
+background-color: white;
+padding-left: 101px;display:none;width:30% !Important;">
+<table>
+<tr>
+                       <td> <label style="padding-left: 35px !Important;width: 158% !Important;">
+                            Program Reminder Date
+                        </label><div class="datepicker" data-date-format="mm/dd/yyyy" style="display: block;background-color: honeydew;color: cornflowerblue;font-size: medium;font-family: sans-serif;" ></div>
+                        
+                 
+<button type="button" class="btn btn-primary btn_save" id="btnsetrem" style="margin-left: 48px;">Set Reminder</button></td>
+<td>
+                               <div id="dynamicTable" style="width: 500px;height: 146px;padding-left: 96px;">
+    </div></td>
+    </tr>
+    </table>
+<br/><br/><br/><br/></div>
+
+<div id="Div_Rem_dtls" style="display:none"><table id="table_id" class="display" cellspacing="0" width="100%">  
+        <thead> 
+        <tr>     <th><h4 style="width:250px">Program Reminder Details</h4></th></tr>
+            <tr>  
+                <th>Program Name</th>  
+                <th>Program Start Date</th>  
+                <th>Program End Date</th>  
+                <th>Reminder Dates</th>
+                  
+            </tr>  
+        </thead>  
+        <tfoot> </tfoot>  
+    </table></div>
+</div>
+</div>
+
+<div id="throbber" style="display:none;">
+<img src="https://bajajelect.sharepoint.com/sites/HR-TrainingManagementSystem/SiteAssets/AnugamStyles/img/712_1.gif" /><br/></br><h3><b style="color:#0072c6 !Important;font-size:32px">Please Wait...</b><h3></div>
+
+<style>
+.datepicker-inline{
+display: block;
+background-color: honeydew;
+color: cornflowerblue;
+font-size: medium;
+font-family: sans-serif;"
+}
+</style>
+<script>
+var ProgramName = "";
+
+function loadMyItems() {  
+ProgramName = $('#ProgramNameDynDropDown').val();
+         if (ProgramName == '' || ProgramName == '--Select Program--') {
+             
+                document.getElementById("Div_rem").style.display = 'none';
+                document.getElementById("Div_Rem_dtls").style.display = 'none';
+            }
+            else {
+
+    var siteUrl = _spPageContextInfo.siteAbsoluteUrl;  
+    var oDataUrl = siteUrl + "/_api/web/lists/getbytitle('Invitation')/items/?$top=1&$select=ProgramName,ProgramStartDate,ProgramEndDate,RemainderDates&$filter=ProgramName eq '" + ProgramName + "'";  
+
+    $.ajax({  
+        url: oDataUrl,  
+        type: "GET",  
+        dataType: "json",  
+        headers: {  
+            "accept": "application/json;odata=verbose"  
+        },  
+        success: mySuccHandler,  
+        error: myErrHandler  
+    });  
+    }
+}  
+  
+function mySuccHandler(data) {  
+    try {  
+        var dataTableExample = $('#table_id').DataTable();  
+        if (dataTableExample != 'undefined') {  
+            dataTableExample.destroy();  
+        }  
+        dataTableExample = $('#table_id').DataTable({  
+            scrollY: 300,  
+            "aaData": data.d.results,  
+            "aoColumns": [{  
+                "mData": "ProgramName"  
+            }, {  
+                "mData": "ProgramStartDate"  
+            }, {  
+                "mData": "ProgramEndDate"
+            },
+            {  
+                "mData": "RemainderDates"  
+            }            
+            ]  
+        });  
+        var arr = [];
+
+        $.each(data.d.results, function (index, results) {
+                
+                    arr[i++] = index;
+                
+            });
+
+        var Count = arr.length;
+        if(Count <=0)
+        {
+        alert('Reminder not set yet');
+        }
+        
+    } catch (e) {  
+        alert(e.message);  
+    }  
+}  
+  
+function myErrHandler(data, errCode, errMessage) {  
+    alert("Error: " + errMessage);  
+}  
+
+</script>
+
+ <script>
+
+        $(document).ready(function () {
+            ProgramNameDynDropDownBind();
+           
+            
+        });
+        function ProgramNameDynDropDownBind() {
+            var listName = "NewInductionProgram";
+            var url = _spPageContextInfo.webAbsoluteUrl;
+            var UserEmail = LoginUserEmail();
+            getProgramNameListItems(UserEmail, listName, url, function (data) {
+                var TodayDate = new Date();
+                var day = TodayDate.getDate();
+                var mm = TodayDate.getMonth() + 1;
+                var Year = TodayDate.getFullYear();
+                var items = data.d.results;
+                var pgmFinalData = []; var j = 0;
+                var arrPGM = [];
+                var arrPGMUnique = [];
+                for (var k = 0; k < items.length; k++) {
+                    var ChkProgramEndDate = new Date(items[k].ProgramEndDate.split("/").reverse().join("-"));
+                    if (new Date(items[k].ProgramEndDate.split("/").reverse().join("-")) >= TodayDate || ChkProgramEndDate.setHours(0, 0, 0, 0) == TodayDate.setHours(0, 0, 0, 0)) {
+                        var NameProgram = items[k].ProgramName;
+                        if (pgmFinalData[j++] != NameProgram) {
+                            pgmFinalData[j++] = NameProgram;
+                        }
+                    }
+                }
+                var uniqueProgramNames = '';
+                var result = [];
+                $.each(pgmFinalData, function (index, pgmFinalData) {
+                    if ($.inArray(pgmFinalData, result) == -1) {
+                        result.push(pgmFinalData);
+                    }
+                });
+                console.log(result);
+               
+                var inputElement = '<option  value="">--Select Program--</option>';
+                // Add all the new items
+                for (var i = 0; i < result.length; i++) {
+                    if (result[i] != undefined) {
+                        var itemId = result[i],
+                            itemVal = result[i];
+                        inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+                    }
+                }
+                inputElement += '</select>';
+                $('#ProgramNameDynDropDown').append(inputElement);
+
+               
+                $("#ProgramNameDynDropDown").each(function () {
+                    $('option', this).each(function () {
+
+                        if ($(this).text() == '--Select Program--') {
+                            $(this).attr('selected', 'selected')
+                        };
+                    });
+                });
+
+
+            }, function (data) {
+                alert("Ooops, an error occured. Please try again");
+            });
+        }
+        function getProgramNameListItems(UserEmail, listName, siteurl, success, failure) {
+            var TodayDate = new Date();
+            var day = TodayDate.getDate();
+            var mm = TodayDate.getMonth() + 1;
+            var Year = TodayDate.getFullYear();
+            var InvitationUrl = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=CreatedByUser eq %27" + UserEmail + "%27 and Status eq 'Active'&$orderby= Created desc";//and month(PgmEndDate)%20ge%20" + mm + "%20and%20day(PgmEndDate)%20ge%20" + day + "%20and%20year(PgmEndDate)%20ge%20" + Year + "";
+            $.ajax({
+                url: InvitationUrl,               
+                method: "GET",
+                headers: { "Accept": "application/json; odata=verbose" },
+                success: function (data) {
+                    success(data);
+                },
+                error: function (data) {
+                    failure(data);
+                }
+            }); 
+        }
+        function GroupByData(items, propertyName) {
+            var result = [];
+            $.each(items, function (index, item) {
+                if ($.inArray(item[propertyName], result) == -1) {
+                    result.push(item[propertyName]);
+                }
+            });
+            return result;
+        }
+        
+        
+
+    </script>
+    
+    
+ <script>
+        var currentuserEmailID = "";
+        function LoginUserEmail() {
+
+            $.ajax({
+                async: false,
+                url: _spPageContextInfo.webServerRelativeUrl +
+                    "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+                method: "GET",
+                headers: {
+                    "accept": "application/json;odata=verbose"
+                },
+                success: function (d) {
+                    currentuserEmailID = d.d.Email;
+
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err));
+                }
+            });
+            return currentuserEmailID;
+        }
+
+    </script>
+    <script>
+
+
+
+
+    $(document).ready(function () {
+ 
+          
+  $('.btn').on('click', function() {
+    var the_date = $('.datepicker:first').datepicker('getDates');
+    
+    
+    $.blockUI.defaults.css = {		
+											padding: 0,		
+								            margin: 0,		
+								            width: '30%',		
+								            top: '40%',		
+								            left: '35%',		
+								            textAlign: 'center',
+								            cursor: 'wait'};
+								            
+		       $.blockUI.defaults.overlayCSS.backgroundColor = '#fff';
+		       $.blockUI.defaults.overlayCSS.opacity = 0.9;
+		       $.blockUI.defaults.overlayCSS.cursor = 'pointer';
+								            
+		       
+                $.blockUI({message: $('#throbber')});
+                
+                
+                setTimeout(function () {    
+
+    var n = the_date.length;
+    var RemDt = new Array();
+    var RemDtnew = new Array();
+    for(i=0; i < n; i++) {
+    var myDate = new Date(the_date[i]) 
+    var formatted = (myDate.getMonth() + 1) + "/" + myDate.getDate()  + "/" +  myDate.getFullYear()
+    
+    var formatted1 = myDate.getDate() + "/" + (myDate.getMonth() + 1)  + "/" +  myDate.getFullYear()
+
+  
+    
+   	RemDt.push(formatted1);
+   	
+   	
+   	//For Sorting Start
+   	var formattedDates = RemDt.map(function(date){
+    var splitDate = date.split("/")
+    return new Date(splitDate[2],splitDate[1]-1,splitDate[0])
+})
+
+formattedDates.sort(function(a,b){
+  // Turn your strings into dates, and then subtract them
+  // to get a value that is either negative, positive, or zero.
+  return new Date(a) - new Date(b);
+});
+
+    }
+     var n1 = formattedDates.length;
+      for(i=0; i < n; i++) {
+      var myDatenew = new Date(formattedDates[i]) 
+      
+      var formatted3 = (myDatenew.getMonth() + 1) + "/" + myDatenew.getDate()  + "/" +  myDatenew.getFullYear()
+      
+      RemDtnew.push(formatted3);
+      
+      var employeeStrnew = RemDtnew.join(";");
+}
+
+    var abc=RemDtnew.length;
+    
+    if(abc > 0)
+    {
+    UpdateRemDetails(employeeStrnew);
+    }
+    
+    if(n=='0')
+    {
+    alert('Please select the reminder dates from the calendar!');
+    }
+    $.unblockUI({
+                        onUnblock: function () {
+                            console.log('');
+                        }
+                    });
+                }, 600);
+        
+  });
+});
+    </script>
+    
+    <script>
+    function UpdateRemDetails(employeeStr) {
+            var ProgramName = $('#ProgramNameDynDropDown').val(); var InvitaionID = []; iInvitaionID = 0;
+            jQuery.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items/?$filter=ProgramName%20eq%20%27" + ProgramName + "%27 and Confirmation ne %27Yes%27 and Confirmation ne %27No%27",
+                type: "GET",
+                async: false,
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose",
+                    "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                },
+                success: function (d) {
+                    var arrP = [];
+                    iarrP = 0;
+                    $.each(d.d.results, function (index, results) {
+                        if (results.Status == "Active" && results.Confirmation != "Yes") {
+                            arrP[iarrP++] = index;
+                        }
+                    });
+                    for (var k = 0; k < arrP.length; k++) {
+                        var arrK = arrP[k];
+                        InvitaionID[iInvitaionID++] = d.d.results[arrK].ID;
+                    }
+
+                },
+                error: function () { console.log('fail'); }
+            });
+            if (InvitaionID.length > 0) {
+                for (var i = 0; i < InvitaionID.length; i++) {
+                    var Rem_Dt = employeeStr;
+                    var inviID = InvitaionID[i];
+                    $.ajax({
+                        url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('Invitation')/items(" + inviID + ")",
+                        type: "POST",
+                        async: false,
+                        data: JSON.stringify({
+                            '__metadata': { 'type': 'SP.Data.InvitationListItem' },
+                            'RemainderDates': Rem_Dt,
+                        }),
+                        headers: {
+                            "Accept": "application/json;odata=verbose",
+                            "content-type": "application/json; odata=verbose",
+                            "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                            "X-HTTP-Method": "MERGE",
+                            "If-Match": "*"
+                        },
+                        success: function (data) {
+                        },
+                        error: function (err) {
+                            alert("Error while adding item: " + JSON.stringify(err));
+                        }
+                    });
+                }
+                alert('Reminder set successfully for ' + ProgramName + ' program');
+                window.location.href = 'https://bajajelect.sharepoint.com/sites/HR-TrainingManagementSystem/Pages/ManageRem.aspx';
+            }
+        }
+
+	</script>    
+    
+    
+    
+    <script>
+    
+    var ProgramName = "";
+        $("#ProgramNameDynDropDown").change(function () {
+         ProgramName = $('#ProgramNameDynDropDown').val();
+         //console.log($.trim(ProgramName))
+
+         if (ProgramName == '' || ProgramName == '--Select Program--') {
+               
+                document.getElementById("Div_rem").style.display = 'none';
+                document.getElementById("Div_Rem_dtls").style.display = 'none';
+            }
+            else {
+            
+           
+                $.ajax({
+                    url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('Invitation')/items/?$filter=ProgramName eq '" + ProgramName + "'",
+                    type: "GET",
+                    async: false,
+                    headers: {
+                        "accept": "application/json;odata=verbose",
+                        "content-type": "application/json;odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                    },
+                    success: function (d) {
+                        
+               $.blockUI.defaults.css = {		
+											padding: 0,		
+								            margin: 0,		
+								            width: '30%',		
+								            top: '40%',		
+								            left: '35%',		
+								            textAlign: 'center',
+								            cursor: 'wait'};
+								            
+		       $.blockUI.defaults.overlayCSS.backgroundColor = '#fff';
+		       $.blockUI.defaults.overlayCSS.opacity = 0.9;
+		       $.blockUI.defaults.overlayCSS.cursor = 'pointer';
+								            
+		       
+                $.blockUI({message: $('#throbber')});
+                
+                
+                setTimeout(function () {       
+		        
+                        if (d.d.results.length > 0) {
+                            var arr = [];
+                            i = 0;
+                            $.each(d.d.results, function (index, results) {
+                                arr[i++] = index;
+                            });
+                            
+                            for (var k = 0; k < arr.length; k++) {
+                                
+                                var arrK = arr[k];
+                                var pgmChek = d.d.results[arrK].ProgramName.replace(/\s/g, "");
+                                
+                                var pgmChek1 = ProgramName.replace(/\s/g, "");
+                               
+                                
+                                if (pgmChek == pgmChek1) {
+                                 
+                                 $('.datepicker').datepicker('remove');
+                                   
+                                    ProgramSDate = d.d.results[arrK].ProgramStartDate;
+                                    ProgramEDate = d.d.results[arrK].ProgramEndDate;
+                                   
+                                    RemainderDates = d.d.results[arrK].RemainderDates;
+                                    
+									if(RemainderDates != null && RemainderDates != undefined && RemainderDates != ' ')
+									{		           
+									 $('#dynamicTable').empty();
+                                                            
+                                    if(RemainderDates != null && RemainderDates != undefined && RemainderDates != ' ' )
+                                    {
+                                    //var date = new Date(RemainderDates);
+                                    //RemainderDates = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' +  date.getFullYear();
+
+									//Start 
+									console.log(RemainderDates);
+                                    var array = RemainderDates.split(';');
+                                    console.log(array);
+                                    var arrK1 = [];
+                                    if(array.length>0)
+                                    {
+                                     for (var k1 = 0; k1 < array.length; k1++) {
+                                      //arrK1 += array[k1] + ";";
+                                      
+                                      var date = new Date(array[k1]);
+                                      var RemainderDates_1 = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' +  date.getFullYear();
+                                      arrK1.push(RemainderDates_1 + ";");
+                                      console.log(arrK1);
+                                     }
+
+                                    }
+                                    
+                                    var remdts=''
+                                    if(arrK1.length >0)
+                                    {
+                                    for (var k2 = 0; k2 < arrK1.length; k2++) {
+                                    remdts += arrK1[k2];
+                                    }
+									RemainderDates = remdts;
+                                    }
+                                    //end
+
+                                    var rows=array.length;
+                                 
+                                    }
+                                    else
+                                    {
+                                    RemainderDates ="NA"
+                                    }
+                                    
+                                    if(rows > 0)
+                                    {
+                                    
+									document.getElementById("btnsetrem").style.display = 'none';
+                                   }
+                                   
+                                     BindCalendar(ProgramSDate,ProgramEDate);
+                                   
+                                   // create table
+									var $table = $('<table>');
+									
+									// caption
+									$table.append('<caption style="color:black;	font-weight: bold; font-size:16px;">Program Reminder Details</caption>')
+									// thead
+									.append('<thead>').children('thead')
+									.append('<tr />').children('tr').append('<th>Program Name</th><th>Start Date</th><th>End Date</th><th>\Reminder Dates</th>');
+									
+									//tbody
+									var $tbody = $table.append('<tbody />').children('tbody');
+									
+									// add row
+									$tbody.append('<tr />').children('tr:last')
+									.append('<td>' + ProgramName + '</td>')
+									.append('<td>' + ProgramSDate + '</td>')
+									.append('<td>' + ProgramEDate + '</td>')
+									.append('<td>' + RemainderDates + '</td>');
+									
+									
+									// add table to dom
+									$table.appendTo('#dynamicTable');
+									
+									$('#dynamicTable table').addClass("dynamicTable");
+          							$('#dynamicTable table thead').addClass("dynamicTableTh");
+           							$('#dynamicTable table tbody td').addClass("dynamicTableTd");
+                                   
+                                 
+                                    document.getElementById("Div_rem").style.display = 'block';
+                                    break;
+                                    }
+                                    else
+                                    {
+                                    $('#dynamicTable').empty();
+                                    if(RemainderDates != null && RemainderDates != undefined && RemainderDates != ' ' )
+                                    {
+                                    var array = RemainderDates.split(';');
+                                    var rows=array.length;
+                                    
+                                    }
+                                    else
+                                    {
+                                    RemainderDates ="NA"
+                                    }
+                                  
+                                    
+									document.getElementById("btnsetrem").style.display = 'block';
+                                  
+                                   
+                                     BindCalendar(ProgramSDate,ProgramEDate);
+                                   
+                                   // create table
+									var $table = $('<table>');
+									
+									// caption
+									$table.append('<caption style="color:black;	font-weight: bold; font-size:16px;">Program Reminder Details</caption>')
+									// thead
+									.append('<thead>').children('thead')
+									.append('<tr />').children('tr').append('<th>Program Name</th><th>Start Date</th><th>End Date</th><th>\Reminder Dates</th>');
+									
+									//tbody
+									var $tbody = $table.append('<tbody />').children('tbody');
+									
+									// add row
+									$tbody.append('<tr />').children('tr:last')
+									.append('<td>' + ProgramName + '</td>')
+									.append('<td>' + ProgramSDate + '</td>')
+									.append('<td>' + ProgramEDate + '</td>')
+									.append('<td>' + RemainderDates + '</td>');
+									
+									
+									// add table to dom
+									$table.appendTo('#dynamicTable');
+									
+									$('#dynamicTable table').addClass("dynamicTable");
+          							$('#dynamicTable table thead').addClass("dynamicTableTh");
+           							$('#dynamicTable table tbody td').addClass("dynamicTableTd");
+                                   
+                                   
+                                  
+                                    document.getElementById("Div_rem").style.display = 'block';
+                                  
+                                    
+                                    }
+                                                                       
+                                }
+                            }
+                        }
+                        else {
+                           
+                        }
+                        
+                       
+ 					$.unblockUI({
+                        onUnblock: function () {
+                            console.log('');
+                        }
+                    });
+                }, 600);                
+                
+                    },
+                    error: function (err) {
+                        alert("Error while adding item: " + JSON.stringify(err));
+                    }
+                });
+                
+ 				
+
+  
+}
+
+               
+});
+    
+    </script>
+    
+       
+    <script>
+    
+    function BindCalendar(ProgramSDate,ProgramEDate) {
+
+   
+ var date= ProgramSDate;
+var d=new Date(date.split("/").reverse().join("-"));
+var dd=d.getDate();
+var mm=d.getMonth()+1;
+var yy=d.getFullYear();
+var newdate=mm+"/"+dd+"/"+yy;
+
+var date1= ProgramEDate;
+var d1=new Date(date1.split("/").reverse().join("-"));
+var dd1=d1.getDate();
+var mm1=d1.getMonth()+1;
+var yy1=d1.getFullYear();
+var newdate1=mm1+"/"+dd1+"/"+yy1;
+
+
+    $(document).ready(function () {
+  $('.datepicker').datepicker({
+    format: 'mm/dd/yyyy',
+    multidate: true,
+    startDate: new Date(),
+    endDate: new Date(newdate1),
+    clearBtn: true,
+    calender_style: "picker_3",
+    todayHighlight: true,
+    daysOfWeekHighlighted: [1, 2, 3, 4, 5, 6, 7]
+ 	 });
+  });
+
+       
+  }
+
+    </script>
+    
+    
+    <style>
+       .dynamicTable { font:1.2em Arial; border:2px solid gray;}
+        .dynamicTableTh { background-color:#0072C6; border:1px solid gray; color:White;}
+        .dynamicTableTd { padding:4px; width:90px; border:1px solid gray; color:black }
+
+    </style>
+   
+    

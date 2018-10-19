@@ -1,0 +1,279 @@
+﻿<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>     
+ <script src="/_layouts/15/sp.runtime.js"></script>  
+      <script src="/_layouts/15/sp.js"></script>  
+      <script src="/_layouts/15/1033/strings.js"></script>  
+      <script src="/_layouts/15/clienttemplates.js"></script>  
+      <script src="/_layouts/15/clientforms.js"></script>  
+      <script src="/_layouts/15/clientpeoplepicker.js"></script>  
+      <script src="/_layouts/15/autofill.js"></script>  
+      <script src="_layouts/15/sp.core.js"></script> 
+      
+      <script type="text/javascript">
+
+RegisterScriptFiles('clienttemplates.js');
+
+RegisterScriptFiles('clientforms.js');
+
+RegisterScriptFiles('clientpeoplepicker.js');
+
+RegisterScriptFiles('autofill.js');
+
+</script>
+            <div class="page-title" style="margin-top:0px !important">
+              <div class="title_left">
+               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#TaskModelId">Add Task</button>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title" style="background-color:#00677F;">
+				  <h2 style="color:#fff">Tasks</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <!-- start project list -->
+                    <table class="table table-striped projects">
+                      <thead>
+                        <tr>
+                          <th style="width: 5%">SNo</th>
+                          <th style="width: 10%">TaskName</th>
+						  <th style="width: 10%">StartDate</th>
+                          <th style="width: 10%">DueDate</th>
+                            <th style="width:10%">Assigned To</th>
+                          <th style="width: 10%">%Complete</th>
+						  <th style="width: 20%">Description</th>
+                          <th style="width: 5%">Priority</th>
+                            <th style="width:10%">Task Status</th>
+						  <th style="width: 5%">Edit</th>
+                          <th style="width: 5%">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody id="TaskTableId">
+                      </tbody>
+                    </table>
+                    <!-- end project list -->
+                  </div>
+                </div>
+              </div>
+            </div>
+        <!--page content End-->
+
+
+
+
+
+<!-- Task Model Dialogue Box Start -->
+<div class="container">
+  <!-- Trigger the modal with a button -->
+  <!-- Modal Start -->
+  <div class="modal fade" id="TaskModelId" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content Start-->
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#00c0ef;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Task</h4>
+        </div>
+        <div class="modal-body">
+		  <div class="row">
+		  <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Task Name</label>
+            <div class="col-md-8">
+              <input type="text" class="form-control" id="TaskNameId">
+            </div>
+          </div>
+		  <div class="clearfix"></div>
+		  <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput">Start Date</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" onkeypress="return false"  placeholder="__/__/__" / id="StartDateId"/ >
+            </div>
+          </div>
+		   <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Due Date</label>
+            <div class="col-md-8">
+			  <input type="text" class="form-control" onkeypress="return false"  placeholder="__/__/__" / id="DueDateId"/ >
+            </div>
+          </div>
+               <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Assigned To</label>
+            <div class="col-md-8">
+			   <div id="peoplePickerDiv" class="clearpeoplePickerDiv"></div>
+            </div>
+          </div>
+               <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label integerdata" for="textinput" >% Complete</label>
+            <div class="col-md-8">
+			   <input type="text"  class="form-control" id="PercentcompleteId">
+            </div>
+          </div>
+              <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Description</label>
+            <div class="col-md-8">
+			  <textarea class="form-control" rows="10"  id="DescriptionId"></textarea>
+            </div>
+          </div>
+               <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Priority</label>
+            <div class="col-md-8"id="Priority">
+                                <select id="PriorityId" class="form-control" required>
+                                    <option value="0" selected>---Select---</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="High">High</option>
+                                    <option value="Low">Low</option>
+                                </select>
+            </div>
+          </div>
+              <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Task Status</label>
+               <div class="col-md-8 " id="StatusId">
+                <select id="TaskStatusId" class="form-control" required>
+                                    <option value="0" selected>---Select---</option>
+                                    <option value="Not Started">Not Started</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Deferred">Deferred</option>
+                                    <option value="Waiting on someone else">Waiting on someone else</option>
+                                </select>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer" style="margin-top:15px";>
+         <button type="button" class="btn btn-default" style="background-color:#00677F;" id="btedit" onclick="gettaskusers()">Edit</button>
+		<button type="button" class="btn btn-default" style="background-color:#00677F;" id="TaskSavebtnId">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:#00677F" id="TaskCancelbtnId">Cancel</button>
+        </div>
+    </div>
+	<!-- Modal content End-->
+  </div>
+</div>
+<!-- Modal End -->
+</div>
+ </div>
+<!-- Task Model Dialogue Box End -->
+
+
+
+<!--Edit Task Model Dialogue Box Start -->
+<div class="container">
+  <!-- Trigger the modal with a button -->
+  <!-- Modal Start -->
+  <div class="modal fade" id="EditTaskModelId" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content Start-->
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#00c0ef;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Task</h4>
+        </div>
+        <div class="modal-body">
+		  <div class="row">
+		  <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Task Name</label>
+            <div class="col-md-8">
+              <input type="text"  class="form-control" id="EditTaskNameId" >
+            </div>
+          </div>
+		  <div class="clearfix"></div>
+		  <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput">Start Date</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" onkeypress="return false"  placeholder="__/__/__" / id="EditStartDateId" />
+            </div>
+          </div>
+		   <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Due Date</label>
+            <div class="col-md-8">
+			  <input type="text" class="form-control" onkeypress="return false"  placeholder="__/__/__" / id="EditDueDateId" />
+            </div>
+          </div>
+               <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label emailidValidation" for="textinput" >Assigned To</label>
+            <div class="col-md-8">
+                 
+			    <input   class="form-control" id="peoplePickerDivEdit">
+            </div>
+          </div>
+               <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label integerdata" for="textinput" >% Complete</label>
+            <div class="col-md-8">
+			   <input type="text" class="integerdata form-control" id="EditPercentCompleteId">
+            </div>
+          </div>
+              <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Description</label>
+            <div class="col-md-8">
+			  <textarea class="form-control" rows="10"  id="EditDescriptionId"></textarea>
+            </div>
+          </div>
+               <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Priority</label>
+            <div class="col-md-8 " id="EPriorityId">
+                <select id="EditPriorityId" class="form-control" required>
+                                    <option value="0" selected>---Select---</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="High">High</option>
+                                    <option value="Low">Low</option>
+                                </select>
+            </div>
+          </div>
+              <div class="clearfix"></div>
+		   <div class="form-group" style="margin-top:15px";>
+            <label class="col-md-4 control-label" for="textinput" >Task Status</label>
+               <div class="col-md-8 " id="ETaskStatusId">
+                <select id="EditTaskStatusId" class="form-control" required>
+                                    <option value="0" selected>---Select---</option>
+                                    <option value="Not Started">Not Started</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Deferred">Deferred</option>
+                                    <option value="Waiting on someone else">Waiting on someone else</option>
+              </select>
+            </div>
+          </div>
+        </div>
+          <div class="modal-footer" style="margin-top:15px";>
+            
+
+          <button type="button" class="btn btn-default" style="background-color:#00677F;" id="btnAdd" onclick="Checkpoint()">Add</button>
+		<button type="button" class="btn btn-default" style="background-color:#00677F;" id="TaskUpdatebtnId">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:#00677F;" id="EditTaskCancelbtnId">Cancel</button>
+        </div>
+      </div>
+    </div>
+	<!-- Modal content End-->
+  </div>
+</div>
+<!-- Modal End -->
+</div>
+<!-- Edit Task Model Dialogue Box End -->
+
+<script src="/sites/AnugamDev/SiteAssets/JS/test.js" type="text/javascript"></script>
+
+
+
+
+
+
+

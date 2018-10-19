@@ -1,0 +1,725 @@
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+<style>
+    .requiredfieldsstyle {
+        padding-left: 15px !important;
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    .tiptext {
+        padding: 5px;
+        display: inline;
+        font-size: 20px;
+        color: #b9b9b9;
+    }
+
+    .Check {
+        display: none;
+        position: absolute;
+        margin-top: -40px;
+        margin-left: 40px;
+        font-size: 14px !important;
+        background-color: #222;
+        padding: 10px;
+        z-index: 1000;
+    }
+
+        .Check p {
+            margin: 0px !important;
+        }
+</style>
+
+<div>
+<div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1>
+            Manage Attendance
+        </h1>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-12 margin-top-15">
+            <label>
+                Program Name
+            </label>
+            <div id="ddlProgramName">
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>
+                    Program Start Date
+                </label>
+                <input type="text" id="txtProgramStartDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program End Date
+                </label>
+                <input type="text" id="txtProgramEndDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program Location
+                </label>
+                <input id="txtProgramLocation" class="form-control" readonly="readonly" />
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4" id="divActivityShow">
+                <label>
+                    Day
+                </label>
+                <select id="divActivityName" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 padding-0 margin-top-15">
+        <div class="col-md-12">
+            <div class="tiptext" id="divInfoIcon" style="display:none;">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <div class="Check">
+                    <p>1. Checked User are Present.</p>
+                    <p>2. UnChecked User are Absent.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 padding-0">
+            <label>
+                Confirmed [<span id="appendInvitees"></span>]
+            </label>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            <div id="CustomerGrid" style="width: 100%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 padding-0 margin-top-15">
+        <div id="divErrorMessage" class="requiredfieldsstyle"></div>
+    </div>
+    <div class="col-md-12 padding-0 margin-top-5">
+        <div class="col-md-2">
+            <button class="btn btn-success btn-block" id="btnSubmit">
+                SUBMIT
+            </button>
+        </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        PopulateProgramDropDown();
+    });
+
+    function PopulateProgramDropDown() {
+        var listName = "NewInductionProgram";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+        var UserEmail = LoginUserEmail();
+        getProgram(UserEmail, listName, url, function (data) {
+            var TodayDate = new Date();
+            var day = TodayDate.getDate();
+            var mm = TodayDate.getMonth() + 1;
+            var Year = TodayDate.getFullYear();
+            var items = data.d.results;
+            var pgmFinalData = []; var j = 0;
+            var arrPGM = [];
+            var arrPGMUnique = [];
+            for (var k = 0; k < items.length; k++) {
+                var ChkProgramEndDate = new Date(items[k].ProgramEndDate.split("/").reverse().join("-"));
+                if (new Date(items[k].ProgramEndDate.split("/").reverse().join("-")) >= TodayDate || ChkProgramEndDate.setHours(0, 0, 0, 0) == TodayDate.setHours(0, 0, 0, 0)) {
+                    var NameProgram = items[k].ProgramName;
+                    if (pgmFinalData[j++] != NameProgram) {
+                        pgmFinalData[j++] = NameProgram;
+                    }
+                }
+            }
+            var uniqueProgramNames = '';
+            var result = [];
+            $.each(pgmFinalData, function (index, pgmFinalData) {
+                if ($.inArray(pgmFinalData, result) == -1) {
+                    result.push(pgmFinalData);
+                }
+            });
+            console.log(result);
+            //var programBind = GroupByProgramData(pgmFinalData, 'ProgramName');
+            var inputElement = '<select id="ProgramNameDynDropDown" class="form-control"><option  value="">--Select--</option>';
+            // Add all the new items
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] != undefined) {
+                    var itemId = result[i],
+                        itemVal = result[i];
+                    inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+                }
+            }
+            inputElement += '</select>';
+            $('#ddlProgramName').append(inputElement);
+            $("#ProgramNameDynDropDown").each(function () {
+                $('option', this).each(function () {
+
+                    if ($(this).text() == '--Select--') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+            var selectedProgramName = '';
+            $('#ProgramNameDynDropDown').on('change', function () {
+                selectedProgramName = $(this).val();
+                var ActivityId = "";
+                $.blockUI({ message: '<div style="font-size:20px">Please Wait...</div>', });
+                setTimeout(function () {
+                    ChangeProgram(selectedProgramName, url, listName);
+                    $.unblockUI({
+                        onUnblock: function () {
+                            console.log('');
+                        }
+                    });
+                }, 200);
+            });
+
+        }, function (data) {
+            alert("An error occured while getting ConfigParameters. Please try again");
+        });
+    }
+    function ChangeProgram(selectedProgramName, url, listName)
+    {
+        GetActivityLookUpId('NewInductionProgram', url, selectedProgramName, function (data) {
+            console.log(data.d.results);
+            var items = data.d.results;
+            var taskNames = GroupByData(items, 'DayWise');
+            $('#divActivityName').empty();
+            //var inputElement = '<select id="ddlActivityName" class="form-control"><option  value="">Select</option>';
+            // Add all the new items
+            var select = document.getElementById("divActivityName");
+            var el = document.createElement("option");
+            el.textContent = '--Select--';
+            el.value = '--Select--';
+            select.appendChild(el);
+            for (var i = 0; i < taskNames.length; i++) {
+
+                var el = document.createElement("option");
+                el.textContent = taskNames[i];
+                el.value = taskNames[i];
+                select.appendChild(el);
+            }
+        }, function (data) {
+            alert('An error occured while getting ConfigParameters. Please try again');
+        });
+
+
+        $('#CustomerGrid').empty();
+        $('#CustomerRecordsTable').empty();
+        $("#txtProgramLocation").val('');
+        $("#txtProgramStartDate").val('');
+        $("#txtProgramEndDate").val('');
+        getProgramLocation(selectedProgramName);
+        var siteurl = _spPageContextInfo.webAbsoluteUrl;
+        var actSDate = GetActivityStartDate(listName, siteurl, selectedProgramName);
+        var MISAttendanceData = GetAttendanceData(selectedProgramName, actSDate);
+        if (actSDate != '' && MISAttendanceData == false) {
+            getEmailIdOfUser(selectedProgramName);
+            $('#btnSubmit').show();
+            $("#divErrorMessage").empty();
+        }
+        else {
+            $("#divErrorMessage").empty();
+            $('#divErrorMessage').css('color', 'red');
+            $('#divErrorMessage').append("Attendance Already Taken");
+            $('#btnSubmit').hide();
+        }
+    }
+
+    function getProgram(UserEmail, listName, siteurl, success, failure) {
+        var UrlOFInvitation = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=CreatedByUser eq %27" + UserEmail + "%27 and Status eq 'Active'";
+        //month(PgmEndDate)%20ge%20" + mm + "%20and%20day(PgmEndDate)%20ge%20" + day + "%20and%20year(PgmEndDate)%20ge%20" + Year + "and%20
+        ;
+        $.ajax({
+            url: UrlOFInvitation,
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+    function GroupByData(items, propertyName) {
+        var result = [];
+        $.each(items, function (index, item) {
+            if ($.inArray(item[propertyName], result) == -1) {
+                result.push(item[propertyName]);
+            }
+        });
+        return result;
+    }
+    function GetActivityLookUpId(listName, siteurl, selectedProgramName, success, failure) {
+        var UserEmail = LoginUserEmail();
+        var toDay = GetToday();
+        var url = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=ProgramName eq %27" + selectedProgramName + "%27 and ActivityStartDate eq '" + toDay + "' and CreatedByUser eq %27" + UserEmail + "%27";
+        //"/_api/web/lists/getbytitle('" + listName + "')/items?$filter=ProgramName eq %27" + selectedProgramName + "%27%20and%20CreatedByUser%20eq%20%27" + UserEmail + "%27";
+        $.ajax({
+            url: url,
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+
+    function GroupByProgramData(items, propertyName) {
+        var result = [];
+        $.each(items, function (index, item) {
+            if ($.inArray(item[propertyName], result) == -1) {
+                result.push(item[propertyName]);
+            }
+        });
+        return result;
+    }
+    function GetToday() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        today = dd + '/' + mm + '/' + yyyy;
+        return today;
+    }
+    function GetActivityStartDate(listName, siteurl, selectedProgramName) {
+        var ActStartDate = '';
+        var UserEmail = LoginUserEmail();
+        var toDay = GetToday();
+        var RestUrl = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=ProgramName eq %27" + selectedProgramName + "%27 and ActivityStartDate eq '" + toDay + "' and CreatedByUser eq %27" + UserEmail + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    ActStartDate = d.d.results[0].DayWise;
+                }
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+        return ActStartDate;
+    }
+    function GetAttendanceData(selectedProgramName, actSDate) {
+        var isExists = false;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27 and Day eq '" + actSDate + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    isExists = true;
+                }
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+        return isExists;
+    }
+</script>
+
+
+<script>
+    function getEmailIdOfUser(selectedProgramName) {
+        var UserEmail = LoginUserEmail();
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramStatus%20eq%20%27Completed%27%20and%20ProgramName%20eq%20%27" + selectedProgramName + "%27%20and%20CreatedByUser%20eq%20%27" + UserEmail + "%27 and CanceledDate eq null and Confirmation eq %27Yes%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (data) {
+                if (data.d.results.length > 0) {
+                    //construct HTML Table from the JSON Data
+                    $('#CustomerGrid').append(GenerateTableFromJson(data.d.results));
+                    //Bind the HTML data with Jquery DataTable
+                    var oTable = $('#CustomerRecordsTable').dataTable({
+                        "iDisplayLength": 5,
+                        "aLengthMenu": [
+                        [5, 10, 30, 50],
+                        [5, 10, 30, 50]
+                        ],
+                        "sPaginationType": "full_numbers"
+                    });
+                    $("#btnSubmit").show();
+                } else {
+                    $("#appendInvitees").empty();
+                    $('#CustomerGrid').append("<span>No Customer Records Found.</span>");
+                    $("#btnSubmit").hide();
+                }
+            },
+            error: function (data) {
+                $('#CustomerGrid').append("<span>Error Retreiving Customer Records. Error : " + JSON.stringify(data) + "</span>");
+            }
+        });
+        function GenerateTableFromJson(objArray) {
+            var tableContent = '<table id="CustomerRecordsTable" style="width:100%" class="table table-striped table-bordered dt-responsive nowrap"><thead><tr><td><input type="checkbox" class="allCheckbox" /> Select All </td>' + '<td>Employee Code</td>' + '<td>Employee Name</td>' + '<td>EmailID</td>' + '</tr></thead><tbody>';
+            $("#appendInvitees").empty();
+            $('#divInfoIcon').show();
+            var count = objArray.length;
+            $("#appendInvitees").append(count);
+            for (var i = 0; i < objArray.length; i++) {
+                tableContent += '<tr>';
+                tableContent += '<td>' + '<input type="checkbox" class="myCheckbox" value=' + objArray[i].Id + '>' + '</td>';
+                tableContent += '<td>' + objArray[i].EmployeeCode + '</td>';
+                tableContent += '<td>' + objArray[i].EmployeeName + '</td>';
+                tableContent += '<td>' + objArray[i].EmployeeEmailId + '</td>';
+                tableContent += '</tr>';
+            }
+            return tableContent;
+        }
+    }
+</script>
+<script>
+    function getProgramLocation(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        var PgrmLocation = d.d.results[arrK].ProgramLocation;
+                        var PgrmStartDate = d.d.results[arrK].ProgramStartDate;
+                        var PgrmEndDate = d.d.results[arrK].ProgramEndDate;
+                        $("#txtProgramLocation").val(PgrmLocation);
+                        $("#txtProgramStartDate").val(PgrmStartDate);
+                        $("#txtProgramEndDate").val(PgrmEndDate);
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+
+</script>
+<script type="text/javascript">
+    "use strict";
+    $(document).on('click', '.allCheckbox', function () {
+        if ($(this).is(':checked') == true) {
+            $('.myCheckbox').prop('checked', true);
+        }
+        else {
+            $('.myCheckbox').prop('checked', false);
+        }
+    });
+    $("#btnSubmit").click(function () {
+        $('#divErrorMessage').css('color', '');
+        $('#divErrorMessage').empty();
+        var ProgramNameDynDropDown = $('#ProgramNameDynDropDown').val();
+        var divDaywise = $('#divActivityName').val();
+        $('#ProgramNameDynDropDown').css('border-color', '');
+        if (ProgramNameDynDropDown == '' || ProgramNameDynDropDown == '--Select--') {
+            $('#ProgramNameDynDropDown').css("border", "1px solid red");
+            $("#divErrorMessage").empty();
+            $('#divErrorMessage').css('color', 'red');
+            $('#divErrorMessage').append("Highlighted fields are mandatory");
+            return false;
+        }
+        if ($('input[class=myCheckbox]:checked').length == 0) {
+            $("#divErrorMessage").empty();
+            $('#divErrorMessage').css('color', 'red');
+            $('#divErrorMessage').append("Please Check at Least One User");
+            return false;
+        }
+        if (divDaywise == "" || divDaywise == "--Select--") {
+            $("#divErrorMessage").empty();
+            $('#divErrorMessage').css('color', 'red');
+            $('#divErrorMessage').append("Please Select Day");
+            return false;
+        }
+        $.blockUI({ message: '<div style="font-size:20px">Please Wait...</div>', });
+        setTimeout(function () {
+            SaveDetails();
+            $.unblockUI({
+                onUnblock: function () {
+                    console.log('');
+                }
+            });
+        }, 200);        
+    });
+
+    function SaveDetails()
+    {
+        var ProgramNameDynDropDown = $('#ProgramNameDynDropDown').val();
+        var divDaywise = $('#divActivityName').val();
+        var EmployeeID = []; var EamilID = []; var EmplCode = []; var EmployeeName = []; var EmployeeType = [];
+        var EmpID = 0; var EmailID = 0; var EmpCode = 0; var EName = 0; var EmpType = 0;
+        var arrEmpbaselocation = []; var iBaseLoc = 0;
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramStatus%20eq%20%27Completed%27and%20ProgramName%20eq%20%27" + ProgramNameDynDropDown + "%27",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.ProgramStatus == "Completed") {
+                        arr[i++] = index;
+                    }
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    EmployeeID[EmpID++] = d.d.results[arrK].ID;
+                    EamilID[EmailID++] = d.d.results[arrK].EmployeeEmailId;
+                    EmplCode[EmpCode++] = d.d.results[arrK].EmployeeCode;
+                    EmployeeName[EName++] = d.d.results[arrK].EmployeeName;
+                    EmployeeType[EmpType++] = d.d.results[arrK].EmployeeType;
+                    arrEmpbaselocation[iBaseLoc++] = d.d.results[arrK].EmpBaseLocation;
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+
+        var newArray = []; var NotCheckedArr = [];
+        var checkedIDArray = [];
+        $('.myCheckbox').each(function () {
+            var checkedVal = $(this).val();
+            var checked = $(this).is(':checked');
+
+            if (checked == true) {
+                checkedIDArray.push(checkedVal);
+            }
+        });
+        for (var j = 0; j <= EmployeeID.length; j++) {
+            console.log(EmployeeID[j]);
+            $('.myCheckbox').each(function () {
+                var checkedVal = $(this).val();
+                var checked = $(this).is(':checked');
+
+                if (checked == true) {
+                    if (checkedVal == EmployeeID[j]) {
+                        var obj =
+                                {
+                                    EmpID: EmployeeID[j],
+                                    EmpCode: EmplCode[j],
+                                    EmpName: EmployeeName[j],
+                                    EmailID: EamilID[j],
+                                    EmployeeType: EmployeeType[j],
+                                    Empbaselocation: arrEmpbaselocation[j]
+                                }
+                        newArray.push(obj);
+                    }
+                }
+                if (checked == false) {
+                    if (checkedVal == EmployeeID[j]) {
+                        var obj1 =
+                               {
+                                   EmpID: EmployeeID[j],
+                                   EmpCode: EmplCode[j],
+                                   EmpName: EmployeeName[j],
+                                   EmailID: EamilID[j],
+                                   EmployeeType: EmployeeType[j],
+                                   Empbaselocation: arrEmpbaselocation[j]
+                               }
+                        NotCheckedArr.push(obj1);
+                    }
+                }
+            });
+        }
+        if (newArray.length > 0) {
+            for (var i = 0; i < newArray.length; i++) {
+                var ProgramName = $('#ProgramNameDynDropDown').val();
+                var ActivityDay = $('#divActivityName').val();
+                var PgmStartDate = $('#txtProgramStartDate').val();
+                var PgmEndDate = $('#txtProgramEndDate').val();
+                var PgmLocation = $('#txtProgramLocation').val();
+                var Creator = LoginUserEmail();
+                var CompusHire = '';
+                if (newArray[i].EmployeeType == 'Yes') {
+                    CompusHire = 'Y';
+                }
+                else {
+                    CompusHire = 'N'
+                }
+                $.ajax({
+                    url: _spPageContextInfo.webServerRelativeUrl + "//_api/web/lists/getbytitle('MISReportForInvities')/items",
+                    type: "POST",
+                    data: JSON.stringify({
+                        '__metadata': { 'type': 'SP.Data.MISReportForInvitiesListItem' },
+                        'Title': ProgramName,
+                        'Status': 'Active',
+                        'ProgramName': ProgramName,
+                        'ProgramStartDate': PgmStartDate,
+                        'ProgramEndDate': PgmEndDate,
+                        'ProgramLocation': PgmLocation,
+                        'EmployeeName': newArray[i].EmpName,
+                        'EmpCode': newArray[i].EmpCode,
+                        'EmpEmailID': newArray[i].EmailID,
+                        'BaseLocation': newArray[i].Empbaselocation,
+                        'CompusHire': CompusHire,
+                        'Day': ActivityDay,
+                        'Creator': Creator,
+                        'Confirmation': 'Y',
+                        'Attendance': 'Y',
+                    }),
+                    headers: {
+                        "Accept": "application/json;odata=verbose",
+                        "content-type": "application/json; odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                    },
+                    success: function (data) {
+                    },
+                    error: function (err) {
+                        alert("Error while adding item: " + JSON.stringify(err));
+                    }
+                });
+            }
+            alert("Submitted Successfully.");
+        }
+        if (NotCheckedArr.length > 0) {
+            for (var i = 0; i < NotCheckedArr.length; i++) {
+                var ProgramName = $('#ProgramNameDynDropDown').val();
+                var ActivityDay = $('#divActivityName').val();
+                var PgmStartDate = $('#txtProgramStartDate').val();
+                var PgmEndDate = $('#txtProgramEndDate').val();
+                var PgmLocation = $('#txtProgramLocation').val();
+                var Creator = LoginUserEmail();
+                var CompusHire = '';
+                if (NotCheckedArr[i].EmployeeType == 'Yes') {
+                    CompusHire = 'Y';
+                }
+                else {
+                    CompusHire = 'N'
+                }
+                $.ajax({
+                    url: _spPageContextInfo.webServerRelativeUrl + "//_api/web/lists/getbytitle('MISReportForInvities')/items",
+                    type: "POST",
+                    data: JSON.stringify({
+                        '__metadata': { 'type': 'SP.Data.MISReportForInvitiesListItem' },
+                        'Title': ProgramName,
+                        'ProgramName': ProgramName,
+                        'Status': 'Active',
+                        'ProgramStartDate': PgmStartDate,
+                        'ProgramEndDate': PgmEndDate,
+                        'ProgramLocation': PgmLocation,
+                        'EmployeeName': NotCheckedArr[i].EmpName,
+                        'EmpCode': NotCheckedArr[i].EmpCode,
+                        'EmpEmailID': NotCheckedArr[i].EmailID,
+                        'BaseLocation': NotCheckedArr[i].Empbaselocation,
+                        'CompusHire': CompusHire,
+                        'Day': ActivityDay,
+                        'Creator': Creator,
+                        'Confirmation': 'Y',
+                        'Attendance': 'N',
+                    }),
+                    headers: {
+                        "Accept": "application/json;odata=verbose",
+                        "content-type": "application/json; odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                    },
+                    success: function (data) {
+                    },
+                    error: function (err) {
+                        alert("Error while adding item: " + JSON.stringify(err));
+                    }
+                });
+            }
+        }
+    }
+
+</script>
+
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+
+</script>
+<script>
+    $(".tiptext").mouseover(function () {
+        $(this).children(".Check").show();
+    }).mouseout(function () {
+        $(this).children(".Check").hide();
+    });
+
+</script>

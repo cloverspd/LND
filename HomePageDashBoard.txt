@@ -1,0 +1,456 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+.ms-cui-topBar2 
+{
+Display:none;
+}
+#globalNavBox
+{
+Display:none;
+}
+#s4-ribbonrow
+{
+Display:none;
+}
+.ms-mpSearchBox ms-floatRight
+{
+Display:none;
+}
+#DeltaPlaceHolderSearchArea
+{
+Display:none;
+}
+.ms-breadcrumb-top
+{
+Display:none;
+}
+
+.ms-breadcrumb-box
+{
+Display:none;
+}
+#WebPartWPQ2
+{
+margin-top: -84px;
+}
+</style>
+<style>
+ .ms-navedit-editLinksText{
+  display: none;
+ }
+ </style>
+
+<div>
+
+    <div class="col-md-12">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-12">
+                <label>
+                    Current Program Details
+                </label>
+            </div>
+            <div class="col-md-12">
+                <table id="tableActivity" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Program Name
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Date of Creation
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblConfigParametersBind"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-12">
+                <label>
+                    Completed Program Details
+                </label>
+            </div>
+            <div class="col-md-12">
+            <body onload="makeTableScroll();">
+           <div class="scrollingTable">
+                <table id="tableCompletedProgram" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Program Name
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Date of Creation
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblCompletedProgram"></tbody>
+                </table>
+                </div>
+                </body>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+<!-- Datatables -->
+
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+
+</script>
+<script>
+    var CurrentUserEmail = LoginUserEmail();
+    jQuery.ajax({
+        url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('NewInductionProgram')/items?$top=1000",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+        },
+        success: function (d) {
+            var arr = []; var arrSaveAsDrat = [];
+            i = 0; arrS = 0;
+            $.each(d.d.results, function (index, results) {
+                var ProgramEndDate = results.ProgramEndDate;
+                var ChkProgramEndDate = new Date(ProgramEndDate.split("/").reverse().join("-"));
+                var GetDate = new Date();
+                var ccDate = GetDate.setHours(0, 0, 0);
+                var Final = new Date(ccDate);
+                //|| ChkProgramEndDate.setHours(0, 0, 0, 0) == GetDate.setHours(0, 0, 0, 0)
+                if (ChkProgramEndDate >= Final) {
+                    if (results.Status == "Active" || results.Status == "SaveAsDraft") {
+                        arr[i++] = index;
+                    }
+                }
+                //if (results.Status == "SaveAsDraft" && ChkProgramEndDate >= Final) {
+                //    arrSaveAsDrat[arrS++] = index;
+                //}
+            });
+            var duplocateProgram = '';
+            var i = 1;
+            for (var j = 0; j < arr.length; j++) {
+                var arrConfigK = arr[j];
+                if (duplocateProgram != d.d.results[arrConfigK].ProgramName) {
+
+                    duplocateProgram = d.d.results[arrConfigK].ProgramName;
+
+                    var index = parseInt(i);
+                    var ProgramName = d.d.results[arrConfigK].ProgramName;
+                    var ProgramSdate = d.d.results[arrConfigK].ProgramStartDate;
+                    var ProgramEdate = d.d.results[arrConfigK].ProgramEndDate;
+                    var ProgramCreatedDate = d.d.results[arrConfigK].CreatedDateCal;
+                    var ActivityID = d.d.results[arrConfigK].ID;
+                    $("#tblConfigParametersBind").append("<tr><td>" + ProgramName + "</td><td>" + ProgramSdate + "</td><td>" + ProgramEdate + "</td><td>" + ProgramCreatedDate + "</td></tr>");
+                    i++;
+                }
+            }
+            //var dsaveDraftuplocateProgram = '';
+            //var k = 1;
+            //for (var j = 0; j < arrSaveAsDrat.length; j++) {
+            //    var arrConfigK = arrSaveAsDrat[j];
+            //    if (dsaveDraftuplocateProgram != d.d.results[arrConfigK].ProgramName) {
+
+            //        dsaveDraftuplocateProgram = d.d.results[arrConfigK].ProgramName;
+
+            //        var index = parseInt(i);
+            //        var ProgramName = d.d.results[arrConfigK].ProgramName;
+            //        var ProgramSdate = d.d.results[arrConfigK].ProgramStartDate;
+            //        var ProgramEdate = d.d.results[arrConfigK].ProgramEndDate;
+            //        var ProgramCreatedDate = d.d.results[arrConfigK].CreatedDateCal;
+            //        var ActivityID = d.d.results[arrConfigK].ID;
+            //        $("#tblConfigParametersBind").append("<tr><td>" + ProgramName + "</td><td>" + ProgramSdate + "</td><td>" + ProgramEdate + "</td><td>" + ProgramCreatedDate + "</td></tr>");
+            //        k++;
+            //    }
+            //}
+        },
+        error: function () { console.log('fail'); }
+    });
+</script>
+
+<script>
+    var CurrentUserEmail = LoginUserEmail();
+    jQuery.ajax({
+        url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('NewInductionProgram')/items?$top=1000",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+        },
+        success: function (d) {
+            var arr = []; var arrSaveAsDrat = [];
+            i = 0; arrS = 0;
+            $.each(d.d.results, function (index, results) {
+                var ProgramEndDate = results.ProgramEndDate;
+                var ChkProgramEndDate = new Date(ProgramEndDate.split("/").reverse().join("-"));
+                var GetDate = new Date();
+                if (ChkProgramEndDate < GetDate && ChkProgramEndDate.setHours(0, 0, 0, 0) != GetDate.setHours(0, 0, 0, 0)) {
+                    if (results.Status == "Active") {
+
+                        arr[i++] = index;
+                    }
+                }
+                //if (results.Status == "SaveAsDraft" && ChkProgramEndDate < GetDate && ChkProgramEndDate.setHours(0, 0, 0, 0) != GetDate.setHours(0, 0, 0, 0)) {
+
+                //    arrSaveAsDrat[arrS++] = index;
+
+                //}
+            });
+            var duplocateProgram = '';
+            var i = 1;
+            for (var j = 0; j < arr.length; j++) {
+                var arrConfigK = arr[j];
+                if (duplocateProgram != d.d.results[arrConfigK].ProgramName) {
+
+                    duplocateProgram = d.d.results[arrConfigK].ProgramName;
+
+                    var index = parseInt(i);
+                    var ProgramName = d.d.results[arrConfigK].ProgramName;
+                    var ProgramSdate = d.d.results[arrConfigK].ProgramStartDate;
+                    var ProgramEdate = d.d.results[arrConfigK].ProgramEndDate;
+                    var ProgramCreatedDate = d.d.results[arrConfigK].CreatedDateCal;
+                    var ActivityID = d.d.results[arrConfigK].ID;
+                    $("#tblCompletedProgram").append("<tr><td>" + ProgramName + "</td><td>" + ProgramSdate + "</td><td>" + ProgramEdate + "</td><td>" + ProgramCreatedDate + "</td></tr>");
+                    i++;
+                }
+            }
+            //var saveAsDrftduplocateProgram = '';
+            //var k = 1;
+            //for (var j = 0; j < arrSaveAsDrat.length; j++) {
+            //    var arrConfigK = arrSaveAsDrat[j];
+            //    if (duplocateProgram != d.d.results[arrConfigK].ProgramName) {
+
+            //        duplocateProgram = d.d.results[arrConfigK].ProgramName;
+
+            //        var index = parseInt(i);
+            //        var ProgramName = d.d.results[arrConfigK].ProgramName;
+            //        var ProgramSdate = d.d.results[arrConfigK].ProgramStartDate;
+            //        var ProgramEdate = d.d.results[arrConfigK].ProgramEndDate;
+            //        var ProgramCreatedDate = d.d.results[arrConfigK].CreatedDateCal;
+            //        var ActivityID = d.d.results[arrConfigK].ID;
+            //        $("#tblCompletedProgram").append("<tr><td>" + ProgramName + "</td><td>" + ProgramSdate + "</td><td>" + ProgramEdate + "</td><td>" + ProgramCreatedDate + "</td></tr>");
+            //        k++;
+            //    }
+            //}
+            $('[data-View]').click(function () {
+                ProgramName = $(this).data('val');
+                $('#myProgramActivities').modal('show');
+                $('#txtProgramName').val('');
+                $('#txtProgramLocation').val('');
+                $('#txtProgramEndDate').val('');
+                $('#txtProgramStartDate').val('');
+                $.ajax({
+                    async: false,
+                    url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('NewInductionProgram')/items?filter=ProgramName eq %27" + ProgramName + "%27",
+                    type: "GET",
+                    headers: {
+                        "accept": "application/json;odata=verbose",
+                        "content-type": "application/json;odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                    },
+                    success: function (d) {
+                        var arr = [];
+                        i = 0;
+                        $.each(d.d.results, function (index, results) {
+                            if (results.Status == "Active" && results.ProgramName == ProgramName) {
+                                arr[i++] = index;
+                            }
+                        });
+                        $("#tblProgramActvitiesBind").empty();
+                        for (var k = 0; k < arr.length; k++) {
+                            var arrConfigK = arr[k];
+
+                            $('#txtProgramName').val(d.d.results[arrConfigK].ProgramName);
+                            $('#txtProgramStartDate').val(d.d.results[arrConfigK].ProgramStartDate);
+                            $('#txtProgramEndDate').val(d.d.results[arrConfigK].ProgramEndDate);
+                            $('#txtProgramLocation').val(d.d.results[arrConfigK].ProgramLocation);
+
+
+                            var ActivityName = d.d.results[arrConfigK].ActivityName;
+                            var Duration = d.d.results[arrConfigK].ActivityDuration;
+                            var StartDate = d.d.results[arrConfigK].ActivityStartDate;
+                            var EndDate = d.d.results[arrConfigK].ActivityEndDate;
+                            $("#tblProgramActvitiesBind").append("<tr><td>" + ActivityName + "</td><td>" + Duration + "</td><td id='actStartDate'>" + StartDate + "</td><td id='actEndDate'>" + EndDate + "</td></tr>");
+                        }
+                    },
+                    error: function () { console.log('fail'); }
+                });
+
+            });
+
+        },
+        error: function () { console.log('fail'); }
+    });
+</script>
+
+<script type='text/javascript'>
+ 
+$(function () {
+    // Selectors for future use
+    var myTable = "#tableCompletedProgram";
+    var myTableBody = myTable + " tbody";
+    var myTableRows = myTableBody + " tr";
+    var myTableColumn = myTable + " th";
+ 
+    // Starting table state
+    function initTable() {
+        $(myTableBody).attr("data-pageSize", 4);
+        $(myTableBody).attr("data-firstRecord", 0);
+        $('#previous').hide();
+        $('#next').show();
+ 
+        // Increment the table width for sort icon support
+       
+ 
+        // Start the pagination
+        paginate(parseInt($(myTableBody).attr("data-firstRecord"), 10),
+                 parseInt($(myTableBody).attr("data-pageSize"), 10));
+    }
+ 
+ 
+    // Table sorting function
+    function sortTable(table, column, order) {
+         
+    }
+ 
+    // Heading click
+    $(myTableColumn).click(function () {
+       
+        // Start the pagination
+        paginate(parseInt($(myTableBody).attr("data-firstRecord"), 10),
+                 parseInt($(myTableBody).attr("data-pageSize"), 10));
+    });
+ 
+    // Pager click
+    $("a.paginate").click(function (e) {
+        e.preventDefault();
+        var tableRows = $(myTableRows);
+        var tmpRec = parseInt($(myTableBody).attr("data-firstRecord"), 10);
+        var pageSize = parseInt($(myTableBody).attr("data-pageSize"), 10);
+ 
+        // Define the new first record
+        if ($(this).attr("id") == "next") {
+            tmpRec += pageSize;
+        } else {
+            tmpRec -= pageSize;
+        }
+        // The first record is < of 0 or > of total rows
+        if (tmpRec < 0 || tmpRec > tableRows.length) return
+ 
+        $(myTableBody).attr("data-firstRecord", tmpRec);
+        paginate(tmpRec, pageSize);
+    });
+ 
+    // Paging function
+    var paginate = function (start, size) {
+        var tableRows = $(myTableRows);
+        var end = start + size;
+        // Hide all the rows
+        tableRows.hide();
+        // Show a reduced set of rows using a range of indices.
+        tableRows.slice(start, end).show();
+        // Show the pager
+        $(".paginate").show();
+        // If the first row is visible hide prev
+        if (tableRows.eq(0).is(":visible")) $('#previous').hide();
+        // If the last row is visible hide next 
+        if (tableRows.eq(tableRows.length - 1).is(":visible")) $('#next').hide();
+    }
+ 
+    // Table starting state
+    initTable();
+ 
+ 
+});
+
+</script>
+
+ <style type="text/css">
+        table {
+            width:  100%;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid black;
+        }
+        .scrollingTable {
+            width: 74em;
+            overflow-y: auto;
+        }
+    </style>
+    
+    <script type="text/javascript">
+        function makeTableScroll() {
+            // Constant retrieved from server-side via JSP
+            var maxRows = 20;
+
+            var table = document.getElementById('tableCompletedProgram');
+            var wrapper = table.parentNode;
+            var rowsInTable = table.rows.length;
+            var height = 0;
+            if (rowsInTable > maxRows) {
+                for (var i = 0; i < maxRows; i++) {
+                    height += table.rows[i].clientHeight;
+                }
+                wrapper.style.height = height + "px";
+            }
+        }
+    </script>

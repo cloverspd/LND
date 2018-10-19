@@ -1,0 +1,360 @@
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<div class="col-md-12">
+
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1>
+            Programs Feedback Analytics
+        </h1>
+    </div>
+    <div class="col-md-12 margin-top-15">
+        <label>
+            Program Name
+        </label>
+        <div id="ddlProgramName">
+        </div>
+    </div>
+    <div class="col-md-12 margin-top-15 padding-0">
+        <div class="col-md-4">
+            <label>
+                Program Start Date
+            </label>
+            <input type="text" id="txtProgramStartDate" class="form-control" readonly="readonly" />
+        </div>
+        <div class="col-md-4">
+            <label>
+                Program End Date
+            </label>
+            <input type="text" id="txtProgramEndDate" class="form-control" readonly="readonly" />
+        </div>
+        <div class="col-md-4">
+            <label>
+                Program Location
+            </label>
+            <input id="txtProgramLocation" class="form-control" readonly="readonly" />
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div id="divBindCharts">
+
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        PopulateProgramDropDown();
+    });
+
+    function PopulateProgramDropDown() {
+        var listName = "NewInductionProgram";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+        var UserEmail = LoginUserEmail();
+        getProgram(listName, url, function (data) {
+            var items = data.d.results;
+            var programBind = GroupByProgramData(items, 'ProgramName');
+            var inputElement = '<select id="ProgramNameDynDropDown" class="form-control"><option  value="">Select</option>';
+            // Add all the new items
+            for (var i = 0; i < programBind.length; i++) {
+                var itemId = programBind[i],
+                    itemVal = programBind[i];
+                inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+
+            }
+            inputElement += '</select>';
+
+            $('#ddlProgramName').append(inputElement);
+
+            $("#ProgramNameDynDropDown").each(function () {
+                $('option', this).each(function () {
+
+                    if ($(this).text() == 'Select') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+            $('#ProgramNameDynDropDown').on('change', function () {
+                var selectedProgramName = $(this).val();
+                $('#divBindCharts').empty(); getProgramLocation(selectedProgramName);
+                GetDayWiseSpeakerDetails(selectedProgramName);
+            });
+
+        }, function (data) {
+            alert("An error occured while getting ConfigParameters. Please try again");
+        });
+    }
+    function getProgram(listName, siteurl, success, failure) {
+        $.ajax({
+            url: siteurl + "/_api/web/lists/getbytitle('" + listName + "')/items",
+
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+    function GroupByProgramData(items, propertyName) {
+        var result = [];
+        $.each(items, function (index, item) {
+            if ($.inArray(item[propertyName], result) == -1) {
+                result.push(item[propertyName]);
+            }
+        });
+        return result;
+    }
+</script>
+
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+
+</script>
+
+<script>
+    function getProgramLocation(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramStatus%20eq%20%27Completed%27and%20ProgramName%20eq%20%27" + selectedProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        var PgrmLocation = d.d.results[arrK].ProgramLocation;
+                        var PgrmStartDate = d.d.results[arrK].ProgramStartDate;
+                        var PgrmEndDate = d.d.results[arrK].ProgramEndDate;
+                        $("#txtProgramLocation").val(PgrmLocation);
+                        $("#txtProgramStartDate").val(PgrmStartDate);
+                        $("#txtProgramEndDate").val(PgrmEndDate);
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+    var arrDayWiseUnique = []; var arrSpeakerWiseUnique = [];
+    function GetDayWiseSpeakerDetails(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('FeedBackTransactionDetails')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27&$orderby=Sequnce asc";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                arrDayWiseUniqueNames = $.unique(d.d.results.map(function (d) {
+                    return d.ActivityDay;
+                }));
+                arrSpeakerWiseUnique = $.unique(d.d.results.map(function (d) {
+                    return d.SpeakerName;
+                }));
+            },
+            error: function () { console.log('fail'); }
+        });
+        $('#container').html('');
+        if (arrDayWiseUniqueNames.length > 0) {
+            var count = 0;
+            for (var j = 0; j < arrDayWiseUniqueNames.length; j++) {
+                var DayWise = arrDayWiseUniqueNames[j];
+                if (arrSpeakerWiseUnique.length > 0) {
+                    for (var k = 0; k < arrSpeakerWiseUnique.length; k++) {
+                        count = count + 1;
+                        var SpeakerWise = arrSpeakerWiseUnique[k];
+                        CountContentRelevance = GetContentRelevanceCount(SpeakerWise, selectedProgramName, DayWise);
+                        console.log(CountContentRelevance);
+                        var iSatCanDobetter; var iSatSatisfactory; var iSatGood; var iSatExcellent;
+                        var iCntCanDobetter; var iCntSatisfactory; var iCntGood; var iCntExcellent;
+                        var IsExists = GetExistsUser(SpeakerWise, selectedProgramName, DayWise);
+                        if (IsExists == true) {
+                            if (CountContentRelevance.length > 0) {
+                                for (var i = 0; i < CountContentRelevance.length; i++) {
+
+                                    // Querstion 1 Content relavacne
+                                    iCntCanDobetter = CountContentRelevance[i].arrContentCanDoBetter;
+                                    iCntSatisfactory = CountContentRelevance[i].arrContentSatisfactory;
+                                    iCntGood = CountContentRelevance[i].arrContentGood;
+                                    iCntExcellent = CountContentRelevance[i].arrContentExcellent;
+
+                                    // Querstion 1 Speaker ability
+                                    iSatCanDobetter = CountContentRelevance[i].arrSpeakerCanDoBetter;
+                                    iSatSatisfactory = CountContentRelevance[i].arrSpeakerSatisfactory;
+                                    iSatGood = CountContentRelevance[i].arrSpeakertGood;
+                                    iSatExcellent = CountContentRelevance[i].arrSpeakerExcellent;
+                                }
+                            }
+                            $('#divBindCharts').append("<div class='col-md-6'><div><h3 style='color: #ababab;'>" + DayWise + "</h3></div><div id='container" + (count) + "' style='min-width:310px;height:400px;margin:0 auto;'></div></div>");
+                            GetAnalytics((count), SpeakerWise, iCntCanDobetter, iCntSatisfactory, iCntGood, iCntExcellent,
+                            iSatCanDobetter, iSatSatisfactory, iSatGood, iSatExcellent);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    var Charts;
+    function GetAnalytics(k, SpeakerWise, iCntCanDobetter, iCntSatisfactory, iCntGood, iCntExcellent,
+                    iSatCanDobetter, iSatSatisfactory, iSatGood, iSatExcellent) {
+        Charts = Highcharts.chart('container' + k, {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: SpeakerWise
+            },
+            xAxis: {
+                categories: ['Can Do Better', 'Satisfactory', 'Good', 'Excellent']
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total Rating For Questions'
+                }
+            },
+            tooltip: {
+                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                shared: true
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'percent'
+                }
+            },
+            series: [{
+                name: 'Content/Presentation (relevance, adherence to timeline)',
+                data: [iCntCanDobetter, iCntSatisfactory, iCntGood, iCntExcellent]
+            }, {
+                name: 'Speakers ability to engage, share knowledge & respond to questions',
+                data: [iSatCanDobetter, iSatSatisfactory, iSatGood, iSatExcellent]
+            }]
+        });
+    }
+    //Content Relevance
+    var arrContentCanDoBetter = 0;
+    var arrContentSatisfactory = 0;
+    var arrContentGood = 0;
+    var arrContentExcellent = 0;
+    var arrSpeakerCanDoBetter = 0;
+    var arrSpeakerSatisfactory = 0;
+    var arrSpeakertGood = 0;
+    var arrSpeakerExcellent = 0;
+    var arrContentRelevance = 0;
+    //var arrCountSpeakerAbility = [];
+    function GetContentRelevanceCount(SpeakerWise, selectedProgramName, DayWise) {
+        arrContentRelevance = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('FeedBackTransactionDetails')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27 and SpeakerName eq %27" + SpeakerWise + "%27 and ActivityDay eq %27" + DayWise + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                arrContentCanDoBetter = 0;
+                arrContentSatisfactory = 0;
+                arrContentGood = 0;
+                arrContentExcellent = 0;
+                arrSpeakerCanDoBetter = 0;
+                arrSpeakerSatisfactory = 0;
+                arrSpeakertGood = 0; arrSpeakerExcellent = 0
+                $.each(d.d.results, function (index, results) {
+                    if (results.ContentRelevance == "Can Do Better") {
+                        arrContentCanDoBetter = arrContentCanDoBetter + 1;
+                    }
+                    if (results.ContentRelevance == "Satisfactory") {
+                        arrContentSatisfactory = arrContentSatisfactory + 1;
+                    }
+                    if (results.ContentRelevance == "Good") {
+                        arrContentGood = arrContentGood + 1;
+                    }
+                    if (results.ContentRelevance == "Excellent") {
+                        arrContentExcellent = arrContentExcellent + 1;
+                    }
+
+                    if (results.SpeakerAbility == "Can Do Better") {
+                        arrSpeakerCanDoBetter = arrSpeakerCanDoBetter + 1;
+                    }
+                    if (results.SpeakerAbility == "Satisfactory") {
+                        arrSpeakerSatisfactory = arrSpeakerSatisfactory + 1;
+                    }
+                    if (results.SpeakerAbility == "Good") {
+                        arrSpeakertGood = arrSpeakertGood + 1;
+                    }
+                    if (results.SpeakerAbility == "Excellent") {
+                        arrSpeakerExcellent = arrSpeakerExcellent + 1;
+                    }
+                });
+                arrContentRelevance = [];
+                arrContentRelevance.push({
+                    arrContentCanDoBetter: arrContentCanDoBetter, arrContentSatisfactory: arrContentSatisfactory,
+                    arrContentGood: arrContentGood, arrContentExcellent: arrContentExcellent,
+                    arrSpeakerCanDoBetter: arrSpeakerCanDoBetter, arrSpeakerSatisfactory: arrSpeakerSatisfactory,
+                    arrSpeakertGood: arrSpeakertGood, arrSpeakerExcellent: arrSpeakerExcellent
+                });
+            },
+            error: function () { console.log('fail'); }
+        });
+        return arrContentRelevance;
+    }
+</script>
+<script>
+    function GetExistsUser(SpeakerWise, selectedProgramName, DayWise) {
+        var IsExists;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('FeedBackTransactionDetails')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27 and SpeakerName eq %27" + SpeakerWise + "%27 and ActivityDay eq %27" + DayWise + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    IsExists = true;
+                }
+                else {
+                    IsExists = false;
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return IsExists;
+    }
+</script>

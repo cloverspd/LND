@@ -1,0 +1,222 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+<div>
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important;;margin-left: 23px !Important;margin-right: 0px !Important;margin-top: 0px !Important; margin-bottom: 0px !Important;">
+            Manage Overall Feedback
+        </h1>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-12">
+                <label>
+                    Program Details
+                </label>
+            </div>
+            <div class="col-md-12">
+                <table id="tableActivity" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                SlNo
+                            </th>
+                            <th>
+                                Program Name
+                            </th>
+                            <th>
+                                Program Start Date
+                            </th>
+                            <th>
+                                Program End Date
+                            </th>
+                            <th>
+                                Speaker Name
+                            </th>
+                            <th width="20%" colspan="2">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblFeedBackSpeakerCurrent"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+
+</script>
+<script>
+    var CurrentUserEmail = LoginUserEmail();
+    jQuery.ajax({
+        url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('FeedbackSpeakerDetails')/items?filter=CreatedByUser eq %27" + CurrentUserEmail + "%27&$orderby=ID%20desc",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+        },
+        success: function (d) {
+            var arr = []; var arrSaveAsDrat = [];
+            i = 0; arrS = 0;
+            $.each(d.d.results, function (index, results) {
+                var ProgramEndDate = results.ProgramEndDate;
+                var ChkProgramEndDate = new Date(ProgramEndDate.split("/").reverse().join("-"));
+                var GetDate = new Date();
+                var ccDate = GetDate.setHours(0, 0, 0);
+                var Final = new Date(ccDate);
+              //  if (ChkProgramEndDate >= Final) {
+                    if (results.CreatedByUser == CurrentUserEmail) {
+                        if (results.Status == "Active" || results.Status == "SaveAsDraft") {
+                            arr[i++] = index;
+                        }
+                    }
+               // }
+            });
+            var duplocateProgram = '';
+            var i = 1;
+            for (var j = 0; j < arr.length; j++) {
+                var arrConfigK = arr[j];
+                if (duplocateProgram != d.d.results[arrConfigK].ProgramName) {
+
+                    duplocateProgram = d.d.results[arrConfigK].ProgramName;
+
+                    var arrConfigK = arr[j];
+                    var index = parseInt(j + 1);
+
+                    var ProgramName = d.d.results[arrConfigK].ProgramName;
+                    var ProgramStartDate = d.d.results[arrConfigK].ProgramStartDate;
+                    var ProgramEndDate = d.d.results[arrConfigK].ProgramEndDate;
+                    var ProgramLocation = d.d.results[arrConfigK].ProgramLocation;
+                    var FacilitiesValue = d.d.results[arrConfigK].FacilitiesValue;
+                    var ProgramContentValue = d.d.results[arrConfigK].ProgramContentValue;
+                    var SpeakerID = d.d.results[arrConfigK].ID;
+                    var TasksActivitiesValue = d.d.results[arrConfigK].TasksActivitiesValue;
+                    var ProgramUtilityValue = d.d.results[arrConfigK].ProgramUtilityValue;
+                    var TrainerAbilityEncourage = d.d.results[arrConfigK].TrainerAbilityEncourage;
+                    var TrainerAbilityCommunicate = d.d.results[arrConfigK].TrainerAbilityCommunicate;
+                    var SpeakerName = d.d.results[arrConfigK].SpeakerName;
+                    var EmployeeName = d.d.results[arrConfigK].EmployeeName;
+                    $("#tblFeedBackSpeakerCurrent").append("<tr><td>" + index + "</td><td>" + ProgramName + "</td><td>" + ProgramStartDate + "</td><td >" + ProgramEndDate + "</td><td>" + SpeakerName + "</td><td width='10%'><a href='/sites/HR-TrainingManagementSystem/Pages/Manage-Feedback-Details.aspx?ProgramName=" + ProgramName + "'>Edit</a></td><td width='10%'><input type='button'  data-delete='popup-1'data-val='" + ProgramName + "' value='Delete'> </td></tr>");
+                    i++;
+                }
+            }
+            $('[data-delete]').on('click', function (e) {
+                var DeleteCheck = false;
+                var a = confirm("Do you want to permanently delete the program ?");
+                if (a == true) {
+                    DeleteCheck = true;
+                    a = true;
+                }
+                else {
+                    DeleteCheck = false;
+                    a = false;
+                }
+                if (DeleteCheck == true) {
+                    ProgramName = $(this).data('val');
+                    $.ajax({
+                        async: false,
+                        url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('FeedbackSpeakerDetails')/items?filter=ProgramName eq %27" + ProgramName + "%27",
+                        type: "GET",
+                        headers: {
+                            "accept": "application/json;odata=verbose",
+                            "content-type": "application/json;odata=verbose",
+                            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                        },
+                        success: function (d) {
+                            var arr = [];
+                            i = 0;
+                            $.each(d.d.results, function (index, results) {
+                                if (results.Status == "Active" || results.Status == "SaveAsDraft") {
+                                    if (results.ProgramName == ProgramName) {
+                                        arr[i++] = index;
+                                    }
+                                }
+                            });
+                            for (var k = 0; k < arr.length; k++) {
+                                var arrK = arr[k];
+                                var ProgramID = d.d.results[arrK].ID;
+                                DeleteDataOnID(ProgramID);
+                            }
+                            alert("Program deleted successfully!");
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            alert(JSON.stringify(error));
+                        },
+                    });
+                    function DeleteDataOnID(ProgramID) {
+                        var ProgramIDNew = ProgramID;
+                        $.ajax({
+                            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('FeedbackSpeakerDetails')/items(" + ProgramIDNew + ")",
+                            type: "POST",
+                            async: false,
+                            headers: {
+                                "ACCEPT": "application/json;odata=verbose",
+                                "content-type": "application/json;odata=verbose",
+                                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                                "IF-MATCH": "*",
+                                "X-HTTP-Method": "DELETE"
+                            },
+                            success: function (data) {
+                            },
+                            error: function (error) {
+                                alert(JSON.stringify(error));
+                            },
+                        });
+
+                    }
+                }
+            });
+        },
+        error: function () { console.log('fail'); }
+    });
+</script>
+

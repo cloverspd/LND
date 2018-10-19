@@ -1,0 +1,579 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/sites/Anugamdev/SiteAssets/AnugamStyles/css/main.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css" rel="stylesheet">
+
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" rel="stylesheet">
+
+<style>
+    .clear {
+        clear: both;
+    }
+
+    .opacity-0 {
+        opacity: 0;
+    }
+
+    .padding-0 {
+        padding: 0 !important;
+    }
+
+    .margin-0 {
+        margin: 0 !important;
+    }
+
+    .margin-top-0 {
+        margin-top: 0 !important;
+    }
+
+    .margin-bottom-0 {
+        margin-bottom: 0 !important;
+    }
+
+    .margin-top-5 {
+        margin-top: 5px !important;
+    }
+
+    .margin-top-10 {
+        margin-top: 10px !important;
+    }
+
+    .margin-top-15 {
+        margin-top: 15px !important;
+    }
+
+    .form-control-style-1 {
+        background-color: #d5ecd5 !important;
+        border: 1px solid #a9d4a9 !important;
+    }
+
+    .border-style-1 {
+        border: 1px solid #e3e3e3;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .requiredfieldsstyle {
+        padding-left: 15px !important;
+        font-size: 12px;
+        font-style: italic;
+    }
+</style>
+<div>
+
+    <div class="col-md-12">
+        <div class="col-md-12 margin-top-15 ">
+            <div class="col-md-6">
+                <label>Program Name</label>
+                <p class="form-control form-control-style-1"></p>
+            </div>
+            <div class="col-md-3">
+                <label>Start Day</label>
+                <p class="form-control form-control-style-1"></p>
+            </div>
+            <div class="col-md-3">
+                <label>End Day</label>
+                <p class="form-control form-control-style-1"></p>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="padding-0-xs margin-top-15" id="speakerdetialsbind">
+        </div>
+        <div class="well margin-top-15">
+            <div class="col-md-12 margin-top-15">
+                <label>What was the most useful part of the Training? Why?</label>
+            </div>
+            <div class="col-md-12 margin-top-15">
+                <div class="col-md-12 padding-0">
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+
+        <div class="well margin-top-15">
+            <div class="col-md-12 margin-top-15">
+                <label>Any features of the program that can be improved /anything you did not like?</label>
+            </div>
+            <div class="col-md-12 margin-top-15">
+                <div class="col-md-12 padding-0">
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="well margin-top-15">
+            <div class="col-md-12 margin-top-15">
+                <label>Your overall view of the program / Any Comment</label>
+            </div>
+            <div class="col-md-12 margin-top-15">
+                <div class="col-md-12 padding-0">
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+
+
+
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-2">
+                <button class="btn btn-success btn-block" id="btnSubmit">SUBMIT</button>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+<script>
+    var UserOffice = "";
+    var UserOfficeNew = "";
+    var EmailOfUser = "";
+    var ProgramName = "";
+    var UserLoginEmailId = "";
+    $.ajax({
+        async: false,
+        url: _spPageContextInfo.webServerRelativeUrl + "//_api/SP.UserProfiles.PeopleManager/GetMyProperties",
+        method: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose"
+        },
+        success: function (d) {
+            //UserOffice = d.d.Office;
+            UserOfficeNew = d.d.UserProfileProperties.results[60].Value;
+            UserOffice = d.d.UserProfileProperties.results[61].Value;
+            EmailOfUser = d.d.Email;
+            UserLoginEmailId = d.d.UserProfileProperties.results[19].Value.toUpperCase();
+        },
+        error: function (err) {
+            alert(JSON.stringify(err));
+        }
+    });
+    function getQueryStrings() {
+        var assoc = {};
+        var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+        var queryString = location.search.substring(1);
+        var keyValues = queryString.split('&');
+
+        for (var i in keyValues) {
+            var key = keyValues[i].split('=');
+            if (key.length > 1) {
+                assoc[decode(key[0])] = decode(key[1]);
+            }
+        }
+
+        return assoc;
+    }
+    var qs = getQueryStrings();
+    var ProgramID = qs["FeedbackID"];
+    var ActID = "";
+    var appWebUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
+
+    $.ajax({
+        async: false,
+        url: appWebUrl + "/_api/web/lists/getbytitle('EmailNotification')/items(" + ProgramID + ")",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "x-requestdigest": $("#__requestdigest").val(),
+        },
+        success: function (d) {
+            var UserWithoutDomain = EmailOfUser.substring(0, EmailOfUser.lastIndexOf("@"));
+            var res = UserWithoutDomain.toUpperCase();
+            var eMailID = d.d.EmployeeEmailId;
+            var EcodeUpper = eMailID.toUpperCase();
+
+            if (d.d.ID == ProgramID && d.d.OverAllFeedback != "Completed" && EcodeUpper == EmailOfUser.toUpperCase() || EcodeUpper == UserLoginEmailId) {
+                var ProgramName = d.d.ProgramName;
+                var ProgramEndDate = d.d.ProgramEndDate;
+                var ProgramStartDate = d.d.ProgramStartDate;
+                $("#ProgramNameBind").append(ProgramName);
+                $("#ProgramStartDate").val(ProgramStartDate);
+                $("#ProgramEndDate").val(ProgramEndDate);
+            }
+            if (d.d.ID == ProgramID && d.d.OverAllFeedback == "Completed") {
+                alert("Over All Feed Back Already Submitted");
+                window.location.href = "/sites/Anugamdev/Pages/PageNotFoundError.aspx";
+
+            }
+        },
+        error: function () { console.log('fail'); }
+    });
+    var activityID = []; iactivityID = 0; var arrSequnce = []; iarrSequnce = 0; var arrSaveActId = []; iarrSaveActId = 0;
+    var arractivityName = []; iarractivityName = 0; var activityUniID = []; iactivityUniID = 0;
+    if (ActID != "" && ActID != null && ProgramName != "" && ProgramName != null) {
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items?$filter=DayWise eq %27" + ActID + "%27and%20FeedBackNeed%20eq%20%27Yes%27&$orderby=actSequence%20asc",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.Status == "Active" && results.ProgramName == ProgramName) {
+                        arr[i++] = index;
+                    }
+                });
+                for (var i = 0; i < arr.length; i++) {
+                    var arrKey = arr[i];
+                    activityID = d.d.results[arrKey].ActivityID;
+                    arractivityName[iarractivityName++] = d.d.results[arrKey].ActivityName;
+                    arrSaveActId[iarrSaveActId++] = d.d.results[arrKey].ActivityID;
+                    arrSequnce[iarrSequnce++] = d.d.results[arrKey].actSequence;
+                    activityUniID[iactivityUniID++] = d.d.results[arrKey].ID;
+                    var ProgramStartDate = d.d.results[0].ProgramStartDate;
+                    var ProgramStartDate = d.d.results[0].ProgramEndDate;
+                    $('#PSdate').val(ProgramStartDate);
+                    $('#PEdate').val(ProgramStartDate);
+
+                    var SpeakerOrder = i + 1;
+                    GetSpeakerDetailsBind(activityID, SpeakerOrder);
+                }
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+
+    }
+
+    var Sequence = ""; var arrSequence = [];
+    function GetSpeakerDetailsBind(activityID, SpeakerOrder) {
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('FeedBackDetails')/items?$filter=ActiviTyID eq %27" + activityID + "%27",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                var SpeakerName = d.d.results[0].NameOfTheSpeaker;
+                var SpeakerEmail = d.d.results[0].SpeakerEmail;
+                var EmployeeCode = d.d.results[0].EmployeeCode;
+                var SpeakerDepartment = d.d.results[0].SpeakerDepartment;
+                Sequence = d.d.results[0].Sequence;
+                $("#speakerdetialsbind").append('<div class="FormValidations well padding-0-xs SpeakerSeq-' + Sequence + '" id=' + Sequence + '>'
+        + '<div class="col-md-12 margin-top-15 padding-0">'
+            + '<div class="col-md-4"><label>Speaker Name</label><p class="form-control form-control-style-1" id=SpeakerName' + sequence + '>' + speakername + '</p></div>'
+            + '<div class="col-md-3" style="display:none"><label>Speaker Email</label><p class="form-control form-control-style-1" id=SpeakerEmail' + sequence + '>' + speakeremail + '</p></div><div class="col-md-3" style="display:none">'
+            + '<label>Speaker Ecode</label><p class="form-control form-control-style-1" id=SpeakerECode' + sequence + '>' + employeecode + '</p>'
+            + '</div><div class="col-md-4"><label> Speaker Department</label><p class="form-control form-control-style-1" id=SpeakerDept' + sequence + '>' + speakerdepartment + '</p></div></div>'
+        + '<div class="col-md-12 margin-top-15 padding-0"><div class="col-md-12"><div class="col-md-12 border-style-1"><div class="col-md-7"><label class="margin-bottom-0" id=' + Sequence + '>Q1 . Program Content</label></div>'
+                    + '<div class="col-md-5">'
+                        + '<div class="FormValidationsRadio col-md-12 padding-0 validationContent' + Sequence + '" id="validationContent' + Sequence + '">'
+                            + '<label class="radio-inline"><input type="radio" title="ProgramContent' + Sequence + ' " class="ProgramContent" name="ProgramContent' + Sequence + '" value="Average" id=' + Sequence + '>Average</label><label class="radio-inline">'
+                + '<input type="radio" class="ProgramContenthide" name="ProgramContent' + Sequence + '" value="Good" id=' + Sequence + '>Good'
+            + '</label><label class="radio-inline"><input type="radio" class="ProgramContenthide" name="ProgramContent' + Sequence + '" value="Very Good" id=' + Sequence + '>Very Good</label><label class="radio-inline">'
+                + '<input type="radio" class="ProgramContenthide" name="ProgramContent' + Sequence + '" value="Excellent" id=' + Sequence + '>Excellent</label></div></div></div></div>'
+        + '<div class="col-md-12">'
+        + '<div class=" col-md-12 margin-top-10  border-style-1">'
+         + '<div class="col-md-7"><label class="margin-bottom-0" id=' + Sequence + '>Q2 . Tasks / Activities Undertaken</label></div>'
+         + '<div class="col-md-5">'
+        + '<div class="FormValidationsRadio col-md-12 padding-0 validationContent' + Sequence + '" id="validationContent' + Sequence + '">'
+            + '<label class="radio-inline"><input type="radio" title="TasksActivities' + Sequence + ' " class="TasksActivities" name="TasksActivities' + Sequence + '" value="Average" id=' + Sequence + '>Average</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="TasksActivities' + Sequence + '" value="Good" id=' + Sequence + '>Good'
+            + '</label><label class="radio-inline"><input type="radio" class="contentDatahide" name="TasksActivities' + Sequence + '" value="Very Good" id=' + Sequence + '>Very Good</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="TasksActivities' + Sequence + '" value="Excellent" id=' + Sequence + '>Excellent'
+            + '</label></div></div></div></div>'
++ '<div class="col-md-12">'
++ '<div class=" col-md-12 margin-top-10  border-style-1">'
+    + '<div class="col-md-7"><label class="margin-bottom-0" id=' + Sequence + '>Q3 . Program Utility In Daily Aspects Of Life </label></div>'
+    + '<div class="col-md-5">'
+        + '<div class="FormValidationsRadio col-md-12 padding-0 validationContent' + Sequence + '" id="validationContent' + Sequence + '">'
+            + '<label class="radio-inline"><input type="radio" title="contentData' + Sequence + ' " class="contentData" name="ProgramUtility' + Sequence + '" value="Average" id=' + Sequence + '>Average</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="ProgramUtility' + Sequence + '" value="Good" id=' + Sequence + '>Good'
+            + '</label><label class="radio-inline"><input type="radio" class="contentDatahide" name="ProgramUtility' + Sequence + '" value="Very Good" id=' + Sequence + '>Very Good</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="ProgramUtility' + Sequence + '" value="Excellent" id=' + Sequence + '>Excellent'
+           + ' </label></div></div></div></div>'
++ '<div class="col-md-12">'
++ '<div class=" col-md-12 margin-top-10  border-style-1">'
+    + '<div class="col-md-7"><label class="margin-bottom-0" id=' + Sequence + '>Q4 . The Trainer’s Ability To Encourage Active Participation</label></div>'
+    + '<div class="col-md-5">'
+        + '<div class="FormValidationsRadio col-md-12 padding-0 validationContent' + Sequence + '" id="validationContent' + Sequence + '">'
+           + ' <label class="radio-inline"><input type="radio" title="TrainerAbilityEncourage' + Sequence + ' " class="TrainerAbilityEncourage" name="TrainerAbilityEncourage' + Sequence + '" value="Average" id=' + Sequence + '>Average</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="TrainerAbilityEncourage' + Sequence + '" value="Good" id=' + Sequence + '>Good'
+            + '</label><label class="radio-inline"><input type="radio" class="contentDatahide" name="TrainerAbilityEncourage' + Sequence + '" value="Very Good" id=' + Sequence + '>Very Good</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="TrainerAbilityEncourage' + Sequence + '" value="Excellent" id=' + Sequence + '>Excellent'
+            + '</label></div></div></div></div>'
++ '<div class="col-md-12">'
++ '<div class=" col-md-12 margin-top-10  border-style-1">'
+    + '<div class="col-md-7"><label class="margin-bottom-0" id=' + Sequence + '>Q5 . Trainer’s Ability To Communicate Techniques, Concepts & Ideas</label></div>'
+   + ' <div class="col-md-5">'
+        + '<div class="FormValidationsRadio col-md-12 padding-0 validationContent' + Sequence + '" id="validationContent' + Sequence + '">'
+           + ' <label class="radio-inline"><input type="radio" title="TrainerAbilityCommunicate' + Sequence + ' " class="TrainerAbilityCommunicate" name="TrainerAbilityCommunicate ' + Sequence + '" value="Average" id=' + Sequence + '>Average</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="TrainerAbilityCommunicate' + Sequence + '" value="Good" id=' + Sequence + '>Good'
+            + '</label><label class="radio-inline"><input type="radio" class="TrainerAbilityCommunicateDatahide" name="TrainerAbilityCommunicate' + Sequence + '" value="Very Good" id=' + Sequence + '>Very Good</label><label class="radio-inline">'
+                + '<input type="radio" class="contentDatahide" name="TrainerAbilityCommunicate' + Sequence + '" value="Excellent" id=' + Sequence + '>Excellent'
+           + ' </label></div></div></div></div></div><div class=" clear"></div></div>');
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+
+
+    $("#btnSubmit").click(function () {
+        $('#divErrorMessage').css('color', '');
+        $('#divErrorMessage').empty();
+        var Couunt = 0;
+        var isvalid = true;
+        var names = []
+        $('input:radio').each(function () {
+            var rname = $(this).attr('name');
+            if ($.inArray(rname, names) == -1) names.push(rname);
+        });
+        var radioError = true;
+        $.each(names, function (i, name) {
+            var seq = name[name.length - 1];
+            var NameOfRadioButton = '';
+            if ($('input[name="' + name + '"]:checked').length == 0) {
+                radioError = false;
+                NameOfRadioButton = name.substring(0, name.length - 1);
+                if (NameOfRadioButton == 'ContentRelevance') {
+                    $("#divErrorMessage").empty();
+                    $('#divErrorMessage').css('color', 'red');
+                    $('#divErrorMessage').append("Highlighted fields are mandatory");
+                    $('.validationContent' + seq + '').css({ "border": "1px solid red" });
+                }
+                if (NameOfRadioButton == 'SpeakerAbility') {
+                    $("#divErrorMessage").empty();
+                    $('#divErrorMessage').css('color', 'red');
+                    $('#divErrorMessage').append("Highlighted fields are mandatory");
+                    $('.validationSpeaker' + seq + '').css({ "border": "1px solid red" });
+                }
+            }
+            else {
+                if (NameOfRadioButton == 'ContentRelevance') {
+                    $("#divErrorMessage").empty();
+                    $('#divErrorMessage').css('color', '');
+                    $('.validationContent' + seq + '').css({ "border": "" });
+                }
+                if (NameOfRadioButton == 'SpeakerAbility') {
+                    $("#divErrorMessage").empty();
+                    $('#divErrorMessage').css('color', '');
+                    $('.validationSpeaker' + seq + '').css({ "border": "" });
+                }
+            }
+        });
+        if (Couunt == 0 && radioError == true) {
+            if (arrSequnce.length > 0 && arrSaveActId.length > 0 && activityUniID.length > 0) {
+                for (var i = 0; i < arrSequnce.length; i++) {
+                    var ActUinqueID = activityUniID[i];
+                    var actID = arrSaveActId[i];
+                    var actName = arractivityName[i];
+                    var SeqId = arrSequnce[i];
+                    var SpeakerAbility = $('input[type=radio][name=SpeakerAbility' + SeqId + ']:checked').attr('id');
+                    var ContentRelevance = $('input[type=radio][name=ContentRelevance' + SeqId + ']:checked').attr('id');
+                    var SpekerAbValue = $('input[type=radio][name=SpeakerAbility' + SeqId + ']:checked').val();
+                    var ContentRel = $('input[type=radio][name=ContentRelevance' + SeqId + ']:checked').val();
+                    var Candobetter = $('#txtCanDoBetter' + SeqId + '').val();
+                    if (SpeakerAbility == SeqId.toString()) {
+                        var SpeakerName = ""; var SpeakerEmail = ""; var EmployeeCode = ""; var SpeakerDepartment = ""; var SpeakerName = "";
+                        $.ajax({
+                            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('FeedBackDetails')/items?$filter=ActiviTyID eq %27" + actID + "%27",
+                            type: "GET",
+                            async: false,
+                            headers: {
+                                "accept": "application/json;odata=verbose",
+                                "content-type": "application/json;odata=verbose",
+                                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                            },
+                            success: function (d) {
+                                SpeakerName = d.d.results[0].NameOfTheSpeaker;
+                                SpeakerEmail = d.d.results[0].SpeakerEmail;
+                                SpeakerECode = d.d.results[0].EmployeeCode;
+                                SpeakerDepartment = d.d.results[0].SpeakerDepartment;
+                            },
+                            error: function () { console.log('fail'); }
+                        });
+                        InsertFeedBack(actID, actName, arrSequnce, SpekerAbValue, ContentRel, SpeakerName, SpeakerEmail, SpeakerECode, SpeakerDepartment, Candobetter, ActUinqueID);
+                    }
+                }
+            }
+            var actDayDate = $('#ProgramActSDateBind').val();
+            var EmpCode = $('#EmployeeECode').val();
+            var actDate = $('#ProgramActSDateBind').val();
+            var getUserUniqueID = GetMisReportUserUniqueID(actDayDate, EmpCode, ProgramName);
+            if (getUserUniqueID != '' && getUserUniqueID != null) {
+                UpdateMisReportUserDetails(getUserUniqueID);
+            }
+            var qs = getQueryStrings();
+            var ProgramID = qs["InvitatioD"];
+            EmailDetailUpdate(ProgramID);
+        }
+    });
+    var FeedBackUniqueID = ""; var BaseLocation = ""; var Department = "";
+
+    var ProgramName; var ProgramInvitationID; var empCode; var EmployeeName; var EmpLocation;
+    if (ProgramName != "" && ProgramName != null) {
+        var qs = getQueryStrings();
+        var ProgramID = qs["InvitatioD"];
+        function InsertFeedBack(actID, actName, arrSequnce, SpekerAbValue, ContentRel, SpeakerName, SpeakerEmail, SpeakerECode, SpeakerDepartment, Candobetter, ActUinqueID) {
+            var EmployeeName = $('#EmployeeName').val();
+            var EmployeeECode = $('#EmployeeECode').val();;
+            var EmployeeBaseLocation = $('#EmployeeBaseLocation').val();;
+            var intSequnce = parseInt(arrSequnce);
+            var PgmSdate = $('#PSdate').val();;
+            var PgmEdate = $('#PEdate').val();;
+            var actStartDay = $('#ProgramActSDateBind').val();
+            var appWebUrl = _spPageContextInfo.webAbsoluteUrl;
+            if (ProgramID != "" && ProgramID != "null") {
+                $.ajax({
+                    async: false,
+                    url: appWebUrl + "/_api/web/lists/getbytitle('FeedBackTransactionDetails')/items",
+                    type: "POST",
+                    data: JSON.stringify({
+                        '__metadata': { 'type': 'SP.Data.FeedBackTransactionDetailsListItem' },
+                        'EmployeeCode': EmployeeECode,
+                        'EmployeeName': EmployeeName,
+                        'EmpLocation': EmployeeBaseLocation,
+                        'ProgramName': ProgramName,
+                        'ActivityID': actID,
+                        'ActivityName': actName,
+                        'SpeakerDepartment': SpeakerDepartment,
+                        'SpeakerName': SpeakerName,
+                        'SpeakerECode': SpeakerECode,
+                        'SpeakerEmail': SpeakerEmail,
+                        'Sequnce': intSequnce,
+                        'ActivityDay': actStartDay,
+                        'ContentRelevance': ContentRel,
+                        'SpeakerAbility': SpekerAbValue,
+                        'CanDoBetter': Candobetter,
+                        'Status': "Completed",
+                        'ProgramStartDate': PgmSdate,
+                        'ProgramEndDate': PgmEdate
+                    }),
+                    headers: {
+
+                        "Accept": "application/json;odata=verbose",
+                        "content-type": "application/json; odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                    },
+                    success: function (data) {
+                        if (ActUinqueID != "") {
+                            InductionProgramStatus(ActUinqueID);
+                        }
+                    },
+                    error: function (err) {
+                        alert("Error while adding item: " + JSON.stringify(err));
+                    }
+                });
+            }
+        }
+    }
+
+    function EmailDetailUpdate(RequestID) {
+        $.ajax({
+            url: _spPageContextInfo.webServerRelativeUrl + "/_api/web/lists/getbytitle('EmailNotification')/items(" + RequestID + ")",
+            type: "POST",
+            async: false,
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.EmailNotificationListItem' },
+                'FeedBackStatus': "Completed",
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                "X-HTTP-Method": "MERGE",
+                "If-Match": "*"
+            },
+            success: function (data) {
+                goToLink();
+                window.location.href = 'https://bajajelect.sharepoint.com/SitePages/Home.aspx';
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+    }
+    function InductionProgramStatus(actID) {
+        $.ajax({
+            url: _spPageContextInfo.webServerRelativeUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items(" + actID + ")",
+            type: "POST",
+            async: false,
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.NewInductionProgramListItem' },
+                'FeedBackStatus': "Completed",
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                "X-HTTP-Method": "MERGE",
+                "If-Match": "*"
+            },
+            success: function (data) {
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+    }
+    function GetMisReportUserUniqueID(actDayDate, EmpCode, ProgramName) {
+        var UniqueId = '';
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=Attendance eq 'Y' and EmpCode%20eq%20%27" + EmpCode + "%27and%20ProgramName%20eq%20%27" + ProgramName + "%27 and Day eq '" + actDayDate + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                UniqueId = d.d.results[0].ID;
+            },
+            error: function () { console.log('fail'); }
+        });
+        return UniqueId;
+    }
+    function UpdateMisReportUserDetails(getUserUniqueID) {
+        $.ajax({
+            url: _spPageContextInfo.webServerRelativeUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items(" + getUserUniqueID + ")",
+            type: "POST",
+            async: false,
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.MISReportForInvitiesListItem' },
+                'FeedBackStatus': "Completed",
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                "X-HTTP-Method": "MERGE",
+                "If-Match": "*"
+            },
+            success: function (data) {
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+    }
+</script>

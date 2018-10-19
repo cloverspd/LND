@@ -1,0 +1,1258 @@
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.flash.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.html5.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.print.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+
+
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/exportToExcelJS/jquery.table2excel.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/exportToExcelJS/jquery.battatech.excelexport.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+<style>
+    .errorBorder-color {
+        padding: 0px !important;
+        color: red;
+        font-size: 19px;
+        margin-left: 33px;
+    }
+
+    .margin-top-50 {
+        margin-top: 50px;
+    }
+
+    .dataTables_length {
+        position: absolute;
+        margin-top: -115px;
+    }
+
+    .dataTables_filter {
+        position: absolute;
+        margin-top: -115px;
+    }
+
+    .btn-success {
+        color: #fff;
+        background-color: #5cb85c !important;
+        border-color: #4cae4c !important;
+    }
+</style>
+
+
+<div>
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important;margin-left: 9px !Important;margin-right: 0px !Important;margin-top: 0px !Important; margin-bottom: 0px !Important;">
+            Program Tracker
+        </h1>
+    </div>
+    <div class="col-md-12 padding-0">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div id="divErrorMessage" class="errorBorder-color"></div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <label>
+                Program Name
+            </label>
+            <div id="ddlProgramName">
+            </div>
+        </div>
+        <div style="display:none;" class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>
+                    Program Start Date
+                </label>
+                <input type="text" id="txtProgramStartDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program End Date
+                </label>
+                <input type="text" id="txtProgramEndDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program Location
+                </label>
+                <input id="txtProgramLocation" class="form-control" readonly="readonly" />
+            </div>
+
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>
+                    Total No Of Invitees
+                </label>
+                <input type="text" id="txtTotalInvities" class="form-control" readonly="readonly" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 padding-0 margin-top-15">
+        <div class="col-md-4">
+            <label>
+                Employee Details
+            </label>
+        </div>
+        <div class="col-md-12 padding-0" id="divClearCotentMISReport" style="margin-top: -29px;">
+            <div class="col-md-12">
+                <table style="width: 100%;" id='tblFinalReport'>
+                    <tr>
+                        <td>
+                            <div>
+                                <table class="table table-striped table-bordered dt-responsive nowrap margin-bottom-0 margin-top-50 clearDataOnChange">
+                                    <thead>
+                                        <tr>
+                                            <th>Program Name</th>
+                                            <th>Program Dates</th>
+                                            <th>Program Location</th>
+                                            <th>Program Nominated</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyProgramDetails"></tbody>
+
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="divTotalProgramReport" style="width: 100%;">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <table class="table table-striped table-bordered dt-responsive nowrap margin-bottom-0 clearDataOnChange">
+                                    <thead>
+                                        <tr>
+                                            <th>Participants Invited</th>
+                                            <th>Campus Hires</th>
+                                            <th>Declined</th>
+                                            <th>Cancelled</th>
+                                            <th>Confirmed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyDailyUserDetails"></tbody>
+                                </table>
+                                <table style="display:none;" id="tbl_hide" class="table table-striped table-bordered dt-responsive nowrap margin-bottom-0 clearDataOnChange">
+                                    <tbody style="display:none;" id="tbodyDailyUsersAttendanceDetails"></tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-12 margin-top-15">
+            <label style="display:none">ABC</label>
+            <button type="button" id="btntotalProgramReport" class="btn btn-success" style="display:none;">Export All Employee</button>
+        </div>
+
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        PopulateProgramDropDown();
+    });
+
+    function PopulateProgramDropDown() {
+        var listName = "NewInductionProgram";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+        var UserEmail = LoginUserEmail();
+        getProgram(UserEmail, listName, url, function (data) {
+            var TodayDate = new Date();
+            var day = TodayDate.getDate();
+            var mm = TodayDate.getMonth() + 1;
+            var Year = TodayDate.getFullYear();
+            var items = data.d.results;
+            var pgmFinalData = []; var j = 0;
+            var arrPGM = [];
+            var arrPGMUnique = [];
+            for (var k = 0; k < items.length; k++) {
+                var ChkProgramEndDate = new Date(items[k].ProgramEndDate.split("/").reverse().join("-"));
+                if (new Date(items[k].ProgramEndDate.split("/").reverse().join("-")) <= TodayDate || ChkProgramEndDate.setHours(0, 0, 0, 0) >= TodayDate.setHours(0, 0, 0, 0)) {
+                    var NameProgram = items[k].ProgramName;
+                    if (pgmFinalData[j++] != NameProgram) {
+                        pgmFinalData[j++] = NameProgram;
+                    }
+                }
+            }
+            var uniqueProgramNames = '';
+            var result = [];
+            $.each(pgmFinalData, function (index, pgmFinalData) {
+                if ($.inArray(pgmFinalData, result) == -1) {
+                    result.push(pgmFinalData);
+                }
+            });
+            console.log(ChkProgramEndDate);
+            //var programBind = GroupByProgramData(pgmFinalData, 'ProgramName');
+            var inputElement = '<select id="ProgramNameDynDropDown" class="form-control"><option  value="">--Select Program--</option>';
+            // Add all the new items
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] != undefined) {
+                    var itemId = result[i],
+                        itemVal = result[i];
+                    inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+                }
+            }
+            inputElement += '</select>';
+            $('#ddlProgramName').append(inputElement);
+            $("#ProgramNameDynDropDown").each(function () {
+                $('option', this).each(function () {
+
+                    if ($(this).text() == '--Select Program--') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+            $('#ProgramNameDynDropDown').on('change', function () {
+                var selectedProgramName = $(this).val();
+                var UserEmailID = LoginUserEmail();
+                $("#divTotalProgramReport").empty();
+                $('.clearDataOnChange').find("tr:not(:first)").remove();
+                $.blockUI({ message: '<div style="font-size:20px">Please Wait...</div>', });
+               //$.blockUI({ message: '<img src="https://bajajelect.sharepoint.com/sites/AnugamDev/SiteAssets/AnugamStyles/img/Source.gif" style="width:50%;height:50%" />', });
+                setTimeout(function () {
+                    getProgramLocation(selectedProgramName);
+                    getTotlaUserEmployeeDetails(selectedProgramName);
+                    $.unblockUI({
+                        onUnblock: function () {
+                            console.log('');
+                        }
+                    });
+                }, 200);
+            });
+
+        }, function (data) {
+            alert("An error occured while getting ConfigParameters. Please try again");
+        });
+    }
+
+
+    function getProgram(UserEmail, listName, siteurl, success, failure) {
+        var TodayDate = new Date();
+        var day = TodayDate.getDate();
+        var mm = TodayDate.getMonth() + 1;
+        var Year = TodayDate.getFullYear();
+        var UrlOf = siteurl + "/_vti_bin/listdata.svc/NewInductionProgram";
+        var urlTest = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=CreatedByUser eq %27" + UserEmail + "%27 and Status eq 'Active'";
+        //$.ajax({
+        // url: siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=month(PgmEndDate)%20le%20"+mm+"%20and%20day(PgmEndDate)%20le%20"+day+"%20and%20year(PgmEndDate)%20le%20"+Year+"",
+        $.ajax({
+            url: urlTest,
+            //siteurl + "/_api/web/lists/getbytitle('" + listName + "')/items?$filter=CreatedByUser eq %27" + UserEmail + "%27",
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+    function GroupByProgramData(items, propertyName) {
+        var result = [];
+        $.each(items, function (index, item) {
+            if ($.inArray(item[propertyName], result) == -1) {
+                result.push(item[propertyName]);
+            }
+        });
+        return result;
+    }
+
+</script>
+<script>
+function groupBy(items,propertyName)
+{
+    var result = [];
+    $.each(items, function(index, item) {
+       if ($.inArray(item[propertyName], result)==-1) {
+          result.push(item[propertyName]);
+       }
+    });
+    return result;
+}
+</script>
+
+<script>
+    function getTotlaUserEmployeeDetails(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName eq '" + selectedProgramName + "' and Confirmation ne %27Yes%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (data) {
+                //if (data.d.results.length > 0) {
+                    //construct HTML Table from the JSON Data
+                    try {
+                        $('#divTotalProgramReport').append(GenerateTableFromJson(data.d.results));
+                        //Bind the HTML data with Jquery DataTable
+                        var oTable = $('#tblTotlaNoEmployees').dataTable({
+                            "iDisplayLength": 10,
+                            "aLengthMenu": [
+                            [10, 20, 50, 100],
+                            [10, 20, 50, 100]
+                            ],
+                            "sPaginationType": "full_numbers"
+                        });
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+               // } else {
+              //      $('#btntotalProgramReport').hide();
+                    //$("#divTotalProgramReport").empty();
+             //       $('#divTotalProgramReport').append("<span>No Records Found.</span>");
+              //  }
+            },
+            error: function (data) {
+                $('#divTotalProgramReport').append("<span>Error Retreiving Records. Error : " + JSON.stringify(data) + "</span>");
+            }
+        });
+        function GenerateTableFromJson(objArray) {
+            $('tbodyProgramDetails').empty();
+            var ProgramSDate = $('#txtProgramStartDate').val();
+            var ProgramEDate = $('#txtProgramEndDate').val();
+            var ProgramLocation = $('#txtProgramLocation').val();
+            var NomintedProgram = getNominatedProgram(selectedProgramName);
+            if (ProgramSDate != '') {
+                $('#tbodyProgramDetails').append('<tr><td>' + selectedProgramName + '</td><td>From ' + ProgramSDate + ' To ' + ProgramEDate + ' </td><td>' + ProgramLocation + '</td><td>' + NomintedProgram + '</td></tr>');
+            }
+            var ParticipantsInvited = getParticipantsInvited(selectedProgramName);
+            var CampusHires = getCampusHires(selectedProgramName);
+            var Declined = getDeclined(selectedProgramName);
+            var Cancelled = getCancelled(selectedProgramName);
+            var Confirmed = getConfirmed(selectedProgramName);
+
+            var taskNames = GetMISEmpDetails(selectedProgramName);
+            console.log(taskNames);
+            var MISReportEmployees = groupBy(taskNames,'Day');
+            
+            var MISDupEmpRemv  = groupBy(taskNames,'EmpCode');
+            console.log(MISDupEmpRemv);
+            
+            var tableContent1='';
+            if(MISReportEmployees.length > 0)
+            {
+                
+                for (var j1 = 0; j1 < MISReportEmployees.length; j1++)
+                {
+                    tableContent1 +=  '<td>' + MISReportEmployees[j1] + '</td>';
+                }
+            }
+
+            $('#tbodyDailyUserDetails').append('<tr><td>' + ParticipantsInvited + '</td><td>' + CampusHires + '</td><td>' + Declined + '</td><td>' + Cancelled + '</td><td>' + Confirmed + '</td></tr>');
+
+            var tableContent = '<table id="tblTotlaNoEmployees" style="width:100%" class="table table-striped table-bordered dt-responsive nowrap">'
+                + '<thead><tr>' + '<td>Slno</td>' + '<td>Employee Name</td>' + '<td>Employee Code</td>' + '<td>Campus Hiree (Y/N)</td>' + '<td>Base Location</td>' + '<td>Invited</td>' //+ "<td 'style=display: none;'>Declined</td>"
+                + '<td>Cancelled</td>' + '<td>Confirmed</td>' + tableContent1 + '<td>Activity Feedback Provided</td>' + '<td>Overall Feedback Provided</td>' +  '<td>Reasons</td>' + '</tr></thead><tbody>';
+            $("#txtTotalInvities").empty();
+            var count = objArray.length;
+            $("#txtTotalInvities").val(ParticipantsInvited);
+            $('#btntotalProgramReport').show();
+            //var MISReportEmployees = GetMISEmpDetails(selectedProgramName);
+            //var taskNames = GetMISEmpDetails(selectedProgramName);
+            //var MISReportEmployees = groupBy(taskNames,'Day');
+            tableContent += '<tr>';
+            var slno = 0;
+            if (objArray.length > 0) {
+                for (var i = 0; i < objArray.length; i++) {
+                    if (objArray[i].Status == 'Active' &&
+                        objArray[i].ProgramStatus == null && objArray[i].Confirmation == null) {
+                        slno = slno + 1;
+                        tableContent += '<td>' + slno + '</td>';
+                        tableContent += '<td>' + objArray[i].EmployeeName + '</td>';
+                        tableContent += '<td>' + objArray[i].EmployeeCode + '</td>';
+                        if (objArray[i].EmployeeType == 'Yes') {
+                            tableContent += "<td>Y</td>";
+                        }
+                        else {
+                            tableContent += "<td>N</td>";
+                        }
+                        var UserBaseLocation = GetUserBaseLocation(objArray[i].EmployeeEmailId);
+                        if (UserBaseLocation != '') {
+                            tableContent += '<td>' + UserBaseLocation + '</td>';
+                        }
+                        else {
+                            tableContent += "<td>Y</td>";
+                        }
+                        tableContent += "<td style='background-color: #52cc5c;color: #1d7d25;'>Y</td>";
+                        /*if (objArray[i].Confirmation == 'No' && objArray[i].ProgramStatus == 'Completed') {
+                            tableContent += "<td style='background-color: #ffc800;color: #8e6f00;display: none;'>NA</td>";
+                        }
+                        else {
+                            tableContent += "<td style='background-color: #ffc800;color: #8e6f00;display: none;'>NA</td>";
+                        }*/
+                        if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'Yes' && objArray[i].CanceledDate != '' && objArray[i].CanceledDate != null) {
+                            tableContent += "<td style='background-color: #ffc800;color: #8e6f00;'>NA</td>";
+                        }
+                        else {
+                            tableContent += "<td style='background-color: #ffc800;color: #8e6f00;'>NA</td>";
+                        }
+                        if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'Yes') {
+                            tableContent += "<td style='background-color: #ffc800;color: #8e6f00;'>NA</td>";
+                        }
+                        else {
+                            tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>NA</td>";
+                        }
+                        tableContent += "<td>NA</td>";
+                        
+                         if(MISReportEmployees.length > 0)
+                        {
+                            
+                            for (var j2 = 0; j2 < MISReportEmployees.length; j2++)
+                            {
+                                tableContent += "<td>NA</td>";
+                            }
+                        }
+                        
+                        
+                        
+                        tableContent += "<td>NA</td>";
+                        tableContent += "<td>NA</td>";
+                       
+                        tableContent += '</tr>';
+                    }
+                    else if (objArray[i].Status == 'Active' && objArray[i].Confirmation == 'No' ||
+                        objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'Yes') {
+                        slno = slno + 1;
+                        tableContent += '<td>' + slno + '</td>';
+                        tableContent += '<td>' + objArray[i].EmployeeName + '</td>';
+                        tableContent += '<td>' + objArray[i].EmployeeCode + '</td>';
+                        if (objArray[i].EmployeeType == 'Yes') {
+                            tableContent += "<td>Y</td>";
+                            var UserBaseLocation = GetUserBaseLocation(objArray[i].EmployeeEmailId);
+                            if (UserBaseLocation != '') {
+                                tableContent += '<td>' + UserBaseLocation + '</td>';
+                            }
+                            else {
+                                tableContent += "<td>NA</td>";
+                            }
+                            tableContent += "<td style='background-color: #52cc5c;color: #1d7d25;'>Y</td>";
+                           /* if (objArray[i].Confirmation == 'No' && objArray[i].ProgramStatus == 'Completed') {
+                                tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;display: none;'>Y</td>";
+                            }
+                            else {
+                                tableContent += "<td style='background-color: #ffc800;color: #8e6f00;display: none;'>NA</td>";
+                            }*/
+                            if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'Yes' && objArray[i].CanceledDate != '' && objArray[i].CanceledDate != null) {
+                                tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>Y</td>";
+                            }
+                            else if(objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'No') {
+                                tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>Y</td>";
+                            }
+                            else{
+                            tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>N</td>";
+                            }
+                            if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'Yes') {
+                                tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>Y</td>";
+                            }
+                            else {
+                                tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>N</td>";
+                            }
+                            tableContent += "<td >N</td>";
+
+                            if(MISReportEmployees.length > 0)
+                            {
+                                
+                                for (var j3 = 0; j3 < MISReportEmployees.length; j3++)
+                                {
+                                    tableContent += "<td>N</td>";
+                                }
+                            }
+                        
+                            
+                            tableContent += "<td>NA</td>";
+
+                            
+                            if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'No' && objArray[i].Reasons != '' && objArray[i].CanceledDate == null) {
+                                tableContent += '<td>' + objArray[i].Reasons + '</td>';
+                            }
+                            else {
+                                if (objArray[i].ReasonforCancelation != null) {
+                                    tableContent += '<td>' + objArray[i].ReasonforCancelation + '</td>';
+                                } else {
+                                    tableContent += '<td>NA</td>';
+                                }
+                            }
+                            tableContent += '</tr>';
+                        }
+                        else {
+                            tableContent += '<td>N</td>';
+                            var UserBaseLocation = GetUserBaseLocation(objArray[i].EmployeeEmailId);
+                            if (UserBaseLocation != '') {
+                                tableContent += '<td>' + UserBaseLocation + '</td>';
+                            }
+                            else {
+                                tableContent += '<td>NA</td>';
+                            }
+                            tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>Y</td>";
+                            /*if (objArray[i].Confirmation == 'No' && objArray[i].ProgramStatus == 'Completed') {
+                                tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;display: none;'>Y</td>";
+                            }
+                            else {
+                                tableContent += "<td style='background-color: #dc5d51;color: #802d25;display: none;'>N</td>";
+                            }*/
+                            if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'Yes' && objArray[i].CanceledDate != '' && objArray[i].CanceledDate != null) {
+                                tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>Y</td>";
+                            }
+                            else if(objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'No') {
+                                tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>Y</td>";
+                            }
+                            else{
+                            tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>N</td>";
+                            }
+                            if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'Yes') {
+                                tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>Y</td>";
+                            }
+                            else {
+                                tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>N</td>";
+                            }
+                            tableContent += '<td>N</td>';
+
+                            if(MISReportEmployees.length > 0)
+                            {
+                                
+                                for (var j4 = 0; j4 < MISReportEmployees.length; j4++)
+                                {
+                                    tableContent += "<td>N</td>";
+                                }
+                            }
+
+							tableContent += "<td>NA</td>";
+
+                            
+                            if (objArray[i].ProgramStatus == 'Completed' && objArray[i].Confirmation == 'No' && objArray[i].Reasons != '' && objArray[i].CanceledDate == null) {
+                            if(objArray[i].Reasons != null){
+                                tableContent += '<td>' + objArray[i].Reasons + '</td>';
+                                }
+                                else
+                                {
+                                tableContent += '<td>NA</td>';
+                                }
+                                
+                            }
+                            else {
+                                if (objArray[i].ReasonforCancelation != null) {
+                                    tableContent += '<td>' + objArray[i].ReasonforCancelation + '</td>';
+                                } else {
+                                    tableContent += '<td>NA</td>';
+                                }
+                            }
+                            tableContent += '</tr>';
+                        }
+                    }
+                }
+            }
+            if (MISDupEmpRemv.length > 0) {
+                for (var j9 = 0; j9 < MISDupEmpRemv.length; j9++) {
+
+                    var MisRptParam = MISDupEmpRemv[j9];
+                    console.log(MisRptParam)
+
+                    var MisData = GetMISEmpDetails_1(MisRptParam,selectedProgramName);
+                    //var MisData_1 = GetMISEmpDetails_2(MisRptParam,selectedProgramName);
+                    //var empCODE=''
+                     
+ for (var j10 = 0; j10 < MisData.length; j10++) {
+
+                   // empCODE=
+                    slno = slno + 1;
+                    tableContent += '<td>' + slno + '</td>';
+                    tableContent += '<td>' + MisData[j10].EmployeeName + '</td>';
+                    tableContent += '<td>' + MisData[j10].EmpCode + '</td>';
+                    var EmPCd=MisData[j10].EmpCode;
+                    tableContent += '<td>' + MisData[j10].CompusHire + '</td>';
+                    if (MisData[j10].CompusHire == 'Y') {
+                        var UserBaseLocation1 = GetUserBaseLocation(MisData[j10].EmpEmailID);
+                        if (UserBaseLocation1 != '') {
+                            tableContent += '<td>' + UserBaseLocation1 + '</td>';
+                        }
+                        else {
+                            tableContent += '<td>NA</td>';
+                        }
+                        tableContent += "<td style='background-color: #ffc800;color: #8e6f00;'>NA</td>";
+                        /*tableContent += "<td style='background-color: #ffc800;color: #8e6f00;display: none;'>NA</td>";*/
+                        tableContent += "<td style='background-color: #ffc800;color: #8e6f00;'>NA</td>";
+                        tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>Y</td>";
+                        
+                        if(MISReportEmployees.length > 0)
+                            {
+                                
+                                
+                                for (var abc = 0; abc < MISReportEmployees.length; abc++)
+                                {
+                                   var MisRptParam_1 = MISReportEmployees[abc];
+                                   var mistest=GetMISEmpDetails_2(MisRptParam,selectedProgramName,MisRptParam_1)
+                                   
+                                   if(mistest.length > 0)
+                            {
+                             for (var abcd = 0; abcd < mistest.length; abcd++)
+                                {
+                                 if (mistest[abcd].Attendance == 'Y' && mistest[abcd].Day == MisRptParam_1) {
+                            tableContent += '<td>Y</td>';
+                        }
+                        else {
+                            tableContent += '<td>N</td>';
+                        }
+                                }
+                                }
+                                                 
+                             }
+                            }
+                            else
+                            {
+                            tableContent += '<td>NA</td>';
+                            }
+
+                        
+                        if (MisData[j10].FeedBackStatus == 'Completed') {
+                            tableContent += '<td>Y</td>';
+                        }
+                        else {
+                            tableContent += '<td>N</td>';
+                        }
+                       
+                        var OverallFeedback = GetOverAllFeedbck(EmPCd,selectedProgramName);
+							  if(OverallFeedback > 0)
+                            {
+                        
+                            tableContent += '<td>Y</td>';
+                        }
+                        else {
+                            tableContent += '<td>NA</td>';
+                        }
+                       
+
+
+                        
+						
+                        tableContent += '<td>NA</td>';
+                        tableContent += '</tr>';
+                    }
+                    else {
+                        var UserBaseLocation1 = GetUserBaseLocation(MisData[j10].EmpEmailID);
+                        if (UserBaseLocation1 != '') {
+                            tableContent += '<td>' + UserBaseLocation1 + '</td>';
+                        }
+                        else {
+                            tableContent += '<td>NA</td>';
+                        }
+                        tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>Y</td>";
+                       /*tableContent += "<td style='background-color: #dc5d51;color: #802d25;display: none;'>N</td>";*/
+                        tableContent += "<td style='background-color: #dc5d51;color: #802d25;'>N</td>";
+                        tableContent += "<td style='background-color:#52cc5c;color:#1d7d25;'>Y</td>";
+                        
+                        if(MISReportEmployees.length > 0)
+                            {
+                                
+                                
+                                for (var abc = 0; abc < MISReportEmployees.length; abc++)
+                                {
+                                   var MisRptParam_1 = MISReportEmployees[abc];
+                                   var mistest=GetMISEmpDetails_2(MisRptParam,selectedProgramName,MisRptParam_1)
+                                   
+                                   if(mistest.length > 0)
+                            {
+                             for (var abcd = 0; abcd < mistest.length; abcd++)
+                                {
+                                 if (mistest[abcd].Attendance == 'Y' && mistest[abcd].Day == MisRptParam_1) {
+                            tableContent += '<td>Y</td>';
+                        }
+                        else {
+                            tableContent += '<td>N</td>';
+                        }
+                                }
+                                }
+                                                 
+                             }
+                            }
+                            else
+                            {
+                            tableContent += '<td>NA</td>';
+                            }
+                        
+                        if (MisData[j10].FeedBackStatus == 'Completed') {
+                            tableContent += '<td>Y</td>';
+                        }
+                        else {
+                            tableContent += '<td>N</td>';
+                        }
+                        
+                         var OverallFeedback = GetOverAllFeedbck(EmPCd,selectedProgramName);
+                         if(OverallFeedback > 0)
+                            {
+                        
+                            tableContent += '<td>Y</td>';
+                        }
+                        else {
+                            tableContent += '<td>NA</td>';
+                        }
+                       
+
+                        
+                        tableContent += '<td>NA</td>';
+                        tableContent += '</tr>';
+                    }
+                }
+                
+                }
+            }
+            var GetActivitydays = getActivityDaysMisReport(selectedProgramName);
+            $('#tbodyDailyUsersAttendanceDetails').empty();
+            if (GetActivitydays) {
+                for (var l = 0; l < GetActivitydays.length; l++) {
+                    var ActDayNo = GetActivitydays[l];
+                    var PresentActDayNo = getPrsentDay(selectedProgramName, ActDayNo);
+                    var AbsentActDayNo = getAbsentDay(selectedProgramName, ActDayNo);
+                    var DayNo = ActDayNo.split(' ').slice(0, 2).join(' ');
+                    $('#tbodyDailyUsersAttendanceDetails').append('<tr><td>Attended ' + DayNo + '</td><td>' + PresentActDayNo + '</td></tr><tr><td>Absent ' + DayNo + '</td><td>' + AbsentActDayNo + '</td></tr>');
+                }
+            }
+            return tableContent;
+
+        }
+    }
+    function getPrsentDay(ProgramName, ActDayNo) {
+        var getPresent = 0;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27 and Attendance eq 'Y' and Day eq '" + ActDayNo + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    getPresent = d.d.results.length;
+                }
+            }, error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return getPresent;
+    }
+    function getAbsentDay(ProgramName, ActDayNo) {
+        var getAbsent = 0;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27 and Attendance eq 'N' and Day eq '" + ActDayNo + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    getAbsent = d.d.results.length;
+                }
+            }, error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return getAbsent;
+    }
+
+    function getActivityDaysMisReport(ProgramName) {
+        var getActivityDays = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                getActivityDays = $.unique(d.d.results.map(function (d) {
+                    return d.Day;
+                }));
+            }, error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return getActivityDays;
+    }
+    function getParticipantsInvited(ProgramName) {
+        var Invited;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    Invited = d.d.results.length;
+                }
+                else {
+                    Invited = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return Invited;
+    }
+    function getCampusHires(ProgramName) {
+        var CampusHires;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27 and EmployeeType eq 'Yes'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    CampusHires = d.d.results.length;
+                }
+                else {
+                    CampusHires = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return CampusHires;
+    }
+    function getDeclined(ProgramName) {
+        var Declined;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27 and ProgramStatus eq 'Completed' and Confirmation eq 'No'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    Declined = d.d.results.length;
+                }
+                else {
+                    Declined = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return Declined;
+    }
+    function getCancelled(ProgramName) {
+        var Cancelled;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27 and ProgramStatus eq 'Completed' and Confirmation eq 'Yes' and CanceledDate ne null";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    Cancelled = d.d.results.length;
+                }
+                else {
+                    Cancelled = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return Cancelled;
+    }
+
+    function getConfirmed(ProgramName) {
+        var ConfirmCount;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=Confirmation%20eq%20%27Yes%27and%20ProgramName%20eq%20%27" + ProgramName + "%27 and CanceledDate eq null";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    ConfirmCount = d.d.results.length;
+                }
+                else {
+                    ConfirmCount = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return ConfirmCount;
+    }
+
+</script>
+<script>
+    function getProgramLocation(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName eq '" + selectedProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        var PgrmLocation = d.d.results[arrK].ProgramLocation;
+                        var PgrmStartDate = d.d.results[arrK].ProgramStartDate;
+                        var PgrmEndDate = d.d.results[arrK].ProgramEndDate;
+                        $("#txtProgramLocation").val(PgrmLocation);
+                        $("#txtProgramStartDate").val(PgrmStartDate);
+                        $("#txtProgramEndDate").val(PgrmEndDate);
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+
+</script>
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ProgramName = $('#ddlProgramName').val();
+        $("#btntotalProgramReport").click(function () {
+            $('#tblFinalReport').show();
+            $('#tbl_hide').hide();
+            $('.dataTables_length,.dataTables_filter,.dataTables_info,.dataTables_paginate,#tbl_hide').remove();
+            $("#tblFinalReport").battatech_excelexport({
+                containerid: "tblFinalReport"
+                , datatype: 'table'
+                , worksheetName: ProgramName + ' ' + ' MIS Report'
+            });
+        });
+    });
+</script>
+<script>
+    function GetUserBaseLocation(UserEamilID) {
+        var BaseLocation1 = '';
+        var BaseLocation2 = '';
+        var BaseLocation3 = '';
+        var BaseLocationFinal = '';
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v=%27i:0%23.f|membership|" + UserEamilID + "%27",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                if (d.d.DisplayName == 'undefined' || d.d.DisplayName == null || d.d.DisplayName == '') {
+                    BaseLocationFinal = '';
+                }
+                else {
+                    var BaseLocation1 = d.d.UserProfileProperties.results[61].Value;
+                    var BaseLocation2 = d.d.UserProfileProperties.results[62].Value;
+                    var BaseLocation3 = d.d.UserProfileProperties.results[55].Value;
+                    if (BaseLocation1 != null && BaseLocation1 != '') {
+                        BaseLocationFinal = BaseLocation1;
+                    }
+                    else if (BaseLocation2 != null && BaseLocation2 != '') {
+                        BaseLocationFinal = BaseLocation2;
+                    }
+                    else if (BaseLocation3 != null && BaseLocation3 != '') {
+                        BaseLocationFinal = BaseLocation3;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return BaseLocationFinal;
+    }
+    function GetFeedBackStatus(ProgramName, EmailId) {
+        var FeedBackStatus = '';
+
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    FeedBackStatus = 'Y';
+                }
+                else {
+                    FeedBackStatus = 'N';
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return FeedBackStatus;
+    }
+    function GetMISEmpDetails(ProgramName) {
+        var MISUsers = [];
+
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=ProgramName eq '" + ProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                MISUsers = [];
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    var EmployeeName = d.d.results[arrK].EmployeeName;
+                    var EmpCode = d.d.results[arrK].EmpCode;
+                    var EmpEmailID = d.d.results[arrK].EmpEmailID;
+                    var Day = d.d.results[arrK].Day;
+                    var Attendance = d.d.results[arrK].Attendance;
+                    var FeedBackStatus = d.d.results[arrK].FeedBackStatus;
+                    var Confirmation = d.d.results[arrK].Confirmation;
+                    var CompusHire = d.d.results[arrK].CompusHire;
+                    MISUsers.push({
+                        EmployeeName: EmployeeName, EmpCode: EmpCode, EmpEmailID: EmpEmailID,
+                        Day: Day, Attendance: Attendance, FeedBackStatus: FeedBackStatus,
+                        Confirmation: Confirmation, CompusHire: CompusHire
+                    });
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return MISUsers;
+    }
+    
+    
+     function GetMISEmpDetails_2(MisRptParam,selectedProgramName,MisRptParam_1) {
+        var MISUsers5 = [];
+
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=EmpCode eq '" + MisRptParam + "' and ProgramName eq '" + selectedProgramName + "' and Day eq '" + MisRptParam_1 + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                MISUsers5 = [];
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    var EmployeeName = d.d.results[arrK].EmployeeName;
+                    var EmpCode = d.d.results[arrK].EmpCode;
+                    var EmpEmailID = d.d.results[arrK].EmpEmailID;
+                    var Day = d.d.results[arrK].Day;
+                    var Attendance = d.d.results[arrK].Attendance;
+                    var FeedBackStatus = d.d.results[arrK].FeedBackStatus;
+                    var Confirmation = d.d.results[arrK].Confirmation;
+                    var CompusHire = d.d.results[arrK].CompusHire;
+                    MISUsers5.push({
+                        EmployeeName: EmployeeName, EmpCode: EmpCode, EmpEmailID: EmpEmailID,
+                        Day: Day, Attendance: Attendance, FeedBackStatus: FeedBackStatus,
+                        Confirmation: Confirmation, CompusHire: CompusHire
+                    });
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return MISUsers5;
+    }
+
+    
+      function GetOverAllFeedbck(EmPCd,selectedProgramName) {
+        var OverallFdbckCount = 0;
+        
+         var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('InvitationFeedBack')/items?$filter=EmployeeCode eq '" + EmPCd + "' and ProgramName eq '" + selectedProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.FeedbackStatus == "Completed") {
+                        arr[i++] = index;
+                    }
+                });
+                
+                if(arr.length > 0)
+                {
+                OverallFdbckCount =arr.length;
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+
+return OverallFdbckCount ;
+}
+
+    function GetMISEmpDetails_1(MisRptParam,selectedProgramName) {
+        var MISUsers2 = [];
+
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=EmpCode eq '" + MisRptParam + "' and ProgramName eq '" + selectedProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                MISUsers2 = [];
+               
+                   // var arrK = arr[k];
+                    var EmployeeName = d.d.results[0].EmployeeName;
+                    var EmpCode = d.d.results[0].EmpCode;
+                    var EmpEmailID = d.d.results[0].EmpEmailID;
+                    var Day = d.d.results[0].Day;
+                    var Attendance = d.d.results[0].Attendance;
+                    var FeedBackStatus = d.d.results[0].FeedBackStatus;
+                    var Confirmation = d.d.results[0].Confirmation;
+                    var CompusHire = d.d.results[0].CompusHire;
+                    MISUsers2.push({
+                        EmployeeName: EmployeeName, EmpCode: EmpCode, EmpEmailID: EmpEmailID,
+                        Day: Day, Attendance: Attendance, FeedBackStatus: FeedBackStatus,
+                        Confirmation: Confirmation, CompusHire: CompusHire
+                    });
+                   
+               
+            },
+            error: function () { console.log('fail'); }
+        });
+        return MISUsers2;
+    }
+
+    function getNominatedProgram(ProgramName) {
+        var NomintedProgram = "";
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items?$filter=ProgramName eq '" + ProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    NomintedProgram = d.d.results[0].NominatedProgram;
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return NomintedProgram;
+    }
+</script>
+
+<script>
+
+function getListItems(url, listname, query, complete, failure) {
+    $.ajax({
+        url: url + "/_api/web/lists/getbytitle('" + listname + "')/items" + query,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" },
+        success: function (data) {
+            complete(data.d); 
+        },
+        error: function (data) {
+            failure(data);
+        }
+    });
+}
+
+</script>
+
+<style>
+.col-sm-6
+{
+display:none !important;
+}
+</style>

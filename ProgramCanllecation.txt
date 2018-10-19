@@ -1,0 +1,380 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css" rel="stylesheet">
+
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" rel="stylesheet">
+<style>
+    .clear {
+        clear: both;
+    }
+
+    .opacity-0 {
+        opacity: 0;
+    }
+
+    .padding-0 {
+        padding: 0 !important;
+    }
+
+    .margin-0 {
+        margin: 0 !important;
+    }
+
+    .margin-top-0 {
+        margin-top: 0 !important;
+    }
+
+    .margin-bottom-0 {
+        margin-bottom: 0 !important;
+    }
+
+    .margin-top-5 {
+        margin-top: 5px !important;
+    }
+
+    .margin-top-10 {
+        margin-top: 10px !important;
+    }
+
+    .margin-top-15 {
+        margin-top: 15px !important;
+    }
+
+    .form-control-style-1 {
+        background-color: #d5ecd5 !important;
+        border: 1px solid #a9d4a9 !important;
+    }
+
+    .border-style-1 {
+        border: 1px solid #e3e3e3;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .errorBorder-color {
+        padding: 0px !important;
+        color: red;
+        font-size: 19px;
+        margin-left: 33px;
+    }
+
+    .dropdown-menu {
+        top: 240px !important;
+    }
+
+    .requiredfieldsstyle {
+        padding-left: 15px !important;
+        font-size: 12px;
+        font-style: italic;
+    }
+</style>
+
+<div>
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important; margin-left: 27px !Important;
+    margin-bottom: 0px !Important;
+    margin-right: 0px !Important;
+    margin-top: 0px !Important;">
+            Cancellation of Nomination
+        </h1>
+    </div>
+    <button type="button" class="dashboard-button" onclick="goToLink();" id="Tesging" style="display:none;">Go To Link</button>
+    <div id="divErrorMessage" class="errorBorder-color"></div>
+    <div class="col-md-12 padding-0-xs">
+        <div class="col-md-12 margin-top-15">
+            <label>Program Name</label>
+            <p class="form-control form-control-style-1" id="txtProgramName"></p>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <label>Venue Details</label>
+            <p class="form-control form-control-style-1" id="txtProgramVenue"></p>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>Program Location</label>
+                <p class="form-control form-control-style-1" id="txtprogramLocation"></p>
+            </div>
+            <div class="col-md-4">
+                <label>Start Date</label>
+                <p class="form-control form-control-style-1" id="txtprogramSdate"></p>
+            </div>
+            <div class="col-md-4">
+                <label>End Date</label>
+                <p class="form-control form-control-style-1" id="txtprogramEdate"></p>
+            </div>
+            <div class="col-md-4">
+                <label>Employee Name</label>
+                <p class="form-control form-control-style-1" id="txtEmployeeName"></p>
+            </div>
+            <div class="col-md-4">
+                <label>Ecode</label>
+                <p class="form-control form-control-style-1" id="txtEmployeecode"></p>
+            </div>
+            <div class="col-md-4">
+                <label>Base Location</label>
+                <p class="form-control form-control-style-1" id="txtEmpLocation"></p>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>Confirmation Date</label>
+                <p class="form-control form-control-style-1" id="txtConfirmationDate"></p>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15" style="display:none;">
+            <div class="col-md-12 border-style-1" style="display:none;">
+                <div class="col-md-8">
+                    <label class="margin-bottom-0">Please confirm your presence for the Induction program</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12 padding-0">
+                        <p class="form-control form-control-style-1" id="txtConfirmation"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 margin-top-10  border-style-1" id="StayBaselocation" style="display:none;">
+                <div class="col-md-8">
+                    <label class="margin-bottom-0">Please let us know if you require stay to be arranged by company</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12 padding-0">
+                        <p class="form-control form-control-style-1" id="txtStayBaselocation"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-15" id="StayReason" style="display:none;">
+            <div class="col-md-12">
+                <textarea class="form-control form-control-style-1" placeholder="if No - Reason" id="txtReasons"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-10" id="DateFields" style="display:none;">
+            <div class="col-md-3">
+                <label>Arrival Date</label>
+                <p class="form-control form-control-style-1" id="txtArrivalDate"></p>
+            </div>
+
+            <div class="col-md-3">
+                <label>Arrival Time</label>
+                <p class="form-control form-control-style-1" id="txtArrivalTime"></p>
+            </div>
+
+            <div class="col-md-3">
+                <label>Departure Date</label>
+                <p class="form-control form-control-style-1" id="txtDepartureDate"></p>
+            </div>
+
+            <div class="col-md-3">
+                <label>Departure Time</label>
+                <p class="form-control form-control-style-1" id="txtDepartureTime"></p>
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-10">
+            <div class="col-md-12">
+                <textarea class="form-control" placeholder="Reason For Cancellation" id="txtReasonsForCancel"></textarea>
+            </div>
+        </div>
+
+        <div class=" col-md-12 padding-0 margin-top-15">
+            <div id="divpopMessage" class="requiredfieldsstyle">
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-2">
+                <button class="btn btn-success btn-block" id="btnSubmit" type="button">SUBMIT</button>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    //function GetUserProfileData(){
+
+    var UserOffice = "";
+    var UserOfficeNew = "";
+    var EmailOfUser = "";
+    var ProgramName = "";
+    var UserLoginEmailId = "";
+    $.ajax({
+        async: false,
+        url: _spPageContextInfo.webServerRelativeUrl + "//_api/SP.UserProfiles.PeopleManager/GetMyProperties",
+        method: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose"
+        },
+        success: function (d) {
+            UserOfficeNew = d.d.UserProfileProperties.results[62].Value;
+            UserOffice = d.d.UserProfileProperties.results[61].Value;
+            EmailOfUser = d.d.Email;
+            UserLoginEmailId = d.d.UserProfileProperties.results[19].Value.toUpperCase();
+        },
+        error: function (err) {
+            alert(JSON.stringify(err));
+        }
+    });
+    function getQueryStrings() {
+        var assoc = {};
+        var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+        var queryString = location.search.substring(1);
+        var keyValues = queryString.split('&');
+
+        for (var i in keyValues) {
+            var key = keyValues[i].split('=');
+            if (key.length > 1) {
+                assoc[decode(key[0])] = decode(key[1]);
+            }
+        }
+
+        return assoc;
+    }
+    var qs = getQueryStrings();
+    var ProgramID = qs["InvitationID"];
+    var appWebUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
+
+    $.ajax({
+        async: false,
+        url: appWebUrl + "//_api/web/lists/getbytitle('Invitation')/items(" + ProgramID + ")",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "x-requestdigest": $("#__requestdigest").val(),
+        },
+        success: function (d) {
+            var arr = [];
+            i = 0;
+            var UserWithoutDomain = EmailOfUser.substring(0, EmailOfUser.lastIndexOf("@"));
+            var res = UserWithoutDomain.toUpperCase();
+            var eCode = d.d.EmployeeCode;
+            var EcodeUpper = eCode.toUpperCase();
+            
+             var ProgramEDate = new Date(d.d.ProgramEndDate.split("/").reverse().join("-"));
+             
+             var today = new Date();
+		     var dd = today.getDate();
+			 var mm = today.getMonth()+1; //January is 0!
+			
+			 var yyyy = today.getFullYear();
+			 if(dd<10){
+			    dd=dd;
+			 } 
+			 if(mm<10){
+			    mm=mm;
+			 } 
+			 var today = mm+'/'+dd+'/'+yyyy;
+			 var formatted = (ProgramEDate.getMonth() + 1) + "/" + ProgramEDate.getDate()  + "/" +  ProgramEDate.getFullYear()
+			
+			if(today>formatted)
+            {
+            alert('Program is already expired!!!');
+             window.location.href = "https://bajajelect.sharepoint.com/";
+
+            }
+
+
+
+            if (d.d.ID == ProgramID && d.d.ProgramStatus == "Completed" && EcodeUpper == EcodeUpper || EcodeUpper == UserLoginEmailId && d.d.CanceledDate == "" || d.d.CanceledDate == null && d.d.Confirmation == "Yes") {
+
+                $('#txtProgramName').append(d.d.ProgramName);
+                $('#txtprogramLocation').append(d.d.ProgramLocation);
+                $('#txtprogramSdate').append(d.d.ProgramStartDate);
+                $('#txtprogramEdate').append(d.d.ProgramEndDate);
+                $('#txtEmployeeName').append(d.d.EmployeeName);
+                $('#txtEmployeecode').append(d.d.EmployeeCode);
+                $('#txtConfirmation').append(d.d.Confirmation);
+                $('#txtStayBaselocation').append(d.d.StayArrangedByCompany);
+                $('#txtReasons').append(d.d.Reasons);
+                $('#txtArrivalDate').append(d.d.ArrivalDate);
+                $('#txtArrivalTime').append(d.d.ArrivalTime);
+                $('#txtDepartureDate').append(d.d.DepartureDate);
+                $('#txtDepartureTime').append(d.d.DepartureTime);
+                $('#txtProgramVenue').append(d.d.ProgramVenue);
+                $('#txtConfirmationDate').append(d.d.ConfirmedDate);
+                if (UserOffice != "" && UserOffice != null) {
+                    $("#txtEmpLocation").append(UserOffice);
+                }
+                else if (UserOfficeNew != "" && UserOfficeNew != null) {
+                    $("#txtEmpLocation").append(UserOfficeNew);
+                }
+            }
+            else {
+                alert("You Have Already Responded");
+                window.location.href = "https://bajajelect.sharepoint.com/";
+            }
+
+        },
+        error: function () { console.log('fail'); }
+    });
+
+
+
+    function UpdateCancelationReasons() {
+        var qs = getQueryStrings();
+        var InvitationID = qs["InvitationID"];
+        var Cancel = $('#txtReasonsForCancel').val();
+        var currentDate = new Date()
+        var day = currentDate.getDate()
+        var month = currentDate.getMonth() + 1
+        var year = currentDate.getFullYear()
+        var CancelDate = day + "/" + month + "/" + year;
+
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('Invitation')/items(" + InvitationID + ")",
+            type: "POST",
+            async: false,
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.InvitationListItem' },
+                'ReasonforCancelation': Cancel,
+                'CanceledDate': CancelDate,
+                'Confirmation' : 'No'
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                "X-HTTP-Method": "MERGE",
+                "If-Match": "*"
+            },
+            success: function (data) {
+                alert("Your response is noted.");
+                window.location.href = "https://bajajelect.sharepoint.com/";
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+    }
+
+
+    $('#btnSubmit').click(function () {
+        $('#divpopMessage').css('color', '');
+        $('#divpopMessage').empty();
+        var Cancel = $('#txtReasonsForCancel').val();
+        if (Cancel == '') {
+            $('#txtReasonsForCancel').css("border", "1px solid red");
+            $('#divpopMessage').css('color', 'red');
+            $('#divpopMessage').append("Highlighted fields are mandatory");
+            return false;
+        }
+        UpdateCancelationReasons();
+    });
+</script>

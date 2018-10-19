@@ -1,0 +1,36 @@
+<script type="text/javascript">
+    function getCurrentUserGroupColl(UserID) {
+        $.ajax
+        ({
+            url: "/sites/dev/_api/web/GetUserById(" + UserID + ")/Groups",
+            type: "GET",
+            headers: { "Accept": "application/json; odata=verbose", "X-RequestDigest": $("#__REQUESTDIGEST").val() },
+            dataType: "json",
+            async: true,
+            success: function (data) {
+                /* get all group's title of current user. */
+                var results = data.d.results;
+                for (var i = 0; i < results.length; i++) {
+                    console.log(results[i].Title)
+                }
+            }
+        });
+    }
+
+
+    function getCurrentUser() {
+        $.ajax
+         ({
+             url: "/sites/dev/_api/web/CurrentUser",
+             type: "GET",
+             headers: { "Accept": "application/json; odata=verbose", "X-RequestDigest": $("#__REQUESTDIGEST").val() },
+             dataType: "json",
+             async: true,
+             success: function (data) {
+                 getCurrentUserGroupColl(data.d.Id)
+             }
+         });
+    }
+
+    $(document).ready(function () { getCurrentUser(); });
+</script>

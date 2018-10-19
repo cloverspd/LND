@@ -1,0 +1,705 @@
+<!doctype html> 
+<!--[if lte IE 9]>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >
+<![endif]-->
+
+<html>
+
+<head>
+<meta charset="ISO-8859-1" /> 
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+<style>
+    .requiredfieldsstyle {
+        padding-left: 15px !important;
+        font-size: 12px;
+        font-style: italic;
+    }
+    
+</style>
+<style>
+.ms-cui-topBar2 
+{
+Display:none;
+}
+#globalNavBox
+{
+Display:none;
+}
+#s4-ribbonrow
+{
+Display:none;
+}
+.ms-mpSearchBox ms-floatRight
+{
+Display:none;
+}
+#DeltaPlaceHolderSearchArea
+{
+Display:none;
+}
+.ms-breadcrumb-top
+{
+Display:none;
+}
+
+.ms-breadcrumb-box
+{
+Display:none;
+}
+#WebPartWPQ2
+{
+margin-top: -84px;
+}
+</style>
+<meta http-equiv="X-UA-Compatible" content="IE=9" >
+</head>
+
+
+
+<body>
+
+
+<div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important;margin-left: 22px !Important;">
+            Request Overall Feedback
+        </h1>
+    </div>
+<div class="col-md-12">
+
+    <div class="col-md-6 margin-top-15">
+        <label>
+            Program Name
+        </label>
+        <div id="divProgramName">
+        </div>
+     
+     
+    </div>
+</div>
+<div class="col-md-12 margin-top-15 ">
+    <div class="col-md-4">
+        <label>Start Date</label>
+        <input type="text" id="StartDateId" class="form-control form-control-style-1" readonly="readonly" />
+    </div>
+    <div class="col-md-4">
+        <label>End Date</label>
+        <input type="text" id="EndDateId" class="form-control form-control-style-1" readonly="readonly" />
+    </div>
+    <div class="col-md-4">
+        <label>Program Location</label>
+        <input type="text" id="ProgramLocationId" class="form-control form-control-style-1" readonly="readonly" />
+    </div>
+</div>
+<div class="col-md-12 padding-0 margin-top-15">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <div id="CustomerGrid" style="width: 100%">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0 margin-top-15">
+    <div id="divErrorMessage" class="requiredfieldsstyle"></div>
+</div>
+<div class="col-md-12 padding-0 margin-top-5">
+    <div class="col-md-2">
+        <button class="btn btn-success btn-block" id="btnSubmit" style="margin-left: 14px;">
+            SUBMIT
+        </button>
+    </div>
+</div>
+<div id="throbber" style="display:none;">
+    <img alt="Please wait..." src="https://bajajelect.sharepoint.com/sites/HR-TrainingManagementSystem/SiteAssets/AnugamStyles/img/712_1.gif">
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        ProgramNameDropDownBind();
+    });
+    function ProgramNameDropDownBind() {
+        var listName = "NewInductionProgram";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+        var UserEmail = LoginUserEmail();
+        getProgramNameListItems(UserEmail, listName, url, function (data) {
+            var TodayDate = new Date();
+            var day = TodayDate.getDate();
+            var mm = TodayDate.getMonth() + 1;
+            var Year = TodayDate.getFullYear();
+            var items = data.d.results;
+            var pgmFinalData = []; var j = 0;
+            var arrPGM = [];
+            var arrPGMUnique = [];
+            for (var k = 0; k < items.length; k++) {
+                var ChkProgramEndDate = new Date(items[k].ProgramEndDate.split("/").reverse().join("-"));
+                if (new Date(items[k].ProgramEndDate.split("/").reverse().join("-")) >= TodayDate || ChkProgramEndDate.setHours(0, 0, 0, 0) == TodayDate.setHours(0, 0, 0, 0)) {
+                    var NameProgram = items[k].ProgramName;
+                    if (pgmFinalData[j++] != NameProgram) {
+                        pgmFinalData[j++] = NameProgram;
+                    }
+                }
+            }
+            var uniqueProgramNames = '';
+            var result = [];
+            $.each(pgmFinalData, function (index, pgmFinalData) {
+                if ($.inArray(pgmFinalData, result) == -1) {
+                    result.push(pgmFinalData);
+                }
+            });
+            console.log(result);
+            //var programBind = GroupByProgramData(pgmFinalData, 'ProgramName');
+            var inputElement = '<select id="ProgramNameDynDropDown" class="form-control"><option  value="">--Select Program--</option>';
+            // Add all the new items
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] != undefined) {
+                    var itemId = result[i],
+                        itemVal = result[i];
+                    inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+                }
+            }
+            inputElement += '</select>';
+            $('#divProgramName').append(inputElement);
+
+            $("#ProgramNameDynDropDown").each(function () {
+                $('option', this).each(function () {
+
+                    if ($(this).text() == '--Select Program--') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+
+            $('#ProgramNameDynDropDown').on('change', function () {
+                var selectedProgramName = $('#ProgramNameDynDropDown').val();
+                $('#CustomerGrid').empty();
+                $.blockUI.defaults.css = {
+										padding: 0,
+							            margin: 0,
+							            width: '30%',
+							            top: '40%',
+							            left: '35%',
+							            textAlign: 'center',
+							            cursor: 'wait'};
+$.blockUI({message: $('#throbber')});
+setTimeout(function () {
+
+                getProgramLocation(selectedProgramName);
+                getEmployeeDetails(selectedProgramName);
+                
+                 $.unblockUI({
+                        onUnblock: function () {
+                            console.log('');
+                        }
+                    });
+                }, 100);
+
+            });
+
+        }, function (data) {
+            alert("Ooops, an error occured. Please try again");
+        });
+    }
+
+    function getProgramNameListItems(UserEmail,listName, siteurl, success, failure) {
+        var UrlOFInvitation = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=CreatedByUser eq %27" + UserEmail + "%27 and Status eq 'Active' and InductionProgram eq 'No'&$orderby= Created desc";
+        $.ajax({
+            url: UrlOFInvitation,
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+    // Start get program startdate,Enddate,ProgramLocation
+    var PgrmLocation = "";
+    function getProgramLocation(selectedProgramName) {
+        var CurrentLoginUser = LoginUserEmail();
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items?$filter=ProgramStatus%20eq%20%27Active%27and%20ProgramName%20eq%20%27" + selectedProgramName + "%27and%20CreatedByUser%20eq%20%27" + CurrentLoginUser + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        PgrmStartDate = d.d.results[arrK].ProgramStartDate;
+                        PgrmEDate = d.d.results[arrK].ProgramEndDate;
+                        PgrmLocation = d.d.results[arrK].ProgramLocation;
+                        $("#StartDateId").val(PgrmStartDate);
+                        $("#EndDateId").val(PgrmEDate);
+                        $("#ProgramLocationId").val(PgrmLocation);
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+    // End get program startdate,Enddate,ProgramLocation
+    // Start get EmployeeName Ecode,Email
+    var selectedProgramName = $('#ProgramNameDynDropDown').val();
+    var appWebUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
+    function getEmployeeDetails(selectedProgramName) {
+        var UserEmail = LoginUserEmail();
+        var ProgramNameDynDropDown = $('#ProgramNameDynDropDown').val();
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27 and CanceledDate eq null and Confirmation eq 'Yes'";
+
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (data) {
+                if (data.d.results.length > 0) {
+                    $('#CustomerRecordsTable').dataTable({
+                        "bDestroy": true
+                    }).fnDestroy();
+                    //construct HTML Table from the JSON Data
+                    $('#CustomerGrid').append(GenerateTableFromJson(data.d.results));
+                    //Bind the HTML data with Jquery DataTable
+                    var oTable = $('#CustomerRecordsTable').dataTable({
+                        "iDisplayLength": 20,
+                        "aLengthMenu": [
+                        [5, 10, 30, 50],
+                        [5, 10, 30, 50]
+                        ],
+                        "sPaginationType": "full_numbers"
+                    });
+                    $("#btnSubmit").show();
+                } else {
+                    $("#appendInvitees").empty();
+                    $('#CustomerGrid').append("<span>No Records Found.</span>");
+                    $("#btnSubmit").hide();
+                }
+            },
+            error: function (data) {
+                $('#CustomerGrid').append("<span>Error Retreiving Records. Error : " + JSON.stringify(data) + "</span>");
+            }
+        });
+        function GenerateTableFromJson(objArray) {
+            var tableContent = '<table id="CustomerRecordsTable" style="width:100%" class="table table-striped table-bordered dt-responsive nowrap"><thead><tr><td><input type="checkbox" class="allCheckbox" /> Select All </td>' + '<td>Employee Code</td>' + '<td>Employee Name</td>' + '<td>EmailID</td>' + '</tr></thead><tbody>';
+            $("#appendInvitees").empty();
+            var count = objArray.length;
+            $("#appendInvitees").append(count);
+            var getEmailSentUsers = GetEmailNotificationSenUserDetails(selectedProgramName);
+            var arrNew = [];
+            
+         
+            if (getEmailSentUsers.length > 0) {
+                for (var i = 0; i < objArray.length; i++) {
+                    var EmailId = objArray[i].EmployeeEmailId;
+                    var EmpCode = objArray[i].EmployeeCode;
+                    
+
+                    var get
+                    var flag = true;
+                    for (k = 0; k < getEmailSentUsers.length; k++) {
+                        var speakerId = getEmailSentUsers[k].EmpEmailID;
+                        flag = true;
+                        if (EmailId == speakerId) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        arrNew.push({
+                            ID: objArray[i].Id,
+                            EmployeeName: objArray[i].EmployeeName,
+                            EmployeeCode: objArray[i].EmployeeCode,
+                            EmployeeEmailId: objArray[i].EmployeeEmailId,
+                        });
+                    }
+                }
+                if (arrNew.length > 0) {
+                    for (var m = 0; m < arrNew.length; m++) {
+                    
+                    var test=arrNew[m].EmployeeEmailId;
+                  	var OverallFeedback = GetCountofFAttended(test,selectedProgramName);
+                  		
+					if(OverallFeedback > 0)
+                    {
+
+                        tableContent += '<tr>';
+                        tableContent += '<td>' + '<input type="checkbox" class="myCheckbox" value=' + arrNew[m].ID + '>' + '</td>';
+
+                        tableContent += '<td>' + arrNew[m].EmployeeName + '</td>';
+                        tableContent += '<td>' + arrNew[m].EmployeeCode + '</td>';
+                        tableContent += '<td>' + arrNew[m].EmployeeEmailId + '</td>';
+                        tableContent += '</tr>';
+                        
+                        }
+                    }
+                    return tableContent;
+                    $("#divErrorMessage").empty();
+                    $('#divErrorMessage').css('color', '');
+                    $("#btnSubmit").show();
+                }
+                else {
+                    $("#divErrorMessage").empty();
+                    $('#divErrorMessage').css('color', 'red');
+                    $('#divErrorMessage').append("Feedback link already sent");
+                    $("#btnSubmit").hide();
+                }
+            }
+            else {
+                if (objArray.length > 0) {
+                    for (var i = 0; i < objArray.length; i++) {
+                    
+                     var test=objArray[i].EmployeeEmailId;
+                    var OverallFeedback = GetCountofFAttended(test,selectedProgramName);
+                    if(OverallFeedback > 0)
+                    {
+
+                        tableContent += '<tr>';
+                        tableContent += '<td>' + '<input type="checkbox" class="myCheckbox" value=' + objArray[i].ID + '>' + '</td>';
+                        tableContent += '<td>' + objArray[i].EmployeeName + '</td>';
+                        tableContent += '<td>' + objArray[i].EmployeeCode + '</td>';
+                        tableContent += '<td>' + objArray[i].EmployeeEmailId + '</td>';
+                        tableContent += '</tr>';
+                        
+                        }
+                    }
+                    return tableContent;
+                }
+            }
+
+        }
+        $(document).on('click', '.allCheckbox', function () {
+            if ($(this).is(':checked') == true) {
+                $('.myCheckbox').prop('checked', true);
+                $("#divErrorMessage").empty();
+            }
+            else {
+                $('.myCheckbox').prop('checked', false);
+            }
+        });
+        var EmployeeID = []; var EamilID = []; var EmplCode = []; var EmployeeName = [];
+        EmpID = 0; EmailID = 0; EmpCode = 0; EName = 0;
+        function GetData() {
+            Requrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27 and CanceledDate eq null and Confirmation eq 'Yes'";
+            $.ajax({
+                url: RestUrl,
+                method: "GET",
+                async: false,
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                },
+                success: function (d) {
+                    var arr = [];
+                    i = 0;
+                    $.each(d.d.results, function (index, results) {
+                        arr[i++] = index;
+                    });
+                    for (var k = 0; k < arr.length; k++) {
+                        var arrK = arr[k];
+
+                        if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                            EmployeeID[EmpID++] = d.d.results[arrK].ID;
+                            EmployeeName[EName++] = d.d.results[arrK].EmployeeName;
+                            EmplCode[EmpCode++] = d.d.results[arrK].EmployeeCode;
+                            EamilID[EmailID++] = d.d.results[arrK].EmployeeEmailId;
+
+                        }
+                    }
+                },
+                error: function () { console.log('fail'); }
+            });
+        }
+        $("#btnSubmit").click(function () {
+            $("#divErrorMessage").empty();
+            var isValid = true;
+            if ($('input[class=myCheckbox]:checked').length == 0) {
+                $("#divErrorMessage").empty();
+                $('#divErrorMessage').css('color', 'red');
+                $('#divErrorMessage').append("Please check at least one user");
+                return false;
+            }
+
+            GetData();
+
+            var newArray = [];
+            var checkedIDArray = [];
+            $('.myCheckbox').each(function () {
+                var checkedVal = $(this).val();
+                var checked = $(this).is(':checked');
+                if (checked == true) {
+                    checkedIDArray.push(checkedVal);
+                }
+            });
+            for (j = 0; j < EmployeeID.length; j++) {
+                $('.myCheckbox').each(function () {
+                    var checkedVal = $(this).val();
+                    var checked = $(this).is(':checked');
+                    if (checked == true) {
+                        if (checkedVal == EmployeeID[j]) {
+                            var obj =
+                                    {
+                                        EmpID: EmployeeID[j],
+                                        EmpCode: EmplCode[j],
+                                        EmpName: EmployeeName[j],
+                                        EmID: EamilID[j]
+                                    }
+                            newArray.push(obj);
+                        }
+                    }
+                });
+            }
+            var PrgName = document.getElementById("ProgramNameDynDropDown");
+            var PrgNametxt = PrgName.options[PrgName.selectedIndex].text;
+            var PrgStartDate = document.getElementById("StartDateId").value;
+            var PrgEndDate = document.getElementById("EndDateId").value;
+            var PrgLocation = document.getElementById("ProgramLocationId").value;
+            var webappUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
+            if (newArray.length > 0) {
+                for (var i = 0; i < newArray.length; i++) {
+                 var empmailid=newArray[i].EmID;
+                 var partemailid = GetParticipantEmailid(empmailid);
+
+                    $.ajax({
+                        url: appWebUrl + "//_api/web/lists/getbytitle('InvitationFeedBack')/items",
+                        type: "POST",
+                        data: JSON.stringify({
+                            '__metadata': { 'type': 'SP.Data.InvitationFeedBackListItem' },
+                            'ProgramName': PrgNametxt,
+                            'ProgramStartDate': PrgStartDate,
+                            'ProgramEndDate': PrgEndDate,
+                            'ProgramLocation': PrgLocation,
+                            'EmployeeName': newArray[i].EmpName,
+                            'EmployeeCode': newArray[i].EmpCode,
+                            'EmployeeEmail': newArray[i].EmID,
+                            'ParticipantEmail': partemailid
+                        }),
+                        headers: {
+                            "Accept": "application/json;odata=verbose",
+                            "content-type": "application/json; odata=verbose",
+                            "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                        },
+                        success: function (data) {
+                        },
+                        error: function (err) {
+                            alert("Error while adding item: " + JSON.stringify(err));
+                        }
+                    });
+                }
+                alert("Feedback link sent successfully");
+            }
+
+        });
+    }
+
+</script>
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+    function GetEmailNotificationSenUserDetails(selectedProgramName) {
+        var arrGetEmailNotificationSentUser = [];
+        var UserEmail = LoginUserEmail();
+        var ProgramNameDynDropDown = $('#ProgramNameDynDropDown').val();
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('InvitationFeedBack')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arrEdit = [];
+                iEdit = 0;
+                $.each(d.d.results, function (index, results) {
+                    arrEdit[iEdit++] = index;
+                });
+                arrGetEmailNotificationSentUser = [];
+                for (var k = 0; k < arrEdit.length; k++) {
+                    var indexK = arrEdit[k];
+                    var EmpEmailID = d.d.results[indexK].EmployeeEmail;
+                    arrGetEmailNotificationSentUser.push({
+                        EmpEmailID: EmpEmailID
+                    })
+                }
+            },
+            error: function (d) {
+                console.log('Fail');
+            }
+        });
+        return arrGetEmailNotificationSentUser;
+    }
+
+</script>
+
+
+<script>
+ function GETAbsentUsers(selectedProgramName) {
+        var arrGetAbsentusers = [];
+        var UserEmail = LoginUserEmail();
+        var ProgramNameDynDropDown = $('#ProgramNameDynDropDown').val();
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27 and Attendance eq 'N'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arrEdit = [];
+                iEdit = 0;
+                $.each(d.d.results, function (index, results) {
+                    arrEdit[iEdit++] = index;
+                });
+                arrGetAbsentusers = [];
+                for (var k = 0; k < arrEdit.length; k++) {
+                    var indexK = arrEdit[k];
+                    var EmpCD = d.d.results[indexK].EmpCode;
+                    arrGetAbsentusers.push({
+                        EmpCD : EmpCD
+                    })
+                }
+            },
+            error: function (d) {
+                console.log('Fail');
+            }
+        });
+        return arrGetAbsentusers;
+    }
+
+</script>
+
+<script>
+function GetParticipantEmailid(empmailid)
+{
+var Emailid=''
+
+ $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v=%27i:0%23.f|membership|" + empmailid + "%27",
+                type: "GET",
+                async: false,
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose",
+                    "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                },
+                success: function (d) {
+                    if (d.d.DisplayName == 'undefined' || d.d.DisplayName == null || d.d.DisplayName == '') {
+                       Emailid=empmailid;
+                    }
+                    else {
+                      
+                        Emailid= d.d.Email;
+                        //alert(Email);
+                    }
+                },
+                error: function () { console.log('fail'); }
+            });
+            
+            return Emailid;
+            
+            }
+
+</script>
+<script>
+ function GetCountofFAttended(test,selectedProgramName) {
+       var OverallFdbckCount = 0;
+        var UserEmail = LoginUserEmail();
+        var ProgramNameDynDropDown = $('#ProgramNameDynDropDown').val();
+        //var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('InvitationFeedBack')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27";
+		var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=Attendance%20eq%20%27Y%27%20and%20ProgramName%20eq%20%27" + selectedProgramName + "%27 and Creator eq '" + UserEmail + "' and EmpEmailID eq '" + test + "'";        
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arrEdit = [];
+                iEdit = 0;
+                $.each(d.d.results, function (index, results) {
+                    arrEdit[iEdit++] = index;
+                });
+                
+                if(arrEdit.length > 0)
+                {
+                OverallFdbckCount =arrEdit.length;
+                }
+
+               
+            },
+            error: function (d) {
+                console.log('Fail');
+            }
+        });
+       return OverallFdbckCount ;
+    }
+
+</script>
+
+</body>
+</html>

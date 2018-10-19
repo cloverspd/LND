@@ -1,0 +1,1402 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+<!--<script type="text/javascript" src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/bootstrap-datepicker.min.js"></script>-->
+<style>
+    .errorBorder-color {
+        padding: 0px !important;
+        color: red;
+        font-size: 19px;
+        margin-left: 33px;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #337ab7 !important;
+        border-color: #2e6da4 !important;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px !important;
+        margin-bottom: 0 !important;
+        font-size: 14px !important;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .requiredfieldsstyle {
+        padding-left: 15px !important;
+        font-size: 12px;
+        font-style: italic;
+    }
+</style>
+
+
+<div class="modal fade" id="myModalP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog ui-widget-content" role="document" style="width: 920px !important;">
+        <div class="modal-content" style="width:1000px !Important;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="H4_2">
+                    Feedback Speaker Details
+                </h4>
+            </div>
+            <div class="modal-body" style="height: auto !important;">
+                <div class="col-md-12 margin-top-15 padding-0">
+                    <div class="col-md-4">
+                        <label>
+                            Speaker Name
+                        </label>
+                        <input type="text" id="txtPopUpSpeakerName" maxlength="50" class="form-control PopUpRequiredField " readonly="readonly" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            Employee Name
+                        </label>
+                        <input type="text" id="txtPopUpEmployeeName" maxlength="50" class="form-control PopUpRequiredField PopUpclearTextboxData" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            Employee Code
+                        </label>
+                        <input type="text" id="txtPopUpEmployeeCode" maxlength="50" class="form-control PopUpRequiredField PopUpclearTextboxData" />
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="well margin-top-15">
+
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 border-style-1">
+                            <div class="col-md-7">
+                                <label class="margin-bottom-0">Q1 . Program Content</label>
+                            </div>
+                            <div class="col-md-5 clsPopUpProgramContent">
+                                <div class="col-md-12 padding-0">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramContent" value="Average" class="PopUpcommonCSSForRadio"> Average
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramContent" value="Good" class="PopUpcommonCSSForRadio"> Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramContent" value="Very Good" class="PopUpcommonCSSForRadio"> Very Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramContent" value="Excellent" class="PopUpcommonCSSForRadio"> Excellent
+                                    </label>
+                                </div>
+                                <!--<input type="text" id="txtProgramContentValue" class="form-control RequiredField clearTextboxData" />-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 border-style-1">
+                            <div class="col-md-7">
+                                <label class="margin-bottom-0">Q2 . Tasks / Activities Undertaken</label>
+                            </div>
+                            <div class="col-md-5 PopUpclsTasksActivities">
+                                <div class="col-md-12 padding-0">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTasksActivities" value="Average" class="PopUpcommonCSSForRadio"> Average
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTasksActivities" value="Good" class="PopUpcommonCSSForRadio"> Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTasksActivities" value="Very Good" class="PopUpcommonCSSForRadio"> Very Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTasksActivities" value="Excellent" class="PopUpcommonCSSForRadio"> Excellent
+                                    </label>
+                                </div>
+                                <!--<input type="text" id="txtTasksActivitiesValue" class="form-control RequiredField clearTextboxData" />-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 border-style-1">
+                            <div class="col-md-7">
+                                <label class="margin-bottom-0">Q3 . Program Utility In Daily Aspects Of Life</label>
+                            </div>
+                            <div class="col-md-5 PopUpclsProgramUtility">
+                                <div class="col-md-12 padding-0">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramUtility" value="Average" class="PopUpcommonCSSForRadio"> Average
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramUtility" value="Good" class="PopUpcommonCSSForRadio"> Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramUtility" value="Very Good" class="PopUpcommonCSSForRadio"> Very Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpProgramUtility" value="Excellent" class="PopUpcommonCSSForRadio"> Excellent
+                                    </label>
+                                </div>
+                                <!--<input type="text" id="txtProgramUtilityValue" class="form-control RequiredField clearTextboxData" />-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 border-style-1">
+                            <div class="col-md-7">
+                                <label class="margin-bottom-0">Q4 . The Trainer Ability To Encourage Active Participation</label>
+                            </div>
+                            <div class="col-md-5 PopUpclsTrainerAbilityEncourage">
+                                <div class="col-md-12 padding-0">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityEncourage" value="Average" class="PopUpcommonCSSForRadio"> Average
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityEncourage" value="Good" class="PopUpcommonCSSForRadio"> Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityEncourage" value="Very Good" class="PopUpcommonCSSForRadio"> Very Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityEncourage" value="Excellent" class="PopUpcommonCSSForRadio"> Excellent
+                                    </label>
+                                </div>
+                                <!--<input type="text" id="txtTrainerAbilityEncourage" class="form-control RequiredField clearTextboxData" />-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 border-style-1">
+                            <div class="col-md-7">
+                                <label class="margin-bottom-0">Q5 . Trainer Ability To Communicate Techniques, Concepts & Ideas</label>
+                            </div>
+                            <div class="col-md-5 PopUpclsTrainerAbilityCommunicate">
+                                <div class="col-md-12 padding-0">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityCommunicate" value="Average" class="PopUpcommonCSSForRadio"> Average
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityCommunicate" value="Good" class="PopUpcommonCSSForRadio"> Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityCommunicate" value="Very Good" class="PopUpcommonCSSForRadio"> Very Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpTrainerAbilityCommunicate" value="Excellent" class="PopUpcommonCSSForRadio"> Excellent
+                                    </label>
+                                </div>
+                                <!--<input type="text" id="txtTrainerAbilityCommunicate" class="form-control RequiredField clearTextboxData" />-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 border-style-1">
+                            <div class="col-md-7">
+                                <label class="margin-bottom-0">Q6 . Facilities at the venue</label>
+                            </div>
+                            <div class="col-md-5 PopUpclsFacilities">
+                                <div class="col-md-12 padding-0">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpFacilities" value="Average" class="PopUpcommonCSSForRadio"> Average
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpFacilities" value="Good" class="PopUpcommonCSSForRadio"> Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpFacilities" value="Very Good" class="PopUpcommonCSSForRadio"> Very Good
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="PopUpFacilities" value="Excellent" class="PopUpcommonCSSForRadio"> Excellent
+                                    </label>
+                                </div>
+                                <!--<input type="text" id="txtFacilitiesValue" class="form-control RequiredField clearTextboxData" />-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="well margin-top-15">
+                    <div class="col-md-12 margin-top-15">
+                        <label>What was the most useful part of the Training? Why?</label>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 padding-0">
+                            <textarea class="form-control PopUpRequiredField PopUpclearTextboxData" maxlength="150" placeholder="Max 150 Characters" id="txtPopUpUsefullPartTraining"></textarea>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="well margin-top-15">
+                    <div class="col-md-12 margin-top-15">
+                        <label>Any features of the program that can be improved /anything you did not like?</label>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 padding-0">
+                            <textarea class="form-control PopUpRequiredField PopUpclearTextboxData" maxlength="150" placeholder="Max 150 Characters" id="txtPopUpFeatureImproveForProgram"></textarea>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="well margin-top-15">
+                    <div class="col-md-12 margin-top-15">
+                        <label>Your overall view of the program / Any Comment</label>
+                    </div>
+                    <div class="col-md-12 margin-top-15">
+                        <div class="col-md-12 padding-0">
+                            <textarea class="form-control PopUpRequiredField PopUpclearTextboxData" maxlength="150" placeholder="Max 150 Characters" id="txtPopUpOverAllViewCommentsForProgram"></textarea>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class=" col-md-12 padding-0 margin-top-15">
+                <div id="divUpdateErrors" class="requiredfieldsstyle">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <input type="button" class="btn btn-primary btnValidations" id="btnUpdateDetails"
+                       value="Update" />
+            </div>
+        </div>
+    </div>
+</div>
+<!--POPUP END ********************-->
+<!--Program Name model dialoguebox Start-->
+<div class="col-md-12 margin-top-10 padding-0">
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important;;margin-left: 9px !Important;margin-right: 0px !Important;margin-top: 0px !Important; margin-bottom: 0px !Important;">
+            Manage Feedback Details
+        </h1>
+    </div>
+    <div class="col-md-12 padding-0" style="display:none;">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div id="divErrorMessage" class="errorBorder-color"></div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <label>
+                Program Name
+            </label>
+            <div id="divProgramName">
+                <input type="text" maxlength="50" readonly="readonly" id="txtProgramName" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>
+                    Program Start Date
+                </label>
+                <input type="text" id="txtProgramStartDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program End Date
+                </label>
+                <input type="text" id="txtProgramEndDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program Location
+                </label>
+                <input id="txtProgramLocation" class="form-control clearTextboxData" readonly="readonly" />
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-12 margin-top-15 padding-0" style="display:none;">
+        <div class="col-md-4">
+            <label>
+                Speaker Name
+            </label>
+            <input type="text" id="txtSpeakerName" maxlength="50" class="form-control RequiredField " readonly="readonly" />
+        </div>
+        <div class="col-md-4">
+            <label>
+                Employee Name
+            </label>
+            <input type="text" id="txtEmployeeName" maxlength="50" class="form-control RequiredField clearTextboxData" />
+        </div>
+        <div class="col-md-4">
+            <label>
+                Employee Code
+            </label>
+            <input type="text" id="txtEmployeeCode" maxlength="50" class="form-control RequiredField clearTextboxData" />
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="well margin-top-15" style="display:none;">
+
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 border-style-1">
+                <div class="col-md-7">
+                    <label class="margin-bottom-0">Q1 . Program Content</label>
+                </div>
+                <div class="col-md-5 clsProgramContent">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramContent" value="Average" class="commonCSSForRadio"> Average
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramContent" value="Good" class="commonCSSForRadio"> Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramContent" value="Very Good" class="commonCSSForRadio"> Very Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramContent" value="Excellent" class="commonCSSForRadio"> Excellent
+                        </label>
+                    </div>
+                    <!--<input type="text" id="txtProgramContentValue" class="form-control RequiredField clearTextboxData" />-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 border-style-1">
+                <div class="col-md-7">
+                    <label class="margin-bottom-0">Q2 . Tasks / Activities Undertaken</label>
+                </div>
+                <div class="col-md-5 clsTasksActivities">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="TasksActivities" value="Average" class="commonCSSForRadio"> Average
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TasksActivities" value="Good" class="commonCSSForRadio"> Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TasksActivities" value="Very Good" class="commonCSSForRadio"> Very Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TasksActivities" value="Excellent" class="commonCSSForRadio"> Excellent
+                        </label>
+                    </div>
+                    <!--<input type="text" id="txtTasksActivitiesValue" class="form-control RequiredField clearTextboxData" />-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 border-style-1">
+                <div class="col-md-7">
+                    <label class="margin-bottom-0">Q3 . Program Utility In Daily Aspects Of Life</label>
+                </div>
+                <div class="col-md-5 clsProgramUtility">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramUtility" value="Average" class="commonCSSForRadio"> Average
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramUtility" value="Good" class="commonCSSForRadio"> Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramUtility" value="Very Good" class="commonCSSForRadio"> Very Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="ProgramUtility" value="Excellent" class="commonCSSForRadio"> Excellent
+                        </label>
+                    </div>
+                    <!--<input type="text" id="txtProgramUtilityValue" class="form-control RequiredField clearTextboxData" />-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 border-style-1">
+                <div class="col-md-7">
+                    <label class="margin-bottom-0">Q4 . The Trainer Ability To Encourage Active Participation</label>
+                </div>
+                <div class="col-md-5 clsTrainerAbilityEncourage">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityEncourage" value="Average" class="commonCSSForRadio"> Average
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityEncourage" value="Good" class="commonCSSForRadio"> Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityEncourage" value="Very Good" class="commonCSSForRadio"> Very Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityEncourage" value="Excellent" class="commonCSSForRadio"> Excellent
+                        </label>
+                    </div>
+                    <!--<input type="text" id="txtTrainerAbilityEncourage" class="form-control RequiredField clearTextboxData" />-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 border-style-1">
+                <div class="col-md-7">
+                    <label class="margin-bottom-0">Q5 . Trainer Ability To Communicate Techniques, Concepts & Ideas</label>
+                </div>
+                <div class="col-md-5 clsTrainerAbilityCommunicate">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityCommunicate" value="Average" class="commonCSSForRadio"> Average
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityCommunicate" value="Good" class="commonCSSForRadio"> Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityCommunicate" value="Very Good" class="commonCSSForRadio"> Very Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="TrainerAbilityCommunicate" value="Excellent" class="commonCSSForRadio"> Excellent
+                        </label>
+                    </div>
+                    <!--<input type="text" id="txtTrainerAbilityCommunicate" class="form-control RequiredField clearTextboxData" />-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 border-style-1">
+                <div class="col-md-7">
+                    <label class="margin-bottom-0">Q6 . Facilities at the venue</label>
+                </div>
+                <div class="col-md-5 clsFacilities">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="Facilities" value="Average" class="commonCSSForRadio"> Average
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Facilities" value="Good" class="commonCSSForRadio"> Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Facilities" value="Very Good" class="commonCSSForRadio"> Very Good
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Facilities" value="Excellent" class="commonCSSForRadio"> Excellent
+                        </label>
+                    </div>
+                    <!--<input type="text" id="txtFacilitiesValue" class="form-control RequiredField clearTextboxData" />-->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="well margin-top-15" style="display:none;">
+        <div class="col-md-12 margin-top-15">
+            <label>What was the most useful part of the Training? Why?</label>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 padding-0">
+                <textarea class="form-control RequiredField clearTextboxData" maxlength="150" placeholder="Max 150 Characters" id="txtUsefullPartTraining"></textarea>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="well margin-top-15" style="display:none;">
+        <div class="col-md-12 margin-top-15">
+            <label>Any features of the program that can be improved /anything you did not like?</label>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 padding-0">
+                <textarea class="form-control RequiredField clearTextboxData" maxlength="150" placeholder="Max 150 Characters" id="txtFeatureImproveForProgram"></textarea>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="well margin-top-15" style="display:none;">
+        <div class="col-md-12 margin-top-15">
+            <label>Your overall view of the program / Any Comment</label>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 padding-0">
+                <textarea class="form-control RequiredField clearTextboxData" maxlength="150" placeholder="Max 150 Characters" id="txtOverAllViewCommentsForProgram"></textarea>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class=" col-md-12 padding-0 margin-top-10">
+        <div id="divFeedBackSpeakerErrors" class="requiredfieldsstyle"></div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="col-md-12 margin-top-10" style="display:none;">
+        <input type="button" class="btn btn-primary" id="btnAddSpeaker" value="Add" />
+    </div>
+</div>
+<div>
+    <div class="col-md-12">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-12 padding-0">
+                <label>
+                    Speaker Details
+                </label>
+            </div>
+            <div class="col-md-12 padding-0">
+                <table id="tableFeedBackSpeaker" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                SlNo
+                            </th>
+                            <th>
+                                Program Name
+                            </th>
+                            <th>
+                                Program Start Date
+                            </th>
+                            <th>
+                                Program End Date
+                            </th>
+                            <th>
+                                Speaker Name
+                            </th>
+                            <th>
+                                Employee Name
+                            </th>
+                            <th width="20%" colspan="2">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblFeedBackSpeakerBind"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 margin-top-10">
+        <input type="button" class="btn btn-primary" id="btnSubmit" value="Submit" />
+    </div>
+
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script>
+
+    function getQueryStrings() {
+        var assoc = {};
+        var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+        var queryString = location.search.substring(1);
+        var keyValues = queryString.split('&');
+
+        for (var i in keyValues) {
+            var key = keyValues[i].split('=');
+            if (key.length > 1) {
+                assoc[decode(key[0])] = decode(key[1]);
+            }
+        }
+
+        return assoc;
+    }
+    var qs = getQueryStrings();
+    var ProgramName = qs["ProgramName"];
+    var SelectID = "";
+    if (ProgramName != '' && ProgramName != null) {
+        $('#txtProgramName').val(ProgramName);
+        getProgramLocation(ProgramName);
+        var SpeakerName = getSpeakerName(ProgramName);
+        if (SpeakerName != '' && SpeakerName != null) {
+            $('#txtSpeakerName').val(SpeakerName);
+        }
+        jQuery.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('FeedbackSpeakerDetails')/items?$filter=ProgramName eq %27" + ProgramName + "%27&$orderby=ID%20desc",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.Status == "Active" || results.Status == "Default" || results.Status == "SaveAsDraft") {
+                        arr[i++] = index;
+                    }
+                });
+                $("#tblFeedBackSpeakerBind").html("");
+                for (var j = 0; j < arr.length; j++) {
+                    var arrConfigK = arr[j];
+                    var index = parseInt(j + 1);
+
+                    var ProgramName = d.d.results[arrConfigK].ProgramName;
+                    var ProgramStartDate = d.d.results[arrConfigK].ProgramStartDate;
+                    var ProgramEndDate = d.d.results[arrConfigK].ProgramEndDate;
+                    var ProgramLocation = d.d.results[arrConfigK].ProgramLocation;
+                    var FacilitiesValue = d.d.results[arrConfigK].FacilitiesValue;
+                    var ProgramContentValue = d.d.results[arrConfigK].ProgramContentValue;
+                    var SpeakerID = d.d.results[arrConfigK].ID;
+                    var TasksActivitiesValue = d.d.results[arrConfigK].TasksActivitiesValue;
+                    var ProgramUtilityValue = d.d.results[arrConfigK].ProgramUtilityValue;
+                    var TrainerAbilityEncourage = d.d.results[arrConfigK].TrainerAbilityEncourage;
+                    var TrainerAbilityCommunicate = d.d.results[arrConfigK].TrainerAbilityCommunicate;
+                    var SpeakerName = d.d.results[arrConfigK].SpeakerName;
+                    var EmployeeName = d.d.results[arrConfigK].EmployeeName;
+                    $("#tblFeedBackSpeakerBind").append("<tr><td style='display:none'>" + SpeakerID + "</td><td>" + index + "</td><td>" + ProgramName + "</td><td>" + ProgramStartDate + "</td><td >" + ProgramEndDate + "</td><td>" + SpeakerName + "</td><td >" + EmployeeName + "</td><td width='10%'><input type='button' data-toggle='modal'  data-edit='popup-1'data-val='" + SpeakerID + "' value='Edit' /></td><td width='10%'><input type='button'  data-delete='popup-1'data-val='" + SpeakerID + "' value='Remove'> </td></tr>");
+
+
+                }
+                $('[data-delete]').on('click', function (e) {
+                    var DeleteCheck = false;
+                    var a = confirm("Are You Want To Delete The Activity ?");
+                    if (a == true) {
+                        DeleteCheck = true;
+                        a = true;
+                    }
+                    else {
+                        DeleteCheck = false;
+                        a = false;
+                    }
+                    if (DeleteCheck == true) {
+                        SelectID = $(this).data('val');
+                        var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedbackSpeakerDetails')/items(" + SelectID + ")";
+                        $.ajax({
+                            url: requestUri,
+                            type: "POST",
+                            headers: {
+                                "ACCEPT": "application/json;odata=verbose",
+                                "content-type": "application/json;odata=verbose",
+                                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                                "IF-MATCH": "*",
+                                "X-HTTP-Method": "DELETE"
+                            },
+                            success: function (data) {
+                                if (SelectID != "") {
+                                    var ProgramName = $("#txtProgramName").val();
+                                    getBindData(ProgramName);
+                                }
+                            },
+                            error: function (error) {
+                                alert(JSON.stringify(error));
+                            },
+                        });
+                        e.preventDefault();
+                    }
+                });
+
+                $('[data-edit]').on('click', function (e) {
+                    $('.clearTextboxData').each(function () {
+                        $(this).val('');
+                    });
+                    $(".PopUpcommonCSSForRadio").each(function (i) {
+                        this.checked = false;
+                    });
+
+                    SelectID = $(this).data('val');
+                    $('#myModalP').modal('show');
+                    var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedbackSpeakerDetails')/items(" + SelectID + ")";
+                    $.ajax({
+                        url: requestUri,
+                        type: "GET",
+                        async: false,
+                        headers: {
+                            "accept": "application/json;odata=verbose",
+                            "content-type": "application/json;odata=verbose",
+                            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                        },
+                        success: function (d) {
+
+                            $('input[name=PopUpFacilities][value="' + d.d.FacilitiesValue + '"]').prop('checked', true);
+                            $('input[name=PopUpTasksActivities][value="' + d.d.TasksActivitiesValue + '"]').prop('checked', true);
+
+                            $('input[name=PopUpTrainerAbilityEncourage][value="' + d.d.TrainerAbilityEncourage + '"]').prop('checked', true);
+                            $('input[name=PopUpTrainerAbilityCommunicate][value="' + d.d.TrainerAbilityCommunicate + '"]').prop('checked', true);
+                            $('input[name=PopUpProgramContent][value="' + d.d.ProgramContentValue + '"]').prop('checked', true);
+                            $('input[name=PopUpProgramUtility][value="' + d.d.ProgramUtilityValue + '"]').prop('checked', true);
+                            $("#txtPopUpSpeakerName").val(d.d.SpeakerName);
+                            $("#txtPopUpEmployeeName").val(d.d.EmployeeName);
+                            $("#txtPopUpEmployeeCode").val(d.d.EmployeeCode);
+                            $("#txtPopUpFeatureImproveForProgram").val(d.d.FeatureImproveForProgram);
+                            $("#txtPopUpOverAllViewCommentsForProgram").val(d.d.OverAllViewCommentsForProgram);
+                            $("#txtPopUpUsefullPartTraining").val(d.d.UsefullPartTraining);
+                        },
+                        error: function () { console.log('fail'); }
+                    });
+                });
+
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+    $('#btnUpdateDetails').click(function () {
+        if (checkValidationOnUpdate() && SelectID != '' && SelectID != null) {
+            UpdateProgramDetaiails(SelectID);
+            $('#myModalP').modal('hide');
+        }
+    });
+    function checkValidationOnUpdate() {
+        isValid = true;
+        $('.PopUpRequiredField').each(function () {
+            if ($.trim($(this).val()) == '' || $.trim($(this).val()) == '--Select--') {
+                isValid = false;
+                $(this).css({
+                    "border": "1px solid red"
+                });
+            }
+            else {
+                $(this).css({
+                    "border": ""
+                });
+            }
+        });
+        if ($('input[name="PopUpProgramContent"]:checked').length == 0) {
+            isValid = false;
+            $('.clsPopUpProgramContent').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsPopUpProgramContent').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="PopUpProgramUtility"]:checked').length == 0) {
+            isValid = false;
+            $('.clsPopUpProgramUtility').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsPopUpProgramUtility').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="PopUpTasksActivities"]:checked').length == 0) {
+            isValid = false;
+            $('.clsPopUpTasksActivities').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsPopUpTasksActivities').css({
+                "border": ""
+            });
+        }
+
+        if ($('input[name="PopUpProgramUtility"]:checked').length == 0) {
+            isValid = false;
+            $('.clsPopUpProgramUtility').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsPopUpProgramUtility').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="PopUpTrainerAbilityEncourage"]:checked').length == 0) {
+            isValid = false;
+            $('.clsPopUpTrainerAbilityEncourage').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsPopUpTrainerAbilityEncourage').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="PopUpTrainerAbilityCommunicate"]:checked').length == 0) {
+            isValid = false;
+            $('.clsPopUpTrainerAbilityCommunicate').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsPopUpTrainerAbilityCommunicate').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="PopUpFacilities"]:checked').length == 0) {
+            isValid = false;
+            $('.clsPopUpFacilities').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsPopUpFacilities').css({
+                "border": ""
+            });
+        }
+
+        if (isValid == false) {
+            $('#divUpdateErrors').empty();
+            $('#divUpdateErrors').css('color', 'red');
+            $('#divUpdateErrors').append("Highlighted fields are mandatory");
+        }
+        else {
+            $('#divUpdateErrors').css('color', '');
+            $('#divUpdateErrors').empty();
+        }
+
+        return isValid;
+    }
+    function UpdateProgramDetaiails(SelectID) {
+        var FacilitiesValue = $('input[name=PopUpFacilities]:radio:checked').val();
+        var ProgramContentValue = $('input[name=PopUpProgramContent]:radio:checked').val();
+        var TasksActivitiesValue = $('input[name=PopUpTasksActivities]:radio:checked').val();
+        var ProgramUtilityValue = $('input[name=PopUpProgramUtility]:radio:checked').val();
+        var TrainerAbilityEncourage = $('input[name=PopUpTrainerAbilityEncourage]:radio:checked').val();
+        var TrainerAbilityCommunicate = $('input[name=PopUpTrainerAbilityCommunicate]:radio:checked').val();
+        var SpeakerName = $("#txtPopUpSpeakerName").val();
+        var EmployeeName = $("#txtPopUpEmployeeName").val();
+        var EmployeeCode = $("#txtPopUpEmployeeCode").val();
+        var CurrentLoginUser = LoginUserEmail();
+        var FeatureImproveForProgram = $("#txtPopUpFeatureImproveForProgram").val();
+        var OverAllViewCommentsForProgram = $("#txtPopUpOverAllViewCommentsForProgram").val();
+        var UsefullPartTraining = $("#txtPopUpUsefullPartTraining").val();
+
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedbackSpeakerDetails')/items(" + SelectID + ")",
+            type: "POST",
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.FeedbackSpeakerDetailsListItem' },
+                'FacilitiesValue': FacilitiesValue,
+                'ProgramContentValue': ProgramContentValue,
+                'TasksActivitiesValue': TasksActivitiesValue,
+                'TrainerAbilityEncourage': TrainerAbilityEncourage,
+                'TrainerAbilityCommunicate': TrainerAbilityCommunicate,
+                'SpeakerName': SpeakerName,
+                'EmployeeName': EmployeeName,
+                'Status': "Active",
+                'CreatedByUser': CurrentLoginUser,
+                'EmployeeCode': EmployeeCode,
+                'FeatureImproveForProgram': FeatureImproveForProgram,
+                'OverAllViewCommentsForProgram': OverAllViewCommentsForProgram,
+                'UsefullPartTraining': UsefullPartTraining,
+                'ProgramUtilityValue': ProgramUtilityValue,
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                "X-HTTP-Method": "MERGE",
+                "If-Match": "*"
+            },
+            success: function (data) {
+                alert('Program details updated successfully');
+                var ProgramName = $('#txtProgramName').val();
+                getBindData(ProgramName);
+
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+    }
+
+    function getSpeakerName(ProgramName) {
+        var SpeakerName = '';
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items?$filter=Status%20eq%20%27Active%27and%20ProgramName%20eq%20%27" + ProgramName + "%27 and FeedBackNeed eq 'Yes'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == ProgramName) {
+                        var ActivityID = d.d.results[arrK].ActivityID;
+                        SpeakerName = getSpeakerNameOnActivityID(ActivityID);
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return SpeakerName;
+    }
+    function getSpeakerNameOnActivityID(ActivityID) {
+        var SpeakerName = '';
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('FeedBackDetails')/items?$filter=ActiviTyID eq '" + ActivityID + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+               // if (d.d.results.length > 0) {
+                //    SpeakerName = d.d.results[0].NameOfTheSpeaker;
+              //  }
+              
+               var arr = [];
+            i = 0;
+            $.each(d.d.results, function (index, results) {
+                if (results.Status == "Active") {
+                    arr[i++] = index;
+                }
+            });
+
+              for (var j = 0; j < arr.length; j++) {
+                   var arrConfigK = arr[j];
+                    if(arrConfigK<=0){
+                        SpeakerName = d.d.results[arrConfigK].NameOfTheSpeaker + ",";
+                    }
+                    else if(arrConfigK>=1){
+                        SpeakerName = SpeakerName + d.d.results[arrConfigK].NameOfTheSpeaker + ",";
+                    }
+              }
+               var lastChar = SpeakerName.slice(-1);
+                if (lastChar == ',') {
+                SpeakerName = SpeakerName.slice(0, -1);
+                }
+
+            },
+            error: function () { console.log('fail'); }
+        });
+        return SpeakerName;
+    }
+    function getProgramLocation(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items?$filter=Status%20eq%20%27Active%27and%20ProgramName%20eq%20%27" + selectedProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        var PgrmLocation = d.d.results[arrK].ProgramLocation;
+                        var PgrmStartDate = d.d.results[arrK].ProgramStartDate;
+                        var PgrmEndDate = d.d.results[arrK].ProgramEndDate;
+                        $("#txtProgramLocation").val(PgrmLocation);
+                        $("#txtProgramStartDate").val(PgrmStartDate);
+                        $("#txtProgramEndDate").val(PgrmEndDate);
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+</script>
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+</script>
+
+<script>
+    $('#btnAddSpeaker').click(function () {
+        if (IsValidData()) {
+            var ProgramName = $("#txtProgramName").val();
+            var ProgramStartDate = $("#txtProgramStartDate").val();
+            var ProgramEndDate = $("#txtProgramEndDate").val();
+            var ProgramLocation = $("#txtProgramLocation").val();
+            var FacilitiesValue = $('input[name=Facilities]:radio:checked').val();
+            var ProgramContentValue = $('input[name=ProgramContent]:radio:checked').val();
+            var TasksActivitiesValue = $('input[name=TasksActivities]:radio:checked').val();
+            var ProgramUtilityValue = $('input[name=ProgramUtility]:radio:checked').val();
+            var TrainerAbilityEncourage = $('input[name=TrainerAbilityEncourage]:radio:checked').val();
+            var TrainerAbilityCommunicate = $('input[name=TrainerAbilityCommunicate]:radio:checked').val();
+            var SpeakerName = $("#txtSpeakerName").val();
+            var EmployeeName = $("#txtEmployeeName").val();
+            var EmployeeCode = $("#txtEmployeeCode").val();
+            var CurrentLoginUser = LoginUserEmail();
+            var FeatureImproveForProgram = $("#txtFeatureImproveForProgram").val();
+            var OverAllViewCommentsForProgram = $("#txtOverAllViewCommentsForProgram").val();
+            var UsefullPartTraining = $("#txtUsefullPartTraining").val();
+
+
+            $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('FeedbackSpeakerDetails')/items",
+                type: "POST",
+                async: false,
+                data: JSON.stringify({
+                    '__metadata': { 'type': 'SP.Data.FeedbackSpeakerDetailsListItem' },
+                    'Title': ProgramName,
+                    'ProgramName': ProgramName,
+                    'ProgramStartDate': ProgramStartDate,
+                    'ProgramEndDate': ProgramEndDate,
+                    'ProgramLocation': ProgramLocation,
+                    'FacilitiesValue': FacilitiesValue,
+                    'ProgramContentValue': ProgramContentValue,
+                    'TasksActivitiesValue': TasksActivitiesValue,
+                    'TrainerAbilityEncourage': TrainerAbilityEncourage,
+                    'TrainerAbilityCommunicate': TrainerAbilityCommunicate,
+                    'ProgramUtilityValue': ProgramUtilityValue,
+                    'SpeakerName': SpeakerName,
+                    'EmployeeName': EmployeeName,
+                    'Status': "Default",
+                    'CreatedByUser': CurrentLoginUser,
+                    'EmployeeCode': EmployeeCode,
+                    'FeatureImproveForProgram': FeatureImproveForProgram,
+                    'OverAllViewCommentsForProgram': OverAllViewCommentsForProgram,
+                    'UsefullPartTraining': UsefullPartTraining,
+                }),
+                headers: {
+                    "Accept": "application/json;odata=verbose",
+                    "content-type": "application/json; odata=verbose",
+                    "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                },
+                success: function (data) {
+                    alert("Speaker details created successfully");
+                    getBindData(ProgramName);
+                    clearData();
+                },
+                error: function (err) {
+                    alert("Error while adding item: " + JSON.stringify(err));
+                }
+            });
+        }
+    });
+    function clearData() {
+        //$('input:radio[name=Facilities]').attr('checked', false);
+        //$('input:radio[name=ProgramContent]').attr('checked', false);
+        //$('input:radio[name=TasksActivities]').attr('checked', false);
+        //$('input:radio[name=ProgramUtility]').attr('checked', false);
+        //$('input:radio[name=TrainerAbilityEncourage]').attr('checked', false);
+        //$('input:radio[name=TrainerAbilityCommunicate]').attr('checked', false);
+        $(".commonCSSForRadio").each(function (i) {
+            this.checked = false;
+        });
+        $('.clearTextboxData').each(function () {
+            $(this).val('');
+        });
+    }
+    function IsValidData() {
+        isValid = true;
+        $('.RequiredField').each(function () {
+            if ($.trim($(this).val()) == '' || $.trim($(this).val()) == '--Select--') {
+                isValid = false;
+                $(this).css({
+                    "border": "1px solid red"
+                });
+            }
+            else {
+                $(this).css({
+                    "border": ""
+                });
+            }
+        });
+        if ($('input[name="ProgramContent"]:checked').length == 0) {
+            isValid = false;
+            $('.clsProgramContent').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsProgramContent').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="ProgramUtility"]:checked').length == 0) {
+            isValid = false;
+            $('.clsProgramUtility').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsProgramUtility').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="TasksActivities"]:checked').length == 0) {
+            isValid = false;
+            $('.clsTasksActivities').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsTasksActivities').css({
+                "border": ""
+            });
+        }
+
+        if ($('input[name="ProgramUtility"]:checked').length == 0) {
+            isValid = false;
+            $('.clsProgramUtility').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsProgramUtility').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="TrainerAbilityEncourage"]:checked').length == 0) {
+            isValid = false;
+            $('.clsTrainerAbilityEncourage').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsTrainerAbilityEncourage').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="TrainerAbilityCommunicate"]:checked').length == 0) {
+            isValid = false;
+            $('.clsTrainerAbilityCommunicate').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsTrainerAbilityCommunicate').css({
+                "border": ""
+            });
+        }
+        if ($('input[name="Facilities"]:checked').length == 0) {
+            isValid = false;
+            $('.clsFacilities').css({
+                "border": "1px solid red"
+            });
+        }
+        else {
+            $('.clsFacilities').css({
+                "border": ""
+            });
+        }
+
+        if (isValid == false) {
+            $('#divFeedBackSpeakerErrors').empty();
+            $('#divFeedBackSpeakerErrors').css('color', 'red');
+            $('#divFeedBackSpeakerErrors').append("Highlighted fields are mandatory");
+        }
+        else {
+            $('#divFeedBackSpeakerErrors').css('color', '');
+            $('#divFeedBackSpeakerErrors').empty();
+        }
+
+        return isValid;
+    }
+    $('.RequiredField').change(function () {
+        $(this).css({
+            "border": ""
+        });
+    });
+</script>
+<script>
+    var SelectID = "";
+    function getBindData(ProgramID) {
+        $("#tblFeedBackSpeakerBind").html("");
+        jQuery.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('FeedbackSpeakerDetails')/items?$filter=ProgramName eq %27" + ProgramID + "%27&$orderby=ID%20desc",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.Status == "Active" || results.Status == "Default" || results.Status == "SaveAsDraft") {
+                        arr[i++] = index;
+                    }
+                });
+                for (var j = 0; j < arr.length; j++) {
+                    var arrConfigK = arr[j];
+                    var index = parseInt(j + 1);
+
+                    var ProgramName = d.d.results[arrConfigK].ProgramName;
+                    var ProgramStartDate = d.d.results[arrConfigK].ProgramStartDate;
+                    var ProgramEndDate = d.d.results[arrConfigK].ProgramEndDate;
+                    var ProgramLocation = d.d.results[arrConfigK].ProgramLocation;
+                    var FacilitiesValue = d.d.results[arrConfigK].FacilitiesValue;
+                    var ProgramContentValue = d.d.results[arrConfigK].ProgramContentValue;
+                    var SpeakerID = d.d.results[arrConfigK].ID;
+                    var TasksActivitiesValue = d.d.results[arrConfigK].TasksActivitiesValue;
+                    var ProgramUtilityValue = d.d.results[arrConfigK].ProgramUtilityValue;
+                    var TrainerAbilityEncourage = d.d.results[arrConfigK].TrainerAbilityEncourage;
+                    var TrainerAbilityCommunicate = d.d.results[arrConfigK].TrainerAbilityCommunicate;
+                    var SpeakerName = d.d.results[arrConfigK].SpeakerName;
+                    var EmployeeName = d.d.results[arrConfigK].EmployeeName;
+                    $("#tblFeedBackSpeakerBind").append("<tr><td style='display:none'>" + SpeakerID + "</td><td>" + index + "</td><td>" + ProgramName + "</td><td>" + ProgramStartDate + "</td><td >" + ProgramEndDate + "</td><td>" + SpeakerName + "</td><td >" + EmployeeName + "</td><td width='10%'><input type='button' data-toggle='modal'  data-edit='popup-1'data-val='" + SpeakerID + "' value='Edit' /></td><td width='10%'><input type='button'  data-delete='popup-1'data-val='" + SpeakerID + "' value='Remove'> </td></tr>");
+                }
+                $('[data-delete]').on('click', function (e) {
+                    var DeleteCheck = false;
+                    var a = confirm("Are You Want To Delete The Activity ?");
+                    if (a == true) {
+                        DeleteCheck = true;
+                        a = true;
+                    }
+                    else {
+                        DeleteCheck = false;
+                        a = false;
+                    }
+                    if (DeleteCheck == true) {
+                        SelectID = $(this).data('val');
+                        var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedbackSpeakerDetails')/items(" + SelectID + ")";
+                        $.ajax({
+                            url: requestUri,
+                            type: "POST",
+                            headers: {
+                                "ACCEPT": "application/json;odata=verbose",
+                                "content-type": "application/json;odata=verbose",
+                                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                                "IF-MATCH": "*",
+                                "X-HTTP-Method": "DELETE"
+                            },
+                            success: function (data) {
+                                if (SelectID != "") {
+                                    var ProgramName = $("#txtProgramName").val();
+                                    getBindData(ProgramName);
+                                }
+                            },
+                            error: function (error) {
+                                alert(JSON.stringify(error));
+                            },
+                        });
+                        e.preventDefault();
+                    }
+                });
+
+                $('[data-edit]').on('click', function (e) {
+                    $('.clearTextboxData').each(function () {
+                        $(this).val('');
+                    });
+                    $(".PopUpcommonCSSForRadio").each(function (i) {
+                        this.checked = false;
+                    });
+
+                    SelectID = $(this).data('val');
+                    $('#myModalP').modal('show');
+                    var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedbackSpeakerDetails')/items(" + SelectID + ")";
+                    $.ajax({
+                        url: requestUri,
+                        type: "GET",
+                        async: false,
+                        headers: {
+                            "accept": "application/json;odata=verbose",
+                            "content-type": "application/json;odata=verbose",
+                            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                        },
+                        success: function (d) {
+
+                            $('input[name=PopUpFacilities][value="' + d.d.FacilitiesValue + '"]').prop('checked', true);
+                            $('input[name=PopUpTasksActivities][value="' + d.d.TasksActivitiesValue + '"]').prop('checked', true);
+
+                            $('input[name=PopUpTrainerAbilityEncourage][value="' + d.d.TrainerAbilityEncourage + '"]').prop('checked', true);
+                            $('input[name=PopUpTrainerAbilityCommunicate][value="' + d.d.TrainerAbilityCommunicate + '"]').prop('checked', true);
+                            $('input[name=PopUpProgramContent][value="' + d.d.ProgramContentValue + '"]').prop('checked', true);
+                            $('input[name=PopUpProgramUtility][value="' + d.d.ProgramUtilityValue + '"]').prop('checked', true);
+                            $("#txtPopUpSpeakerName").val(d.d.SpeakerName);
+                            $("#txtPopUpEmployeeName").val(d.d.EmployeeName);
+                            $("#txtPopUpEmployeeCode").val(d.d.EmployeeCode);
+                            $("#txtPopUpFeatureImproveForProgram").val(d.d.FeatureImproveForProgram);
+                            $("#txtPopUpOverAllViewCommentsForProgram").val(d.d.OverAllViewCommentsForProgram);
+                            $("#txtPopUpUsefullPartTraining").val(d.d.UsefullPartTraining);
+                        },
+                        error: function () { console.log('fail'); }
+                    });
+                });
+
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+    $('#btnUpdateDetails').click(function () {
+        if (checkValidationOnUpdate() && SelectID != '' && SelectID != null) {
+            UpdateProgramDetaiails(SelectID);
+            $('#myModalP').modal('hide');
+        }
+    });
+
+    $('#btnSubmit').click(function () {
+        $("#tableFeedBackSpeaker tr:gt(0)").each(function () {
+            var this_row = $(this);
+            var FeedBackSpeakerID = $.trim(this_row.find('td:eq(0)').html());
+            if (FeedBackSpeakerID != '' && FeedBackSpeakerID != null) {
+                $.ajax({
+                    url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('FeedbackSpeakerDetails')/items(" + FeedBackSpeakerID + ")",
+                    type: "POST",
+                    async: false,
+                    data: JSON.stringify({
+                        '__metadata': { 'type': 'SP.Data.FeedbackSpeakerDetailsListItem' },
+                        'Status': 'Active'
+                    }),
+                    headers: {
+                        "Accept": "application/json;odata=verbose",
+                        "content-type": "application/json; odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                        "X-HTTP-Method": "MERGE",
+                        "If-Match": "*"
+                    },
+                    success: function (data) {
+                    },
+                    error: function (err) {
+                        alert("Error while adding item: " + JSON.stringify(err));
+                    }
+                });
+            }
+        });
+        alert("Program details updated successfully");
+        window.location.href = "/sites/HR-TrainingManagementSystem/Pages/Feedback-Dashboard.aspx";
+    });
+</script>

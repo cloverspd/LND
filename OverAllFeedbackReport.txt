@@ -1,0 +1,707 @@
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.flash.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.html5.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.print.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/exportToExcelJS/jquery.table2excel.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/exportToExcelJS/jquery.battatech.excelexport.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+<style>
+    .errorBorder-color {
+        padding: 0px !important;
+        color: red;
+        font-size: 19px;
+        margin-left: 33px;
+    }
+
+    .margin-top-50 {
+        margin-top: 50px;
+    }
+
+    .dataTables_length {
+        position: absolute;
+        margin-top: -115px;
+    }
+
+    .dataTables_filter {
+        position: absolute;
+        margin-top: -115px;
+    }
+</style>
+
+
+<div>
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important;;margin-left: 9px !Important;margin-right: 0px !Important;margin-top: 0px !Important; margin-bottom: 0px !Important;">
+            Overall Feedback Report
+        </h1>
+    </div>
+    <div class="col-md-12 padding-0">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div id="divErrorMessage" class="errorBorder-color"></div>
+        </div>
+        <div class="col-md-6 margin-top-15">
+            <label>
+                Program Name
+            </label>
+            <div id="ddlProgramName">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 padding-0 margin-top-15">
+        <div class="col-md-10">
+            <label style="line-height: 40px;">
+                FEEDBACK FORM SUMMARY
+            </label>
+        </div>
+        <div class="col-md-2">
+            <label style="display:none">ABC</label>
+            <button type="button" id="btntotalProgramReport" style="display:none;" class="btn-block">Export to Excel</button>
+        </div>
+        <div class="col-md-12 padding-0" id="divClearCotentMISReport">
+            <div class="col-md-12">
+                <table style="width: 100%;" id='tblFinalReport'>
+                    <tr>
+                        <td>
+                            <div>
+                                <table class="table table-striped table-bordered dt-responsive nowrap margin-bottom-0 clearDataOnChange">
+                                    <thead>
+                                        <tr>
+                                            <th>Program Name</th>
+                                            <th id="thProgramName"></th>
+                                            <th>Training Start Date</th>
+                                            <th>Training End Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyProgramDetails"></tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <table class="table table-striped table-bordered dt-responsive nowrap margin-bottom-0 clearDataOnChange">
+                                    <thead>
+                                        <tr>
+                                            <th>Session</th>
+                                            <th></th>
+                                            <th>Rating</th>
+                                            <!--<th>Weightage</th>
+                                            <th>Average</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyProgramWeightAge"></tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        PopulateProgramDropDown();
+    });
+
+    function PopulateProgramDropDown() {
+        var listName = "NewInductionProgram";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+        var UserEmail = LoginUserEmail();
+        getProgram(UserEmail, listName, url, function (data) {
+            var TodayDate = new Date();
+            var day = TodayDate.getDate();
+            var mm = TodayDate.getMonth() + 1;
+            var Year = TodayDate.getFullYear();
+            var items = data.d.results;
+            var pgmFinalData = []; var j = 0;
+            var arrPGM = [];
+            var arrPGMUnique = [];
+            for (var k = 0; k < items.length; k++) {
+                var ChkProgramEndDate = new Date(items[k].ProgramEndDate.split("/").reverse().join("-"));
+                if (new Date(items[k].ProgramEndDate.split("/").reverse().join("-")) <= TodayDate || ChkProgramEndDate.setHours(0, 0, 0, 0) == TodayDate.setHours(0, 0, 0, 0)) {
+                    var NameProgram = items[k].ProgramName;
+                    if (pgmFinalData[j++] != NameProgram) {
+                        pgmFinalData[j++] = NameProgram;
+                    }
+                }
+            }
+            var uniqueProgramNames = '';
+            var result = [];
+            $.each(pgmFinalData, function (index, pgmFinalData) {
+                if ($.inArray(pgmFinalData, result) == -1) {
+                    result.push(pgmFinalData);
+                }
+            });
+            console.log(ChkProgramEndDate);
+            //var programBind = GroupByProgramData(pgmFinalData, 'ProgramName');
+            var inputElement = '<select id="ProgramNameDynDropDown" class="form-control"><option  value="">--Select Program--</option>';
+            // Add all the new items
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] != undefined) {
+                    var itemId = result[i],
+                        itemVal = result[i];
+                    inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+                }
+            }
+            inputElement += '</select>';
+            $('#ddlProgramName').append(inputElement);
+            $("#ProgramNameDynDropDown").each(function () {
+                $('option', this).each(function () {
+                    if ($(this).text() == '--Select Program--') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+            $('#ProgramNameDynDropDown').on('change', function () {
+                var selectedProgramName = $(this).val();
+                var UserEmailID = LoginUserEmail();
+                $("#divTotalProgramReport").empty();
+                $("#thProgramName").empty();
+                $("#thProgramName").append(selectedProgramName);
+                $('.clearDataOnChange').find("tr:not(:first)").remove();
+                $.blockUI({ message: '<div style="font-size:20px">Please Wait...</div>', });
+                setTimeout(function () {
+                    getTotlaUserEmployeeDetails(selectedProgramName);
+                    $.unblockUI({
+                        onUnblock: function () {
+                            console.log('');
+                        }
+                    });
+                }, 200);
+            });
+
+        }, function (data) {
+            alert("An error occured while getting ConfigParameters. Please try again");
+        });
+    }
+
+
+    function getProgram(UserEmail, listName, siteurl, success, failure) {
+        var urlTest = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=CreatedByUser eq %27" + UserEmail + "%27 and Status eq 'Active' and FeedBackNeed eq 'Yes'&$orderby= Created desc";
+        $.ajax({
+            url: urlTest,
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+    function GroupByProgramData(items, propertyName) {
+        var result = [];
+        $.each(items, function (index, item) {
+            if ($.inArray(item[propertyName], result) == -1) {
+                result.push(item[propertyName]);
+            }
+        });
+        return result;
+    }
+
+</script>
+<script>
+    function getOnlineFeedEmployeeDetails(selectedProgramName) {
+        var UserEmail = LoginUserEmail(); var pushOnlineFeedData = [];
+        var PgmContent = 0; var TasksActRating = 0; var PrmUtilityRating = 0; var TrainAbiEncour = 0; var TraiAbiComm = 0; var Facilities = 0;
+        var totalPersons = 0;
+        var PgmContent1 = 0; var PgmContent2 = 0; var PgmContent3 = 0; var PgmContent4 = 0;
+        var TasksActRating1 = 0; var TasksActRating2 = 0; var TasksActRating3 = 0; var TasksActRating4 = 0;
+        var PrmUtilityRating1 = 0; var PrmUtilityRating2 = 0; var PrmUtilityRating3 = 0; var PrmUtilityRating4 = 0;
+        var TrainAbiEncour1 = 0; var TrainAbiEncour2 = 0; var TrainAbiEncour3 = 0; var TrainAbiEncour4 = 0;
+        var TraiAbiComm1 = 0; var TraiAbiComm2 = 0; var TraiAbiComm3 = 0; var TraiAbiComm4 = 0;
+        var Facilities1 = 0; var Facilities2 = 0; var Facilities3 = 0; var Facilities4 = 0;
+
+        var SpeakerName = ''; var ProgramStartDate = ""; var ProgramEndDate = ""; var ProgramLocation = "";
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_vti_bin/listdata.svc/InvitationFeedBack?$filter=ProgramName eq '" + selectedProgramName + "' and FeedbackStatus eq 'Completed'"; 
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                totalPersons = arr.length;
+                var PgmContent
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        SpeakerName = d.d.results[arrK].SpeakerName;
+                        ProgramStartDate = d.d.results[arrK].ProgramStartDate;
+                        ProgramEndDate = d.d.results[arrK].ProgramEndDate
+                        ProgramLocation = d.d.results[arrK].ProgramLocation;
+                        PgmContent = d.d.results[arrK].ProgramContentRating;
+                        TasksActRating = d.d.results[arrK].TasksActivitiesRating;
+                        PrmUtilityRating = d.d.results[arrK].PrmUtilityValueRating;
+                        TrainAbiEncour = d.d.results[arrK].TrainAbilityEncourageRating;
+                        TraiAbiComm = d.d.results[arrK].TrainerAbilityCommRating;
+                        Facilities = d.d.results[arrK].FacilitiesValueRating;
+
+                        if (PgmContent == 1 || PgmContent == 2 || PgmContent == 3 || PgmContent == 4) {
+                            if (PgmContent == 1) { PgmContent1 = PgmContent1 + 1 };
+                            if (PgmContent == 2) { PgmContent2 = PgmContent2 + 1 };
+                            if (PgmContent == 3) PgmContent3 = PgmContent3 + 1;
+                            if (PgmContent == 4) PgmContent4 = PgmContent4 + 1;
+                        }
+                        if (TasksActRating == 1 || TasksActRating == 2 || TasksActRating == 3 || TasksActRating == 4) {
+                            if (TasksActRating == 1) TasksActRating1 = TasksActRating1 + 1;
+                            if (TasksActRating == 2) TasksActRating2 = TasksActRating2 + 1;
+                            if (TasksActRating == 3) TasksActRating3 = TasksActRating3 + 1;
+                            if (TasksActRating == 4) TasksActRating4 = TasksActRating4 + 1;
+                        }
+                        if (PrmUtilityRating == 1 || PrmUtilityRating == 2 || PrmUtilityRating == 3 || PrmUtilityRating == 4) {
+                            if (PrmUtilityRating == 1) PrmUtilityRating1 = PrmUtilityRating1 + 1;
+                            if (PrmUtilityRating == 2) PrmUtilityRating2 = PrmUtilityRating2 + 1;
+                            if (PrmUtilityRating == 3) PrmUtilityRating3 = PrmUtilityRating3 + 1;
+                            if (PrmUtilityRating == 4) PrmUtilityRating4 = PrmUtilityRating4 + 1;
+                        }
+                        if (TrainAbiEncour == 1 || TrainAbiEncour == 2 || TrainAbiEncour == 3 || TrainAbiEncour == 4) {
+                            if (TrainAbiEncour == 1) TrainAbiEncour1 = TrainAbiEncour1 + 1;
+                            if (TrainAbiEncour == 2) TrainAbiEncour2 = TrainAbiEncour2 + 1;
+                            if (TrainAbiEncour == 3) TrainAbiEncour3 = TrainAbiEncour3 + 1;
+                            if (TrainAbiEncour == 4) TrainAbiEncour4 = TrainAbiEncour4 + 1;
+                        }
+                        if (TraiAbiComm == 1 || TraiAbiComm == 2 || TraiAbiComm == 3 || TraiAbiComm == 4) {
+                            if (TraiAbiComm == 1) TraiAbiComm1 = TraiAbiComm1 + 1;
+                            if (TraiAbiComm == 2) TraiAbiComm2 = TraiAbiComm2 + 1;
+                            if (TraiAbiComm == 3) TraiAbiComm3 = TraiAbiComm3 + 1;
+                            if (TraiAbiComm == 4) TraiAbiComm4 = TraiAbiComm4 + 1;
+                        }
+                        if (Facilities == 1 || Facilities == 2 || Facilities == 3 || Facilities == 4) {
+                            if (Facilities == 1) Facilities1 = Facilities1 + 1;
+                            if (Facilities == 2) Facilities2 = Facilities2 + 1;
+                            if (Facilities == 3) Facilities3 = Facilities3 + 1;
+                            if (Facilities == 4) Facilities4 = Facilities4 + 1;
+                        }
+                    }
+                }
+                if (PgmContent != 0 && Facilities != 0 && TraiAbiComm != 0 && PrmUtilityRating != 0 && TasksActRating != 0) {
+                    pushOnlineFeedData.push({
+                        PgmContent1: PgmContent1, PgmContent2: PgmContent2, PgmContent3: PgmContent3, PgmContent4: PgmContent4,
+                        TasksActRating1: TasksActRating1, TasksActRating2: TasksActRating2, TasksActRating3: TasksActRating3, TasksActRating4: TasksActRating4,
+                        PrmUtilityRating1: PrmUtilityRating1, PrmUtilityRating2: PrmUtilityRating2, PrmUtilityRating3: PrmUtilityRating3, PrmUtilityRating4: PrmUtilityRating4,
+                        TrainAbiEncour1: TrainAbiEncour1, TrainAbiEncour2: TrainAbiEncour2, TrainAbiEncour3: TrainAbiEncour3, TrainAbiEncour4: TrainAbiEncour4,
+                        TraiAbiComm1: TraiAbiComm1, TraiAbiComm2: TraiAbiComm2, TraiAbiComm3: TraiAbiComm3, TraiAbiComm4: TraiAbiComm4,
+                        Facilities1: Facilities1, Facilities2: Facilities2, Facilities3: Facilities3, Facilities4: Facilities4,
+                        SpeakerName: SpeakerName, ProgramStartDate: ProgramStartDate,
+                        ProgramEndDate: ProgramEndDate, ProgramLocation: ProgramLocation, totalPersons: totalPersons
+                    });
+                }
+            },
+            error: function (data) {
+                $('#divTotalProgramReport').append("<span>Error Retreiving Records. Error : " + JSON.stringify(data) + "</span>")
+            }
+        });
+        return pushOnlineFeedData;
+    }
+    function getTotlaUserEmployeeDetails(selectedProgramName) {
+        var UserEmail = LoginUserEmail();
+        var PgmContent = 0; var TasksActRating = 0; var PrmUtilityRating = 0; var TrainAbiEncour = 0; var TraiAbiComm = 0; var Facilities = 0;
+        var totalPersons = 0;
+        var PgmContent1 = 0; var PgmContent2 = 0; var PgmContent3 = 0; var PgmContent4 = 0;
+        var TasksActRating1 = 0; var TasksActRating2 = 0; var TasksActRating3 = 0; var TasksActRating4 = 0;
+        var PrmUtilityRating1 = 0; var PrmUtilityRating2 = 0; var PrmUtilityRating3 = 0; var PrmUtilityRating4 = 0;
+        var TrainAbiEncour1 = 0; var TrainAbiEncour2 = 0; var TrainAbiEncour3 = 0; var TrainAbiEncour4 = 0;
+        var TraiAbiComm1 = 0; var TraiAbiComm2 = 0; var TraiAbiComm3 = 0; var TraiAbiComm4 = 0;
+        var Facilities1 = 0; var Facilities2 = 0; var Facilities3 = 0; var Facilities4 = 0;
+
+        var SpeakerName = ''; var ProgramStartDate = ""; var ProgramEndDate = ""; var ProgramLocation = "";
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_vti_bin/listdata.svc/FeedbackSpeakerDetails?$filter=ProgramName eq '" + selectedProgramName + "' and CreatedByUser eq %27" + UserEmail + "%27 and Status eq 'Active'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                totalPersons = arr.length;
+                var PgmContent
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        SpeakerName = d.d.results[arrK].SpeakerName;
+                        ProgramStartDate = d.d.results[arrK].ProgramStartDate;
+                        ProgramEndDate = d.d.results[arrK].ProgramEndDate
+                        ProgramLocation = d.d.results[arrK].ProgramLocation;
+                        PgmContent = d.d.results[arrK].PGMContRating;
+                        TasksActRating = d.d.results[arrK].TasksActivitiesRating;
+                        PrmUtilityRating = d.d.results[arrK].PrmUtilityValueRating;
+                        TrainAbiEncour = d.d.results[arrK].TrainAbilityEncourageRating;
+                        TraiAbiComm = d.d.results[arrK].TrainerAbilityCommRating;
+                        Facilities = d.d.results[arrK].FacilitiesValueRating;
+
+                        if (PgmContent == 1 || PgmContent == 2 || PgmContent == 3 || PgmContent == 4) {
+                            if (PgmContent == 1) { PgmContent1 = PgmContent1 + 1 };
+                            if (PgmContent == 2) { PgmContent2 = PgmContent2 + 1 };
+                            if (PgmContent == 3) PgmContent3 = PgmContent3 + 1;
+                            if (PgmContent == 4) PgmContent4 = PgmContent4 + 1;
+                        }
+                        if (TasksActRating == 1 || TasksActRating == 2 || TasksActRating == 3 || TasksActRating == 4) {
+                            if (TasksActRating == 1) TasksActRating1 = TasksActRating1 + 1;
+                            if (TasksActRating == 2) TasksActRating2 = TasksActRating2 + 1;
+                            if (TasksActRating == 3) TasksActRating3 = TasksActRating3 + 1;
+                            if (TasksActRating == 4) TasksActRating4 = TasksActRating4 + 1;
+                        }
+                        if (PrmUtilityRating == 1 || PrmUtilityRating == 2 || PrmUtilityRating == 3 || PrmUtilityRating == 4) {
+                            if (PrmUtilityRating == 1) PrmUtilityRating1 = PrmUtilityRating1 + 1;
+                            if (PrmUtilityRating == 2) PrmUtilityRating2 = PrmUtilityRating2 + 1;
+                            if (PrmUtilityRating == 3) PrmUtilityRating3 = PrmUtilityRating3 + 1;
+                            if (PrmUtilityRating == 4) PrmUtilityRating4 = PrmUtilityRating4 + 1;
+                        }
+                        if (TrainAbiEncour == 1 || TrainAbiEncour == 2 || TrainAbiEncour == 3 || TrainAbiEncour == 4) {
+                            if (TrainAbiEncour == 1) TrainAbiEncour1 = TrainAbiEncour1 + 1;
+                            if (TrainAbiEncour == 2) TrainAbiEncour2 = TrainAbiEncour2 + 1;
+                            if (TrainAbiEncour == 3) TrainAbiEncour3 = TrainAbiEncour3 + 1;
+                            if (TrainAbiEncour == 4) TrainAbiEncour4 = TrainAbiEncour4 + 1;
+                        }
+                        if (TraiAbiComm == 1 || TraiAbiComm == 2 || TraiAbiComm == 3 || TraiAbiComm == 4) {
+                            if (TraiAbiComm == 1) TraiAbiComm1 = TraiAbiComm1 + 1;
+                            if (TraiAbiComm == 2) TraiAbiComm2 = TraiAbiComm2 + 1;
+                            if (TraiAbiComm == 3) TraiAbiComm3 = TraiAbiComm3 + 1;
+                            if (TraiAbiComm == 4) TraiAbiComm4 = TraiAbiComm4 + 1;
+                        }
+                        if (Facilities == 1 || Facilities == 2 || Facilities == 3 || Facilities == 4) {
+                            if (Facilities == 1) Facilities1 = Facilities1 + 1;
+                            if (Facilities == 2) Facilities2 = Facilities2 + 1;
+                            if (Facilities == 3) Facilities3 = Facilities3 + 1;
+                            if (Facilities == 4) Facilities4 = Facilities4 + 1;
+                        }
+                    }
+                }
+                var getProgramWeightAge = OVerAllFeedbackWeightAge(selectedProgramName);
+                var OnlineData = getOnlineFeedEmployeeDetails(selectedProgramName);
+                var totlaCheck = 0;
+                if (OnlineData.length > 0 && PgmContent != '' && PgmContent != null) {
+                    if (getProgramWeightAge.length > 0) {
+                        totlaCheck = totlaCheck + 1;
+                        
+                        var onLinetotalPersons = OnlineData[0].totalPersons;
+                        var totalusr = onLinetotalPersons + totalPersons;
+                        
+                        var ProgramSummary = getProgramWeightAge[0].ProgramSummary * PgmContent + getProgramWeightAge[0].ProgramSummary * TasksActRating + getProgramWeightAge[0].ProgramSummary * PrmUtilityRating;
+                        var PgmContentAvg = (((PgmContent1 * 1 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((PgmContent2 * 2 * getProgramWeightAge[0].ProgramContentValue) / 4)
+                            + ((PgmContent3 * 3 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((PgmContent4 * getProgramWeightAge[0].ProgramContentValue)));
+                        var TasksActRatingavg = (((TasksActRating1 * 1 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((TasksActRating2 * 2 * getProgramWeightAge[0].TasksActivitiesValue) / 4)
+                            + ((TasksActRating3 * 3 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((TasksActRating4 * getProgramWeightAge[0].TasksActivitiesValue)));
+                        var ProgramUtilityAvg = (((PrmUtilityRating1 * 1 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((PrmUtilityRating2 * 2 * getProgramWeightAge[0].ProgramUtilityValue) / 4)
+                            + ((PrmUtilityRating3 * 3 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((PrmUtilityRating4 * getProgramWeightAge[0].ProgramUtilityValue)));
+
+
+                        var avgProgramSummary = (PgmContentAvg + TasksActRatingavg + ProgramUtilityAvg) / totalPersons;
+
+                        var TrainAbiEncourAvg = (((TrainAbiEncour1 * 1 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((TrainAbiEncour2 * 2 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4)
+                            + ((TrainAbiEncour3 * 3 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((TrainAbiEncour4 * getProgramWeightAge[0].TrainerAbilityEncourageValue)));
+                        var TraiAbiCommAvg = (((TraiAbiComm1 * 1 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((TraiAbiComm2 * 2 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4)
+                            + ((TraiAbiComm3 * 3 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((TraiAbiComm4 * getProgramWeightAge[0].TrainerAbilityCommunicateValue)));
+
+                        var TrainerSkillsAbilities = (TrainAbiEncourAvg + TraiAbiCommAvg) / totalPersons;
+
+                        var FacilitiesAvg = (((Facilities1 * 1 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((Facilities2 * 2 * getProgramWeightAge[0].FacilitiesValue) / 4)
+                            + ((Facilities3 * 3 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((Facilities4 * getProgramWeightAge[0].FacilitiesValue)));
+                            
+                            
+                        var pgmSummaryAvg = ((avgProgramSummary * 100) / getProgramWeightAge[0].ProgramSummary).toFixed(2);;
+                        var taineeSkillAvg = ((TrainerSkillsAbilities * 100) / getProgramWeightAge[0].TrainerSkillsAbilities).toFixed(2);
+                        var facilitiesAvgT = ((FacilitiesAvg * 100) / getProgramWeightAge[0].FacilitiesValue).toFixed(2);
+
+                        var ratFacilities = (FacilitiesAvg) / totalPersons;
+                        var totalRating = avgProgramSummary + TrainerSkillsAbilities + ratFacilities;
+                        var totalsWeight = getProgramWeightAge[0].FacilitiesValue + getProgramWeightAge[0].ProgramSummary + getProgramWeightAge[0].TrainerSkillsAbilities;
+
+
+                        
+                        var onLinePgmContentAvg = (((OnlineData[0].PgmContent1 * 1 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((OnlineData[0].PgmContent2 * 2 * getProgramWeightAge[0].ProgramContentValue) / 4)
+                            + ((OnlineData[0].PgmContent3 * 3 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((OnlineData[0].PgmContent4 * getProgramWeightAge[0].ProgramContentValue)));
+                        var onLineTasksActRatingavg = (((OnlineData[0].TasksActRating1 * 1 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((OnlineData[0].TasksActRating2 * 2 * getProgramWeightAge[0].TasksActivitiesValue) / 4)
+                            + ((OnlineData[0].TasksActRating3 * 3 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((OnlineData[0].TasksActRating4 * getProgramWeightAge[0].TasksActivitiesValue)));
+                        var onLineProgramUtilityAvg = (((OnlineData[0].PrmUtilityRating1 * 1 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((OnlineData[0].PrmUtilityRating2 * 2 * getProgramWeightAge[0].ProgramUtilityValue) / 4)
+                            + ((OnlineData[0].PrmUtilityRating3 * 3 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((OnlineData[0].PrmUtilityRating4 * getProgramWeightAge[0].ProgramUtilityValue)));
+
+
+                        var onLineavgProgramSummary = (onLinePgmContentAvg + onLineTasksActRatingavg + onLineProgramUtilityAvg) / onLinetotalPersons;
+
+                        var onLineTrainAbiEncourAvg = (((OnlineData[0].TrainAbiEncour1 * 1 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((OnlineData[0].TrainAbiEncour2 * 2 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4)
+                            + ((OnlineData[0].TrainAbiEncour3 * 3 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((OnlineData[0].TrainAbiEncour4 * getProgramWeightAge[0].TrainerAbilityEncourageValue)));
+                        var onLineTraiAbiCommAvg = (((OnlineData[0].TraiAbiComm1 * 1 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((OnlineData[0].TraiAbiComm2 * 2 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4)
+                            + ((OnlineData[0].TraiAbiComm3 * 3 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((OnlineData[0].TraiAbiComm4 * getProgramWeightAge[0].TrainerAbilityCommunicateValue)));
+
+                        var onLineTrainerSkillsAbilities = (onLineTrainAbiEncourAvg + onLineTraiAbiCommAvg) / onLinetotalPersons;
+
+                        var onLineFacilitiesAvg = (((OnlineData[0].Facilities1 * 1 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((OnlineData[0].Facilities2 * 2 * getProgramWeightAge[0].FacilitiesValue) / 4)
+                            + ((OnlineData[0].Facilities3 * 3 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((OnlineData[0].Facilities4 * getProgramWeightAge[0].FacilitiesValue)));
+
+                        var onLinepgmSummaryAvg = ((onLineavgProgramSummary * 100) / getProgramWeightAge[0].ProgramSummary).toFixed(2);;
+                        var onLinetaineeSkillAvg = ((onLineTrainerSkillsAbilities * 100) / getProgramWeightAge[0].TrainerSkillsAbilities).toFixed(2);
+                        var onLinefacilitiesAvgT = ((onLineFacilitiesAvg * 100) / getProgramWeightAge[0].FacilitiesValue).toFixed(2);
+
+                        var onLineratFacilities = (onLineFacilitiesAvg) / onLinetotalPersons;
+                        var onLinetotalRating = onLineavgProgramSummary + onLineTrainerSkillsAbilities + onLineratFacilities;
+                        var onLinetotalsWeight = getProgramWeightAge[0].FacilitiesValue + getProgramWeightAge[0].ProgramSummary + getProgramWeightAge[0].TrainerSkillsAbilities;
+
+                        var FinalTotal = totalPersons + onLinetotalPersons;
+                        $('#tbodyProgramDetails').append("<tr><td>No of participants</td><td>" + FinalTotal + "</td><td>" + ProgramStartDate + "</td><td>" + ProgramEndDate + "</td></tr>"
+                                                              + "<tr><td>Faculty Name</td><td>" + SpeakerName + "</td><td><b>Location</b></td><td>" + ProgramLocation + "</td></tr>");
+
+//alert(PgmContentAvg);
+//alert(onLinePgmContentAvg);
+var finalpgmcontentt112=(PgmContentAvg + onLinePgmContentAvg)/totalusr;
+
+//alert(finalpgmcontentt112);
+
+//alert(TasksActRatingavg);
+//alert(onLineTasksActRatingavg);
+var finaltaskact12=(TasksActRatingavg + onLineTasksActRatingavg)/totalusr;
+//alert(finaltaskact12);
+
+
+//alert(ProgramUtilityAvg);
+//alert(onLineProgramUtilityAvg);
+var finalpgmUtility12=(ProgramUtilityAvg + onLineProgramUtilityAvg)/totalusr;
+//alert(finalpgmUtility12);
+
+
+var finaltrainerabilitys12 =(TrainAbiEncourAvg + TraiAbiCommAvg + onLineTrainAbiEncourAvg + onLineTraiAbiCommAvg)/totalusr;
+//alert(finaltrainerabilitys12);
+
+
+var finalfacilities12 =(FacilitiesAvg + onLineFacilitiesAvg)/totalusr;
+
+
+
+                        var finalavgProgramSummary = (finalpgmcontentt112 + finaltaskact12 + finalpgmUtility12);
+                        //alert(finalavgProgramSummary)
+                        var finalTrainerSkillsAbilities = (finaltrainerabilitys12);
+                        var finalratFacilities = (finalfacilities12);
+                        var finaltotalRating = finalavgProgramSummary + finalTrainerSkillsAbilities + finalfacilities12 ;
+
+                        $('#tbodyProgramWeightAge').append("<tr><td>1. Program Summary</td><td></td><td><b>" + finalavgProgramSummary.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td>2. Trainer's Skills and Abilities</td><td></td><td><b>" + finalTrainerSkillsAbilities.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td>3. Facilities at the Venue</td><td></td><td><b>" + finalratFacilities.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td><b>Overall program rating</b></td><td></td><td><b>" + finaltotalRating.toFixed(2) + "</b></td></tr>");
+                        $('#btntotalProgramReport').show();
+
+                    }
+                }
+                if (OnlineData.length > 0 && totlaCheck == 0) {
+                    if (getProgramWeightAge.length > 0) {
+                        var onLinetotalPersons = OnlineData[0].totalPersons;
+                        var onLinePgmContentAvg = (((OnlineData[0].PgmContent1 * 1 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((OnlineData[0].PgmContent2 * 2 * getProgramWeightAge[0].ProgramContentValue) / 4)
+                            + ((OnlineData[0].PgmContent3 * 3 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((OnlineData[0].PgmContent4 * getProgramWeightAge[0].ProgramContentValue)));
+                        var onLineTasksActRatingavg = (((OnlineData[0].TasksActRating1 * 1 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((OnlineData[0].TasksActRating2 * 2 * getProgramWeightAge[0].TasksActivitiesValue) / 4)
+                            + ((OnlineData[0].TasksActRating3 * 3 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((OnlineData[0].TasksActRating4 * getProgramWeightAge[0].TasksActivitiesValue)));
+                        var onLineProgramUtilityAvg = (((OnlineData[0].PrmUtilityRating1 * 1 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((OnlineData[0].PrmUtilityRating2 * 2 * getProgramWeightAge[0].ProgramUtilityValue) / 4)
+                            + ((OnlineData[0].PrmUtilityRating3 * 3 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((OnlineData[0].PrmUtilityRating4 * getProgramWeightAge[0].ProgramUtilityValue)));
+
+
+                        var onLineavgProgramSummary = (onLinePgmContentAvg + onLineTasksActRatingavg + onLineProgramUtilityAvg) / onLinetotalPersons;
+
+                        var onLineTrainAbiEncourAvg = (((OnlineData[0].TrainAbiEncour1 * 1 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((OnlineData[0].TrainAbiEncour2 * 2 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4)
+                            + ((OnlineData[0].TrainAbiEncour3 * 3 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((OnlineData[0].TrainAbiEncour4 * getProgramWeightAge[0].TrainerAbilityEncourageValue)));
+                        var onLineTraiAbiCommAvg = (((OnlineData[0].TraiAbiComm1 * 1 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((OnlineData[0].TraiAbiComm2 * 2 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4)
+                            + ((OnlineData[0].TraiAbiComm3 * 3 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((OnlineData[0].TraiAbiComm4 * getProgramWeightAge[0].TrainerAbilityCommunicateValue)));
+
+                        var onLineTrainerSkillsAbilities = (onLineTrainAbiEncourAvg + onLineTraiAbiCommAvg) / onLinetotalPersons;
+
+                        var onLineFacilitiesAvg = (((OnlineData[0].Facilities1 * 1 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((OnlineData[0].Facilities2 * 2 * getProgramWeightAge[0].FacilitiesValue) / 4)
+                            + ((OnlineData[0].Facilities3 * 3 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((OnlineData[0].Facilities4 * getProgramWeightAge[0].FacilitiesValue)));
+
+                        var onLinepgmSummaryAvg = ((onLineavgProgramSummary * 100) / getProgramWeightAge[0].ProgramSummary).toFixed(2);;
+                        var onLinetaineeSkillAvg = ((onLineTrainerSkillsAbilities * 100) / getProgramWeightAge[0].TrainerSkillsAbilities).toFixed(2);
+                        var onLinefacilitiesAvgT = ((onLineFacilitiesAvg * 100) / getProgramWeightAge[0].FacilitiesValue).toFixed(2);
+
+                        var onLineratFacilities = (onLineFacilitiesAvg) / onLinetotalPersons;
+                        var onLinetotalRating = onLineavgProgramSummary + onLineTrainerSkillsAbilities + onLineratFacilities;
+                        var onLinetotalsWeight = getProgramWeightAge[0].FacilitiesValue + getProgramWeightAge[0].ProgramSummary + getProgramWeightAge[0].TrainerSkillsAbilities;
+
+                        var FinalTotal = totalPersons + onLinetotalPersons;
+                        $('#tbodyProgramDetails').append("<tr><td>No of participants</td><td>" + FinalTotal + "</td><td>" + OnlineData[0].ProgramStartDate + "</td><td>" + OnlineData[0].ProgramEndDate + "</td></tr>"
+                                                              + "<tr><td>Faculty Name</td><td>" + OnlineData[0].SpeakerName + "</td><td><b>Location</b></td><td>" + OnlineData[0].ProgramLocation + "</td></tr>");
+
+
+
+
+
+                        var finalavgProgramSummary = onLineavgProgramSummary;
+                        var finalTrainerSkillsAbilities = onLineTrainerSkillsAbilities;
+                        var finalratFacilities = onLineratFacilities;
+                        var finaltotalRating = onLinetotalRating;
+
+                        $('#tbodyProgramWeightAge').append("<tr><td>1. Program Summary</td><td></td><td><b>" + finalavgProgramSummary.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td>2. Trainer's Skills and Abilities</td><td></td><td><b>" + finalTrainerSkillsAbilities.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td>3. Facilities at the Venue</td><td></td><td><b>" + finalratFacilities.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td><b>Overall program rating</b></td><td></td><td><b>" + finaltotalRating.toFixed(2) + "</b></td></tr>");
+                        $('#btntotalProgramReport').show();
+                    }
+                }
+                else {
+                    if (getProgramWeightAge.length > 0 && PgmContent != '' && PgmContent != null && totlaCheck == 0) {
+                        var ProgramSummary = getProgramWeightAge[0].ProgramSummary * PgmContent + getProgramWeightAge[0].ProgramSummary * TasksActRating + getProgramWeightAge[0].ProgramSummary * PrmUtilityRating;
+                        var PgmContentAvg = (((PgmContent1 * 1 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((PgmContent2 * 2 * getProgramWeightAge[0].ProgramContentValue) / 4)
+                            + ((PgmContent3 * 3 * getProgramWeightAge[0].ProgramContentValue) / 4) + ((PgmContent4 * getProgramWeightAge[0].ProgramContentValue)));
+                        var TasksActRatingavg = (((TasksActRating1 * 1 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((TasksActRating2 * 2 * getProgramWeightAge[0].TasksActivitiesValue) / 4)
+                            + ((TasksActRating3 * 3 * getProgramWeightAge[0].TasksActivitiesValue) / 4) + ((TasksActRating4 * getProgramWeightAge[0].TasksActivitiesValue)));
+                        var ProgramUtilityAvg = (((PrmUtilityRating1 * 1 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((PrmUtilityRating2 * 2 * getProgramWeightAge[0].ProgramUtilityValue) / 4)
+                            + ((PrmUtilityRating3 * 3 * getProgramWeightAge[0].ProgramUtilityValue) / 4) + ((PrmUtilityRating4 * getProgramWeightAge[0].ProgramUtilityValue)));
+
+
+                        var avgProgramSummary = (PgmContentAvg + TasksActRatingavg + ProgramUtilityAvg) / totalPersons;
+
+                        var TrainAbiEncourAvg = (((TrainAbiEncour1 * 1 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((TrainAbiEncour2 * 2 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4)
+                            + ((TrainAbiEncour3 * 3 * getProgramWeightAge[0].TrainerAbilityEncourageValue) / 4) + ((TrainAbiEncour4 * getProgramWeightAge[0].TrainerAbilityEncourageValue)));
+                        var TraiAbiCommAvg = (((TraiAbiComm1 * 1 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((TraiAbiComm2 * 2 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4)
+                            + ((TraiAbiComm3 * 3 * getProgramWeightAge[0].TrainerAbilityCommunicateValue) / 4) + ((TraiAbiComm4 * getProgramWeightAge[0].TrainerAbilityCommunicateValue)));
+
+                        var TrainerSkillsAbilities = (TrainAbiEncourAvg + TraiAbiCommAvg) / totalPersons;
+
+                        var FacilitiesAvg = (((Facilities1 * 1 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((Facilities2 * 2 * getProgramWeightAge[0].FacilitiesValue) / 4)
+                            + ((Facilities3 * 3 * getProgramWeightAge[0].FacilitiesValue) / 4) + ((Facilities4 * getProgramWeightAge[0].FacilitiesValue)));
+                        $('#tbodyProgramDetails').append("<tr><td>No of participants</td><td>" + totalPersons + "</td><td>" + ProgramStartDate + "</td><td>" + ProgramEndDate + "</td></tr>"
+                                        + "<tr><td>Faculty Name</td><td>" + SpeakerName + "</td><td><b>Location</b></td><td>" + ProgramLocation + "</td></tr>");
+                        var pgmSummaryAvg = ((avgProgramSummary * 100) / getProgramWeightAge[0].ProgramSummary).toFixed(2);;
+                        var taineeSkillAvg = ((TrainerSkillsAbilities * 100) / getProgramWeightAge[0].TrainerSkillsAbilities).toFixed(2);
+                        var facilitiesAvgT = ((FacilitiesAvg * 100) / getProgramWeightAge[0].FacilitiesValue).toFixed(2);
+
+                        var ratFacilities = (FacilitiesAvg) / totalPersons;
+                        var totalRating = avgProgramSummary + TrainerSkillsAbilities + ratFacilities;
+                        var totalsWeight = getProgramWeightAge[0].FacilitiesValue + getProgramWeightAge[0].ProgramSummary + getProgramWeightAge[0].TrainerSkillsAbilities;
+
+
+
+                        $('#tbodyProgramWeightAge').append("<tr><td>1. Program Summary</td><td></td><td><b>" + avgProgramSummary.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td>2. Trainer's Skills and Abilities</td><td></td><td><b>" + TrainerSkillsAbilities.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td>3. Facilities at the Venue</td><td></td><td><b>" + ratFacilities.toFixed(2) + "</b></td></tr>"
+                            + "<tr><td><b>Overall program rating</b></td><td></td><td><b>" + totalRating.toFixed(2) + "</b></td></tr>");
+                        $('#btntotalProgramReport').show();
+                    }
+
+                }
+            },
+            error: function (data) {
+                $('#divTotalProgramReport').append("<span>Error Retreiving Records. Error : " + JSON.stringify(data) + "</span>")
+            }
+        });
+    }
+
+
+</script>
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ProgramName = $('#ddlProgramName').val();
+        $("#btntotalProgramReport").click(function () {
+            $('#tblFinalReport').show();
+            $('.dataTables_length,.dataTables_filter,.dataTables_info,.dataTables_paginate').remove();
+            $("#tblFinalReport").battatech_excelexport({
+                containerid: "tblFinalReport"
+                , datatype: 'table'
+                , worksheetName: ProgramName + ' ' + ' Over All Feedback Report'
+            });
+        });
+    });
+</script>
+<script>
+    function OVerAllFeedbackWeightAge(ProgramName) {
+        var getOVerAllFeedbackWeightAge = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('OverAllProgramWeightAge')/items?$filter=ProgramName eq '" + ProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                MISUsers = [];
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    var ProgramContentValue = d.d.results[arrK].ProgramContentValue;
+                    var TasksActivitiesValue = d.d.results[arrK].TasksActivitiesValue;
+                    var ProgramUtilityValue = d.d.results[arrK].ProgramUtilityValue;
+                    var TrainerAbilityEncourageValue = d.d.results[arrK].TrainerAbilityEncourageValue;
+                    var TrainerAbilityCommunicateValue = d.d.results[arrK].TrainerAbilityCommunicateValue;
+                    var FacilitiesValue = d.d.results[arrK].FacilitiesValue;
+
+                    var ProgramSummary = d.d.results[arrK].ProgramSummary;
+                    var TrainerSkillsAbilities = d.d.results[arrK].TrainerSkillsAbilities;
+                    var FacilitiesValue = d.d.results[arrK].FacilitiesValue;
+                    getOVerAllFeedbackWeightAge.push({
+                        ProgramContentValue: ProgramContentValue,
+                        TasksActivitiesValue: TasksActivitiesValue,
+                        ProgramUtilityValue: ProgramUtilityValue,
+                        TrainerAbilityEncourageValue: TrainerAbilityEncourageValue,
+                        TrainerAbilityCommunicateValue: TrainerAbilityCommunicateValue,
+
+                        ProgramSummary: ProgramSummary,
+                        TrainerSkillsAbilities: TrainerSkillsAbilities,
+                        FacilitiesValue: FacilitiesValue
+                    });
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return getOVerAllFeedbackWeightAge;
+    }
+</script>

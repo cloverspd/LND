@@ -1,0 +1,1078 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+    .errorBorder-color {
+        padding: 0px !important;
+        color: red;
+        font-size: 19px;
+        margin-left: 33px;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    .opacity-0 {
+        opacity: 0;
+    }
+
+    .padding-0 {
+        padding: 0 !important;
+    }
+
+    .margin-0 {
+        margin: 0 !important;
+    }
+
+    .margin-top-0 {
+        margin-top: 0 !important;
+    }
+
+    .margin-bottom-0 {
+        margin-bottom: 0 !important;
+    }
+
+    .margin-top-5 {
+        margin-top: 5px !important;
+    }
+
+    .margin-top-10 {
+        margin-top: 10px !important;
+    }
+
+    .margin-top-15 {
+        margin-top: 15px !important;
+    }
+
+    .modal-dialog {
+        width: 800px !important;
+        margin: 30px auto !important;
+    }
+</style>
+<!--POPUP START********************-->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Configuration Parameters
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 margin-top-10">
+                    <label>
+                        Program Stages/Activity Name
+                    </label>
+                    <input type="text" class="form-control" placeholder="Program Stages/Activity Name" id="popUpActivityName" />
+                </div>
+                <div class="col-md-12 padding-0 margin-top-15">
+                    <div class="col-md-4">
+                        <label>
+                            Set Duration
+                        </label>
+                        <input type="text" class="form-control" placeholder="#1" id="popUpDurationDays" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            UOM
+                        </label>
+                        <select class="form-control" id="popUpUOM">
+                            <option>--Select--</option>
+                            <option>Minutes</option>
+                            <option>Hours</option>
+                            <option>Days</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            Sequence
+                        </label>
+                        <input type="text" class="form-control" placeholder="#1" id="popUpSequence" />
+                    </div>
+                </div>
+                <div class="col-md-12 padding-0 margin-top-15">
+                    <div class="col-md-6">
+                        <label class="opacity-0">
+                            0
+                        </label>
+                        <div class="col-md-12 padding-0">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="popUpAlertsReminders" id="popUpAlertsAndReminders">
+                                Need Alerts & Reminders
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>
+                            Status
+                        </label>
+                        <div class="col-md-12 padding-0">
+                            <label class="radio-inline">
+                                <input type="radio" class="radioChecked" name="popUpinlineRadioOptions" id="popUpActive" value="Active">
+                                Active
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" class="radioChecked" name="popUpinlineRadioOptions" id="popUpInActive" value="InActive">
+                                In Active
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 margin-top-10">
+                    <label class="opacity-0">
+                        0
+                    </label>
+                    <div class="col-md-12 padding-0">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="popUpAlertsReminders" id="popUpFeedBackNeeded">
+                            Feed Back Need
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-0 margin-top-15" id="popUpSpeakerDetails" style="display:none">
+                    <div class="col-md-3">
+                        <label>
+                            Name Of The Speaker
+                        </label>
+                        <input type="text" class="form-control" placeholder="Name Of The Speaker" id="popUpNameOfTheSpeaker" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Employee Code
+                        </label>
+                        <input type="text" class="form-control" placeholder="Employee Code" id="popUpSpeakerECode" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Base department
+                        </label>
+                        <div id="popupBaseDeptBind"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Brief Description
+                        </label>
+                        <input type="text" class="form-control" placeholder="Brief Description" id="popUpSpeakerDesc" />
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div id="divPopUpErrorMessage" class="errorBorder-color"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" id="btnUpdate">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--POPUP END ********************-->
+<div>
+    <div class="col-md-12">
+        <div id="divErrorMessage" class="errorBorder-color"></div>
+        <div class="col-md-12 margin-top-15">
+            <label>
+                Program Stages/Activity Name
+            </label>
+            <input type="text" class="form-control" placeholder="Program Stages/Activity Name" id="ActivityName" />
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-2">
+                <label>
+                    Set Duration
+                </label>
+                <input type="text" class="form-control integerdata" placeholder="Set Duration" id="setDurationID" />
+            </div>
+            <div class="col-md-2">
+                <label>
+                    UOM
+                </label>
+                <select class="form-control" id="DurationDays">
+                    <option value="0" selected>---</option>
+                    <option>Minutes</option>
+                    <option>Hours</option>
+                    <option>Days</option>
+
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label>
+                    Sequence
+                </label>
+                <input type="text" class="form-control" placeholder="Sequence" id="Sequence" />
+            </div>
+            <div class="col-md-3">
+                <label class="opacity-0 col-md-12">
+                    0
+                </label>
+                <div class="col-md-12 padding-0">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="AlertsReminders" id="AlertsAndReminders">
+                        Need Alerts & Reminders
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label class=" col-md-12 padding-0">
+                    Status
+                </label>
+                <div class="col-md-12 padding-0">
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" value="Active" id="SActive">
+                        Active
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" value="InActive" id="SInActive">
+                        In Active
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-12">
+                <label class="opacity-0 col-md-12">
+                    0
+                </label>
+                <div class="col-md-12 padding-0">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="FeedBackNeed" id="isFeedBackNeed" value="Yes">
+                        Feedback Needed
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-15" id="divFeedBackNeeded" style="display:none">
+            <div class="col-md-3">
+                <label>
+                    Name Of The Speaker
+                </label>
+                <input type="text" class="form-control integerdata" placeholder="Name Of The Speaker" id="txtNameOfTheSpeaker" />
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Employee  Code
+                </label>
+                <input type="text" class="form-control integerdata" placeholder="Speaker Employee Code" id="txtEmployeeCode" />
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Base department
+                </label>
+                <div id="divBaseDeptDynamic"></div>
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Brief Description
+                </label>
+                <input type="text" class="form-control integerdata" placeholder="Speaker Description" id="txtSpeakerDesc" />
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-2">
+                <button class="btn btn-success btn-block" id="btnSubmit">
+                    SUBMIT
+                </button>
+            </div>
+        </div>
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div class="col-md-12">
+                <label>
+                    Existing Program Stages/Activity Name <span id="TotalCout"></span>
+                </label>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Sequence
+                            </th>
+                            <th>
+                                Activity Name
+                            </th>
+                            <th>
+                                Duration
+                            </th>
+                            <th>
+                                Alert
+                            </th>
+                            <th width="20%" colspan="2">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblConfigParametersBind"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript'>
+    jQuery.ajax({
+        url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('ConfigParameters')/items?$select=UOM,Title,ActivityName,Duration,Sequence,AlertsReminders,Status,ID&$orderby=%20ID%20desc",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+        },
+        success: function (d) {
+            var arr = [];
+            i = 0;
+            $.each(d.d.results, function (index, results) {
+                if (results.Status == "Active") {
+                    arr[i++] = index;
+                }
+            });
+            var Count = arr.length;
+            var AId = [];
+            $("#TotalCout").append("[ " + Count + " ]");
+            for (var j = 0; j < arr.length; j++) {
+                var arrConfigK = arr[j];
+                var ActivityName = d.d.results[arrConfigK].ActivityName;
+                var Duration = d.d.results[arrConfigK].Duration;
+                var UOM = d.d.results[arrConfigK].UOM;
+                var DurationUOM = Duration + " " + UOM;
+                var Sequence = d.d.results[arrConfigK].Sequence;
+                var AlertsReminders = d.d.results[arrConfigK].AlertsReminders;
+                var Status = d.d.results[arrConfigK].Status;
+                var ActivityID = d.d.results[arrConfigK].ID;
+                AId.push(Sequence);
+                $("#tblConfigParametersBind").append("<tr><td>" + Sequence + "</td><td>" + ActivityName + "</td><td>" + DurationUOM + "</td><td>" + AlertsReminders + "</td><td width='10%'><a href='#' data-toggle='modal' data-target='#myModal' data-edit='popup-1'data-val='" + ActivityID + "'>Edit</a></td><td width='10%'><a href='#'  data-delete='popup-1'data-val='" + ActivityID + "'>Remove</a></td></tr>");
+
+            }
+            $('[data-delete]').on('click', function (e) {
+                var SelectID = $(this).data('val');
+                var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('ConfigParameters')/items(" + SelectID + ")";
+                $.ajax({
+                    url: requestUri,
+                    type: "POST",
+                    async: false,
+                    headers: {
+                        "ACCEPT": "application/json;odata=verbose",
+                        "content-type": "application/json;odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                        "IF-MATCH": "*",
+                        "X-HTTP-Method": "DELETE"
+                    },
+                    success: function (data) {
+                        if (SelectID != "" && SelectID != null) {
+                            var DeFID = GetFeedbakcID(SelectID);
+                            if (DeFID != "" && DeFID != null) {
+                                DeleteFeedbackdetails(DeFID);
+                                alert("Deleted Successfuly.");
+                                location.reload();
+                            }
+                            else {
+                                alert("Deleted Successfuly.");
+                                location.reload();
+                            }
+                        }
+                    },
+                    error: function (error) {
+                        alert(JSON.stringify(error));
+                    },
+                });
+                e.preventDefault();
+            });
+            var DeleteFeedID = "";
+            function GetFeedbakcID(SelectID) {
+                var requestUriSeaker = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedBackDetails')/items";
+                $.ajax({
+                    url: requestUriSeaker,
+                    type: "GET",
+                    async: false,
+                    headers: {
+                        "accept": "application/json;odata=verbose",
+                        "content-type": "application/json;odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                    },
+                    success: function (d) {
+                        var arrEdit = [];
+                        iEdit = 0;
+                        $.each(d.d.results, function (index, results) {
+                            if (results.ActiviTyID == SelectID) {
+                                arrEdit[iEdit++] = index;
+                            }
+                        });
+                        for (var k = 0; k < arrEdit.length; k++) {
+                            var indexEdit = arrEdit[k];
+                            DeleteFeedID = d.d.results[indexEdit].ID;
+                        }
+                    },
+                    error: function () { console.log('fail'); }
+                });
+                return DeleteFeedID;
+            }
+            function DeleteFeedbackdetails(DeleteID) {
+                var FeedDeleteURL = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedBackDetails')/items(" + DeleteID + ")";
+                $.ajax({
+                    url: FeedDeleteURL,
+                    type: "POST",
+                    async: false,
+                    headers: {
+                        "ACCEPT": "application/json;odata=verbose",
+                        "content-type": "application/json;odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                        "IF-MATCH": "*",
+                        "X-HTTP-Method": "DELETE"
+                    },
+                    success: function (data) {
+                    },
+                    error: function (error) {
+                        alert(JSON.stringify(error));
+                    },
+                });
+            }
+            $('[data-edit]').on('click', function (e) {
+                var SelectID = $(this).data('val');
+                var FeedBackRequired = "";
+                var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('ConfigParameters')/items";
+                $.ajax({
+                    url: requestUri,
+                    type: "GET",
+                    async: false,
+                    headers: {
+                        "accept": "application/json;odata=verbose",
+                        "content-type": "application/json;odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                    },
+                    success: function (d) {
+                        var arrEdit = [];
+                        iEdit = 0;
+                        $.each(d.d.results, function (index, results) {
+                            if (results.ID == SelectID) {
+                                arrEdit[iEdit++] = index;
+                            }
+                        });
+                        for (var k = 0; k < arrEdit.length; k++) {
+                            var indexEdit = arrEdit[k];
+                            var ActivityName = d.d.results[indexEdit].ActivityName;
+                            var Duration = d.d.results[indexEdit].Duration;
+                            var popUOM = d.d.results[indexEdit].UOM;
+                            var Sequence = d.d.results[indexEdit].Sequence;
+                            var AlertsReminders = d.d.results[indexEdit].AlertsReminders;
+                            var Status = d.d.results[indexEdit].Status;
+                            FeedBackRequired = d.d.results[indexEdit].FeedBackRequired;
+                            $("#popUpActivityName").val(ActivityName);
+                            $("#popUpDurationDays").val(Duration);
+                            $("#popUpUOM").val(popUOM);
+                            $("#popUpSequence").val(Sequence);
+                            $("#popUpAlertsAndReminders	").val(AlertsReminders);
+                            $("#popUpinlineRadioOptions").val(Status);
+                            if (AlertsReminders == "Yes") {
+                                $('#popUpAlertsAndReminders').prop('checked', true);
+                            }
+                            if (Status == "Active") {
+                                ('input[name=popUpinlineRadioOptions][value=Active]').checked = true;
+                            }
+                            else {
+                                ('input[name=popUpinlineRadioOptions][value=InActive]').checked = true;
+                            }
+                        }
+                    },
+                    error: function () { console.log('fail'); }
+                });
+                var isFeedBackValue = "No";
+                $('#popUpFeedBackNeeded').click(function () {
+                    if ($(this).prop("checked") == true) {
+                        isFeedBackValue = "Yes";
+                        document.getElementById("popUpSpeakerDetails").style.display = "block";
+                    }
+                    else if (
+							$(this).prop("checked") == false) {
+                        isFeedBackValue = "No";
+                        document.getElementById("popUpSpeakerDetails").style.display = "none";
+                    }
+                });
+                var FeedID = "";
+                if (FeedBackRequired == "Yes") {
+                    var requestUriSeaker = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedBackDetails')/items";
+                    $.ajax({
+                        url: requestUriSeaker,
+                        type: "GET",
+                        async: false,
+                        headers: {
+                            "accept": "application/json;odata=verbose",
+                            "content-type": "application/json;odata=verbose",
+                            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                        },
+                        success: function (d) {
+                            var arrEdit = [];
+                            iEdit = 0;
+                            $.each(d.d.results, function (index, results) {
+                                if (results.ActiviTyID == SelectID) {
+                                    arrEdit[iEdit++] = index;
+                                }
+                            });
+                            for (var k = 0; k < arrEdit.length; k++) {
+                                var indexEdit = arrEdit[k];
+                                FeedID = d.d.results[indexEdit].ID;
+                                var NameOfTheSpeaker = d.d.results[indexEdit].NameOfTheSpeaker;
+                                var EmployeeCode = d.d.results[indexEdit].EmployeeCode;
+                                var SpeakerDesc = d.d.results[indexEdit].SpeakerDesc;
+                                var BaseLcoation = d.d.results[indexEdit].BaseLcoation;
+                                $("#popUpNameOfTheSpeaker").val(NameOfTheSpeaker);
+                                $("#popUpSpeakerECode").val(EmployeeCode);
+                                $("#popUpSpeakerDesc").val(SpeakerDesc);
+                                $("#ddlPopupBaselocation").val(BaseLcoation);
+                                if (FeedBackRequired == "Yes") {
+                                    $('#popUpFeedBackNeeded').prop('checked', true);
+                                    document.getElementById("popUpSpeakerDetails").style.display = "block";
+                                }
+                            }
+                        },
+                        error: function () { console.log('fail'); }
+                    });
+                }
+                if (FeedBackRequired == "No") {
+                    $("#popUpNameOfTheSpeaker").val("");
+                    $("#popUpSpeakerECode").val("");
+                    $("#popUpSpeakerDesc").val("");
+                    $("#ddlPopupBaselocation").val("");
+                    if (FeedBackRequired == "No") {
+                        $('#popUpFeedBackNeeded').prop('checked', false);
+                        document.getElementById("popUpSpeakerDetails").style.display = "none";
+                    }
+                }
+                e.preventDefault();
+                var popPushSeq = [];
+                $("#btnUpdate").click(function () {
+                    if (IsValid()) {
+                        var ActivityName = document.getElementById("popUpActivityName").value;
+                        var popUpSequence = document.getElementById("popUpSequence").value;
+                        var Status = $('input[name=popUpAlertsAndReminders]:radio:checked').val();
+                        var uomtxtid = document.getElementById("popUpUOM");
+                        var uomtxt = uomtxtid.options[uomtxtid.selectedIndex].text;
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1;
+                        var yyyy = today.getFullYear();
+                        var Days = document.getElementById("popUpDurationDays").value;
+                        popPushSeq.push(popUpSequence);
+                        //$('input[type="checkbox"]').click(function () {if ($(this).prop("checked") == true) {var AlertsRemindersY = "Yes"} else if ($(this).prop("checked") == false) {var AlertsReminders = "No"}});
+                        var TitleConcat = ActivityName + "/" + dd + "/" + mm + "/" + yyyy;
+                        $.ajax({
+                            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('ConfigParameters')/items(" + SelectID + ")",
+                            type: "POST",
+                            data: JSON.stringify({
+                                '__metadata': { 'type': 'SP.Data.ConfigParametersListItem' },
+                                'Title': TitleConcat,
+                                'ActivityName': ActivityName,
+                                'Duration': Days,
+                                'Sequence': popUpSequence,
+                                'AlertsReminders': "Yes",
+                                'Status': Status,
+                                'UOM': uomtxt,
+                                'StartDate': 'mm/DD/yyyy',
+                                'EndDate': 'mm/DD/yyyy',
+                            }),
+                            headers: {
+                                "Accept": "application/json;odata=verbose",
+                                "content-type": "application/json; odata=verbose",
+                                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                                "X-HTTP-Method": "MERGE",
+                                "If-Match": "*"
+                            },
+                            success: function (data) {
+                                if (FeedID != "" && FeedID != null) {
+                                    UpdateSpeakerDetails(FeedID);
+                                    alert("Request updated successfully");
+                                    location.reload();
+                                }
+                            },
+                            error: function (err) {
+                                alert("Error while adding item: " + JSON.stringify(err));
+                            }
+                        });
+                    }
+                });
+            });
+            function UpdateSpeakerDetails(FeedID) {
+                var NameOfTheSpeaker = document.getElementById("popUpNameOfTheSpeaker").value;
+                var EmployeeCode = document.getElementById("popUpSpeakerECode").value;
+                var SpeakerDesc = document.getElementById("popUpSpeakerDesc").value;
+                var popupdepart = document.getElementById("ddlPopupBaselocation");
+                var popupDepartText = popupdepart.options[popupdepart.selectedIndex].text;
+                $.ajax({
+                    url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('FeedBackDetails')/items(" + FeedID + ")",
+                    type: "POST",
+                    async: false,
+                    data: JSON.stringify({
+                        '__metadata': { 'type': 'SP.Data.FeedBackDetailsListItem' },
+                        'SpeakerDesc': SpeakerDesc,
+                        'EmployeeCode': EmployeeCode,
+                        'NameOfTheSpeaker': NameOfTheSpeaker,
+                        'BaseLcoation': popupDepartText,
+                    }),
+                    headers: {
+                        "Accept": "application/json;odata=verbose",
+                        "content-type": "application/json; odata=verbose",
+                        "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                        "X-HTTP-Method": "MERGE",
+                        "If-Match": "*"
+                    },
+                    success: function (data) {
+                    },
+                    error: function (err) {
+                        alert("Error while adding item: " + JSON.stringify(err));
+                    }
+                });
+            }
+            function IsValid() {
+                var popUpNameOfTheSpeaker = $('#popUpNameOfTheSpeaker').val();
+                var popUpSpeakerECode = $('#popUpSpeakerECode').val();
+                var ddlPopupBaselocation = $('#ddlPopupBaselocation').val();
+                var checked = $('#popUpFeedBackNeeded').is(':checked');
+                if (checked == true) {
+                    if (popUpNameOfTheSpeaker == '' && txtEmployeeCode == '' && ddlPopupBaselocation == '') {
+                        $('#popUpNameOfTheSpeaker').css("border", "1px solid red");
+                        $('#popUpSpeakerECode').css("border", "1px solid red");
+                        $(ddlPopupBaselocation).css("border", "1px solid red");
+                        return false;
+                    }
+                    else if (popUpNameOfTheSpeaker == '') {
+                        $('#popUpNameOfTheSpeaker').css("border", "1px solid red");
+                        return false;
+                    }
+                    else if (popUpSpeakerECode == '') {
+                        $('#popUpSpeakerECode').css("border", "1px solid red");
+                        return false;
+                    }
+                    else if (ddlPopupBaselocation == '') {
+                        $('#ddlPopupBaselocation').css("border", "1px solid red");
+                        return false;
+                    }
+                }
+                if ($('#popUpActivityName').val() == "") {
+                    $('#popUpActivityName').css("border", "1px solid red");
+                    return false;
+                }
+                if ($('#popUpDurationDays').val() == "") {
+                    $('#popUpDurationDays').css("border", "1px solid red");
+                    return false;
+                }
+                if ($('#popUpUOM').val() == "0" || $('#popUpUOM').val() == "") {
+                    $('#popUpUOM').css("border", "1px solid red");
+                    return false;
+                }
+                if ($('#popUpSequence').val() == "") {
+                    $('#popUpSequence').css("border", "1px solid red");
+                    return false;
+                }
+                if ($('input[name=popUpinlineRadioOptions]:checked').length <= 0) {
+                    $("#divPopUpErrorMessage").empty();
+                    $("#divPopUpErrorMessage").append("Please select status");
+                    return false;
+                }
+                return true;
+            }
+            $("#popUpActive").click(function () {
+                $("#divPopUpErrorMessage").empty();
+            });
+            $("#popUpInActive").click(function () {
+
+                $("divPopUpErrorMessage").empty();
+            });
+
+            $('#Sequence').change(function () {
+                var id = $(this).val();
+                for (i = 0; i < AId.length; i++) {
+                    if (AId[i] == id) {
+                        alert('Please Enter new sequence id');
+                        break;
+                    }
+                    else if (id < AId[i]) {
+                        alert('Sequence id should be greater than existing sequence id');
+                        break;
+                    }
+                }
+
+            });
+            $('#popUpSequence').change(function () {
+                var id = $(this).val();
+                for (i = 0; i < popPushSeq.length; i++) {
+                    if (popPushSeq[i] == id) {
+                        alert('Please Enter new Sequence id');
+                        break;
+                    }
+                    else if (id < popPushSeq[i]) {
+                        alert('Sequence id should be greater than existing sequence id');
+                        break;
+                    }
+                }
+
+            });
+        },
+        error: function () { console.log('fail'); }
+    })
+</script>
+<script type="text/javascript">
+    var LoginUserName = "";
+    $.ajax({
+        url: _spPageContextInfo.webServerRelativeUrl + "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+        method: "GET",
+        headers: { "accept": "application/json;odata=verbose" },
+        success: function (data) {
+            var Logg = data.d;
+            LoginUserName = Logg.Title;
+        },
+        error: function (err) {
+            alert(JSON.stringify(err));
+        }
+    });
+    var AlertsReminders = ""; var NeedRmainderDev = "";
+    $("#AlertsAndReminders").click(function () {
+        if ($(this).prop("checked") == true) {
+            AlertsReminders = "Yes"
+
+        }
+        else if ($(this).prop("checked") == false) {
+            AlertsReminders = "No"
+        }
+    });
+    var isFeedBackValue = "No";
+    $('#isFeedBackNeed').click(function () {
+        if ($(this).prop("checked") == true) {
+            isFeedBackValue = "Yes";
+            document.getElementById("divFeedBackNeeded").style.display = "block";
+        }
+        else if (
+                $(this).prop("checked") == false) {
+            isFeedBackValue = "No";
+            document.getElementById("divFeedBackNeeded").style.display = "none";
+        }
+    });
+
+    function InsertCreation() {
+        var appWebUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
+        var ActivityName = document.getElementById("ActivityName").value;
+        var Sequence = document.getElementById("Sequence").value;
+        var Duration = document.getElementById("setDurationID").value;
+        var Status = $('input[name=inlineRadioOptions]:radio:checked').val();
+        var uomtxtid = document.getElementById("DurationDays");
+        var uomtxt = uomtxtid.options[uomtxtid.selectedIndex].text;
+
+        var BaseLcoation = document.getElementById("ddlBaselocation");
+        var BaseLcoationText = BaseLcoation.options[BaseLcoation.selectedIndex].text;
+        var NameOfTheSpeaker = document.getElementById("txtNameOfTheSpeaker").value;
+        var EmployeeCode = document.getElementById("txtEmployeeCode").value;
+        var SpeakerDesc = document.getElementById("txtSpeakerDesc").value;
+
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        $('#Sequence').change(function () {
+            var id = $(this).val();
+            for (i = 0; i < AId.length; i++) {
+                if (AId[i] == id) {
+                    alert('Please Enter new Sequence id');
+                    break;
+                }
+                else if (id < AId[i]) {
+                    alert('Sequence id should be greater than existing sequence id');
+                    break;
+                }
+            }
+
+        });
+
+        //$('input[type="checkbox"]').click(function () {if ($(this).prop("checked") == true) {var AlertsRemindersY = "Yes"} else if ($(this).prop("checked") == false) {var AlertsReminders = "No"}});
+        var TitleConcat = ActivityName + "/" + dd + "/" + mm + "/" + yyyy;
+        $.ajax({
+            url: appWebUrl + "//_api/web/lists/getbytitle('ConfigParameters')/items",
+            type: "POST",
+            async: false,
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.ConfigParametersListItem' },
+                'Title': TitleConcat,
+                'ActivityName': ActivityName,
+                'Duration': Duration,
+                'Sequence': Sequence,
+                'AlertsReminders': AlertsReminders,
+                'Status': Status,
+                'UOM': uomtxt,
+                'StartDate': 'mm/DD/yyyy',
+                'EndDate': 'mm/DD/yyyy',
+                'FeedBackRequired': isFeedBackValue
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+            },
+            success: function (data) {
+                if (isFeedBackValue == "Yes") {
+                    var ActiviTyID = data.d.ID;
+                    var ACTID = ActiviTyID.toString();
+                    FeedDetailsInsert(NameOfTheSpeaker, BaseLcoationText, NameOfTheSpeaker, EmployeeCode, SpeakerDesc, ACTID);
+                }
+                else {
+                    alert("Request Submitted successfully");
+                }
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+
+    }
+    function FeedDetailsInsert(txtNameOfTheSpeaker, BaseLcoationText, txtNameOfTheSpeaker, txtEmployeeCode, txtSpeakerDesc, ActiviTyID) {
+        $.ajax({
+
+            url: "https://bajajelect.sharepoint.com/sites/HR-TrainingManagementSystem/_api/web/lists/getbytitle('FeedBackDetails')/items",
+            type: "POST",
+            async: false,
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.FeedBackDetailsListItem' },
+                'Title': txtNameOfTheSpeaker,
+                'BaseLcoation': BaseLcoationText,
+                'NameOfTheSpeaker': txtNameOfTheSpeaker,
+                'EmployeeCode': txtEmployeeCode,
+                'SpeakerDesc': txtSpeakerDesc,
+                'ActiviTyID': ActiviTyID,
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+            },
+            success: function (data) {
+                alert("Request Submitted successfully");
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+    }
+
+    $("#SActive").click(function () {
+        $("#divErrorMessage").empty();
+    });
+    $("#SInActive").click(function () {
+
+        $("#divErrorMessage").empty();
+    });
+</script>
+<script>
+
+    $("#btnSubmit").click(function () {
+        var speaker = $('#txtNameOfTheSpeaker').val();
+        var txtEmployeeCode = $('#txtEmployeeCode').val();
+        var ddlBaselocation = $('#ddlBaselocation').val();
+        var checked = $('#isFeedBackNeed').is(':checked');
+        var active = $('input[name=inlineRadioOptions]:checked');
+
+        if (checked == true) {
+
+            if (speaker == '' && txtEmployeeCode == '' && ddlBaselocation == '') {
+                $('#txtNameOfTheSpeaker').css("border", "1px solid red");
+                $('#txtEmployeeCode').css("border", "1px solid red");
+                $('#ddlBaselocation').css("border", "1px solid red");
+                // alert('Please enter all the fields');
+                return false;
+            }
+            else if (speaker == '') {
+                $('#txtNameOfTheSpeaker').css("border", "1px solid red");
+                return false;
+            }
+            else if (txtEmployeeCode == '') {
+                $('#txtEmployeeCode').css("border", "1px solid red");
+                return false;
+            }
+            else if (ddlBaselocation == '') {
+                $('#ddlBaselocation').css("border", "1px solid red");
+                return false;
+            }
+        }
+        var activityNa = $('#ActivityName').val();
+        var DurationDays = $('#DurationDays').val();
+        var setDurationID = $('#setDurationID').val();
+        var Sequence = $('#Sequence').val();
+
+
+        $('#ActivityName').css("border", "1px solid black");
+        $('#setDurationID').css("border", "1px solid black");
+        $('#DurationDays').css("border", "1px solid black");
+        $('#Sequence').css("border", "1px solid black");
+
+        if (activityNa == "" && setDurationID == "" && (DurationDays == "" || DurationDays == "0") && Sequence == "") {
+            $('#ActivityName').css("border", "1px solid red");
+            $('#setDurationID').css("border", "1px solid red");
+            $('#DurationDays').css("border", "1px solid red");
+            $('#Sequence').css("border", "1px solid red");
+            return false;
+        }
+        else if (activityNa == "") {
+            $('#ActivityName').css("border", "1px solid red");
+            return false;
+        }
+        else if (setDurationID == "") {
+            $('#setDurationID').css("border", "1px solid red");
+            return false;
+        }
+        else if (DurationDays == "" || DurationDays == "0") {
+            $('#DurationDays').css("border", "1px solid red");
+            return false;
+        }
+        else if (Sequence == "") {
+            $('#Sequence').css("border", "1px solid red");
+            return false;
+        }
+
+
+        else if (active.length <= 0) {
+            $("#divErrorMessage").empty();
+            $("#divErrorMessage").append("Please select status");
+            return false;
+        }
+        else {
+            InsertCreation();
+            location.reload();
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        BaseDepartmentBind();
+    });
+    function BaseDepartmentBind() {
+        var listName = "BaseDepartment";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+
+        getProgramNameListItems(listName, url, function (data) {
+            var items = data.d.results;
+
+            var inputElement = '<select id="ddlBaselocation" class="form-control"><option  value="">Select</option>';
+            // Add all the new items
+            for (var i = 0; i < items.length; i++) {
+                var itemId = items[i].Title,
+                    itemVal = items[i].ID;
+                inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+
+            }
+            inputElement += '</select>';
+            $('#divBaseDeptDynamic').append(inputElement);
+
+            $("#ddlBaselocation").each(function () {
+                $('option', this).each(function () {
+
+                    if ($(this).text() == 'Select') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+            // assign the change event to provide an alert of the selected option value
+            $('#ProgramNameDynDropDown').on('change', function () {
+                //alert($(this).val());
+
+            });
+
+        }, function (data) {
+            alert("Ooops, an error occured. Please try again");
+        });
+    }
+    function getProgramNameListItems(listName, siteurl, success, failure) {
+        $.ajax({
+            url: siteurl + "/_api/web/lists/getbytitle('BaseDepartment')/items?$orderby=Title%20asc",
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        PopUpBaseDepartmentBind();
+    });
+    function PopUpBaseDepartmentBind() {
+        var listName = "BaseDepartment";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+
+        getProgramNameListItems(listName, url, function (data) {
+            var items = data.d.results;
+
+            var inputElement = '<select id="ddlPopupBaselocation" class="form-control"><option  value="">Select</option>';
+            // Add all the new items
+            for (var i = 0; i < items.length; i++) {
+                var itemId = items[i].Title,
+                    itemVal = items[i].Title;
+                inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+
+            }
+            inputElement += '</select>';
+            $('#popupBaseDeptBind').append(inputElement);
+
+            $("#ddlPopupBaselocation").each(function () {
+                $('option', this).each(function () {
+
+                    if ($(this).text() == 'Select') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+
+        }, function (data) {
+            alert("Ooops, an error occured. Please try again");
+        });
+    }
+    function getProgramNameListItems(listName, siteurl, success, failure) {
+        $.ajax({
+            url: siteurl + "/_api/web/lists/getbytitle('BaseDepartment')/items?$orderby=Title%20asc",
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        $('#popUpDurationDays').keypress(validateNumber);
+        $('#setDurationID').keypress(validateNumber);
+        $('#Sequence').keypress(validateNumber);
+        $('#popUpSequence').keypress(validateNumber);
+    });
+
+    function validateNumber(event) {
+        var key = window.event ? event.keyCode : event.which;
+        if (event.keyCode === 8 || event.keyCode === 46) {
+            return true;
+        } else if (key < 48 || key > 57) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+</script>

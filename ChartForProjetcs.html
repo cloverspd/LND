@@ -1,0 +1,335 @@
+﻿<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<style>
+    .table {
+        border: 2px solid #654a4a;
+    }
+  .table th {
+            text-align: center;
+   }
+        .table tr td {
+            border: 1px solid #654a4a;
+        }
+        .table tr th {
+            border: 1px solid #654a4a;
+        }
+</style>
+
+<div id="bindChart" class="table-responsive"></div>
+<div>
+    <table id="uploaded-sap-table" class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr id="FirstHead">                
+            </tr>
+            <tr id="SecondHead"></tr>
+        </thead>
+        <tbody id="DetailsList"></tbody>
+    </table>
+
+</div>
+
+<script>
+    var ChartData = "<table class='table'>";
+    var years = "<tr>";
+    var months = "<tr>";
+    var ProjectData = "";
+    var bindMonths = "";
+    var StartDate = [];
+    var EndDate = [];
+    var Details = [];
+    var For2TypeWithColor =[
+             { Key: "ER", Value: "#C0C0C0" },
+             { Key: "ERP", Value: "#808080" },
+             { Key: "D", Value: "#000000" },
+             { Key: "P", Value: "#FF0000" },
+             { Key: "R", Value: "#239B56" },
+    ];
+   /* $.ajax({
+        async: false,
+        url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('Project%20table')/items?$orderby=StartDate%20asc",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "x-requestdigest": $("#__requestdigest").val(),
+        },
+        success: function (d) {
+            var Model = ""; var katashiki = ""; var sYear = ""; var eYear = "";
+            ProjectData += "<tr>";
+            $.each(d.d.results, function (index, results) {              
+                if (results.StartDate != "" && results.EndDate != "" && results.StartDate != null && results.EndDate != null) {
+                    var sYearNew = new Date(results.StartDate).getFullYear();
+                    var eYearNew = new Date(results.EndDate).getFullYear();
+                    var sMonth= new Date(results.StartDate).getMonth()+1;
+                    var eMonth = new Date(results.EndDate).getMonth() + 1;
+                    if (sYear != sYearNew && eYear != eYearNew) {
+                        sYear = sYearNew;
+                        eYear = eYearNew;
+                        if (sYear == eYear) {
+                            years += "<th colspan='12' data-toggle='tooltip' data-placement='top' title='" + results.Model + "'>" + sYear + "</th>";
+                            months += "<td class='clsYearSame" + eYear + "'>1</td> <td class='clsYearSame" + eYear + "'>2</td> <td class='clsYearSame" + eYear + "'>3</td>";
+                            months += "<td class='clsYearSame" + eYear + "'>4</td> <td class='clsYearSame" + eYear + "'>5</td> <td class='clsYearSame" + eYear + "'>6</td>";
+                            months += "<td class='clsYearSame" + eYear + "'>7</td> <td class='clsYearSame" + eYear + "'>8</td> <td class='clsYearSame" + eYear + "'>9</td>";
+                            months += "<td class='clsYearSame" + eYear + "'>10</td> <td class='clsYearSame" + eYear + "'>11</td> <td class='clsYearSame" + eYear + "'>12</td> ";
+
+                        }
+                        else {
+                            years += "<th colspan='12'>" + eYear + "</th>";
+                            months += "<td class='clsYearbetween" + eYear + "'>1</td> <td class='clsYearbetween" + eYear + "'>2</td> <td class='clsYearbetween" + eYear + "'>3</td>";
+                            months += "<td class='clsYearbetween" + eYear + "'>4</td> <td class='clsYearbetween" + eYear + "'>5</td> <td class='clsYearbetween" + eYear + "'>6</td>";
+                            months += "<td class='clsYearbetween" + eYear + "'>7</td> <td class='clsYearbetween" + eYear + "'>8</td> <td class='clsYearbetween" + eYear + "'>9</td>";
+                            months += "<td class='clsYearbetween" + eYear + "'>10</td> <td class='clsYearbetween" + eYear + "'>11</td> <td class='clsYearbetween" + eYear + "'>12</td> ";
+                        }
+                    }
+                   // if (sYear == eYear) {
+                      
+                        var colorCode = "";
+                        $.each(For2TypeWithColor, function (index, finalData) {
+                            if (results.OData__x0046_or2 != "" && results.OData__x0046_or2 != null) {
+                                if (results.OData__x0046_or2 == finalData.Key) {
+                                    colorCode = finalData.Value;
+                                }
+                            }
+                        });
+                        ProjectData += "<td class='clsRow"+index+"'></td><td></td><td></td><td></td><td></td><td></td>";
+                        ProjectData += "<td></td><td></td><td></td><td></td><td></td><td></td>";
+                       //// if (sMonth == eMonth) {
+                       //    // if (sMonth == 1 && eMonth != 1) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //   //  }
+                       //    // else if (sMonth == 2 && eMonth != 2) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //  //   }
+                       //   //  else if (sMonth == 3 && eMonth != 3) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //    // }
+                       //    // else if (sMonth == 4 && eMonth != 4) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //   //  }
+                       //   //  else if (sMonth == 5 && eMonth != 5) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //   //  }
+                       //    // else if (sMonth == 6 && eMonth != 6) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //    // }
+                       //    // else if (sMonth == 7 && eMonth != 7) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //    // }
+                       //     //else if (sMonth == 8 && eMonth != 8) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //    // }
+                       //     //else if (sMonth == 9 && eMonth != 9) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //    // }
+                       //    // else if (sMonth == 10 && eMonth != 10) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //     //}
+                       //    // else if (sMonth == 11 && eMonth != 11) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //     //}
+                       //     //else if (sMonth == 12 && eMonth != 12) {
+                       //         ProjectData += "<td style='background-color:" + colorCode + "'></td>";
+                       //     //}
+                    
+                  //  }
+                }
+            });
+            ProjectData += "</tr>";
+            var groupByTitle = getProjectGroupByData();
+            if (groupByTitle.length > 0 && groupByTitle != "" && groupByTitle != null) {
+                $.each(groupByTitle, function (index, groupByTitle) {
+                    var ModelTitle = groupByTitle;
+                    var restUrlFilter = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('Project%20table')/items?$filter=Model eq '" + ModelTitle + "'&$orderby=StartDate%20asc";
+                    $.ajax({
+                        async: false,
+                        url: restUrlFilter,
+                        type: "GET",
+                        headers: {
+                            "accept": "application/json;odata=verbose",
+                            "content-type": "application/json;odata=verbose",
+                            "x-requestdigest": $("#__requestdigest").val(),
+                        },
+                        success: function (d) {
+                            bindMonths = "<tr>";
+                            $.each(d.d.results, function (index, results) {
+                                if (results.StartDate != "" && results.StartDate != null) {
+                                    var sMonth = new Date(results.StartDate).getMonth() + 1;
+                                    var eMonth = new Date(results.EndDate).getMonth() + 1;
+                                    var sYearNew = new Date(results.StartDate).getFullYear();
+                                    var eYearNew = new Date(results.EndDate).getFullYear();
+                                    var sMonth= new Date(results.StartDate).getMonth()+1;
+                                    var eMonth = new Date(results.EndDate).getMonth() + 1;
+                                    if (sYear != sYearNew && eYear != eYearNew) {
+                                        sYear = sYearNew;
+                                        eYear = eYearNew;
+                                        if (sYear == eYear) {
+                                            bindMonths += "<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>";
+                                            bindMonths += "<td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>";
+                                        }
+                                    }                                    
+                                }
+                            });
+                            ChartData+=bindMonths = "<tr>";
+                        },
+                        error: function () { console.log('fail'); }
+                    });
+                });
+            }
+            
+            console.log(bindMonths);
+            years += "</tr>";
+            months += "</tr>";
+            
+            ChartData += years + months + ProjectData + bindMonths + "</table>";
+            $('#bindChart').html(ChartData);
+        },
+        error: function () { console.log('fail'); }
+    });*/
+    $(document).ready(function () {
+       // $('[data-toggle="tooltip"]').tooltip();
+        getProjectGroupByData();
+        BindDetails();
+    });
+  
+    function getProjectGroupByData() {
+        var restProgramUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('Project%20table')/items";
+        var groupByProgram = [];
+        $.ajax({
+            async: false,
+            url: restProgramUrl,
+            type: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "x-requestdigest": $("#__requestdigest").val(),
+            },
+            success: function (data) {
+                //$.each(d.d.results, function (index, item) {
+                //    Details.push(item);
+                //    StartDate.push(item.StartDate);
+                //    EndDate.push(item.EndDate);
+                //    if ($.inArray(item.Model, groupByProgram) == -1) {
+                //        groupByProgram.push(item.Model);                        
+                //    }
+                //});
+                var subitems = data.d.results;                
+                for (var j = 0; j < subitems.length; j++) {                    
+                    Details.push(subitems[j]);
+                    StartDate.push(subitems[j].StartDate);
+                    EndDate.push(subitems[j].EndDate);
+                }
+
+            },
+            error: function () { console.log('fail'); }
+        });       
+    }
+    function BindDetails()
+    {
+        StartDate.sort(function (a, b) {           
+            return new Date(b.date) - new Date(a.date);
+        });
+        EndDate.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
+        });
+        var min_date = StartDate[0];
+        var max_date = EndDate.slice(-1)[0];
+        var sYearNew = new Date(min_date).getFullYear();
+        var eYearNew = new Date(max_date).getFullYear();
+        var sMonth = new Date(min_date).getMonth() + 1;
+        var eMonth = new Date(max_date).getMonth() + 1;
+        var FirstHead = "<th></th>";
+        var SecondHead = "<th></th>";
+        var tdCount = [];
+        for (var i = sYearNew; i <= eYearNew; i++) {            
+            var count = 0;
+            for (var j = 1; j <= 12; j++) {
+                var tdate = new Date(j + '/' + 01 + '/' + i);
+               
+                if (sYearNew == i) {
+                    if (j >= sMonth) {
+                        var fd = new Date(i, j - 1, 1);
+                        var sd = new Date(i, j, 0);
+                        var responseData = Object();
+                        responseData.Startdate=fd;
+                        responseData.Enddate=sd;
+                        SecondHead = SecondHead+"<th>" + j + "</th>"
+                        count = count + 1;
+                        tdCount.push(responseData);
+                    }
+                } else if (eYearNew == i) {
+                    if (eMonth >= j) {
+                        var fd = new Date(i, j - 1, 1);
+                        var sd = new Date(i, j, 0);
+                        var responseData = Object();
+                        responseData.Startdate=fd;
+                        responseData.Enddate=sd;
+                        SecondHead = SecondHead+"<th>" + j + "</th>"
+                        count = count + 1;
+                        tdCount.push(responseData);
+                    }
+                } else {
+                    var fd = new Date(i, j - 1, 1);
+                    var sd = new Date(i, j, 0);
+                    var responseData = Object();
+                    responseData.Startdate=fd;
+                    responseData.Enddate=sd;
+                    SecondHead = SecondHead+"<th>" + j + "</th>"
+                    count = count + 1;
+                    tdCount.push(responseData);
+                }
+            }
+            FirstHead =FirstHead+ "<th colspan=" + count + ">" + i + "</th>";
+            
+        }
+
+        $('#FirstHead').append(FirstHead);
+        $('#SecondHead').append(SecondHead);
+        var tbody = "";
+        var arrDayWiseUniqueNames = [];
+        arrDayWiseUniqueNames = $.unique(Details.map(function (d) { return d.Model }));
+        for (var i = 0; i < arrDayWiseUniqueNames.length ; i++) {            
+            var val = arrDayWiseUniqueNames[i];
+            tbody = tbody + "<tr><td>" + val + "</td>";
+            var j = 0;
+            //for (var j = 0; j <= tdCount.length; j++)
+            while (j < tdCount.length) {
+                var ans = [];
+                var ssdate = new Date(tdCount[j].Startdate);
+                var sEdate = new Date(tdCount[j].Enddate);
+                Details.forEach(function (o) { if (o.Model == val && new Date(o.StartDate) >= ssdate && new Date(o.StartDate) <= sEdate) ans.push(o); });
+                if (ans.length > 0) {
+                    var sYearNew = new Date(ans[0].StartDate).getFullYear();
+                    var eYearNew = new Date(ans[0].EndDate).getFullYear();
+                    var sMonth = new Date(ans[0].StartDate).getMonth() + 1;
+                    var eMonth = new Date(ans[0].EndDate).getMonth() + 1;
+                    var OData = ans[0].OData__x0046_or2;
+                    var bgcolor = 'background-color: red';
+                    if (OData == 'ER')
+                        bgcolor = 'background-color: #C0C0C0';
+                    else if (OData == 'ERP')
+                        bgcolor = 'background-color: #808080';
+                    else if (OData == 'D')
+                        bgcolor = 'background-color: #000000';
+                    else if (OData == 'P')
+                        bgcolor = 'background-color: #FF0000';
+                    else if (OData == 'R')
+                        bgcolor = 'background-color: #239B56';
+
+                    for (var m = sYearNew; m <= eYearNew; m++) {
+                        for (var n = 1; n <= 12; n++) {
+                            if (sYearNew <= m && n >= sMonth && m >= eYearNew && eMonth >= n) {
+                                tbody = tbody + "<td style='" + bgcolor + "'></td>";
+                                j++;
+                            }
+                        }
+                    }
+                } else { tbody = tbody + "<td></td>"; j++; }
+            }
+            tbody = tbody + "</tr>";
+        }
+       
+     $('#DetailsList').append(tbody);
+    }
+</script>
+

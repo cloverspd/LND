@@ -1,0 +1,437 @@
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.flash.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.html5.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.print.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+
+
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/exportToExcelJS/jquery.table2excel.js"></script>
+<script src="/sites/AnugamUAT/SiteAssets/AnugamStyles/exportToExcelJS/jquery.battatech.excelexport.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/AnugamUAT/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+<style>
+    .errorBorder-color {
+        padding: 0px !important;
+        color: red;
+        font-size: 19px;
+        margin-left: 33px;
+    }
+
+    .margin-top-50 {
+        margin-top: 50px;
+    }
+
+    .dataTables_length {
+        position: absolute;
+        margin-top: -115px;
+    }
+
+    .dataTables_filter {
+        position: absolute;
+        margin-top: -115px;
+    }
+</style>
+
+
+<div>
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important;margin-left: 9px !Important;margin-right: 0px !Important;margin-top: 0px !Important; margin-bottom: 0px !Important;">
+            Induction Feedback Reason's
+        </h1>
+    </div>
+    <div class="col-md-12 padding-0">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div id="divErrorMessage" class="errorBorder-color"></div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <label>
+                Program Name
+            </label>
+            <div id="ddlProgramName">
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0" style="display:none;" >
+            <div class="col-md-4">
+                <label>
+                    Program Start Date
+                </label>
+                <input type="text" id="txtProgramStartDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program End Date
+                </label>
+                <input type="text" id="txtProgramEndDate" class="form-control" readonly="readonly" />
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program Location
+                </label>
+                <input id="txtProgramLocation" class="form-control" readonly="readonly" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 padding-0 margin-top-15">
+        <div class="col-md-4">
+            <label>
+                Employee Details
+            </label>
+        </div>
+        <div class="col-md-4">
+            <label style="display:none">ABC</label>
+            <button type="button" id="btntotalProgramReport" style="display:none;">Export All Employee</button>
+        </div>
+
+        <div class="col-md-12 padding-0" id="divClearCotentMISReport">
+            <div class="col-md-12">
+                <table style="width: 100%;" id='tblFinalReport'>
+                    <tr>
+                        <td>
+                            <div>
+                                <table class="table table-striped table-bordered dt-responsive nowrap margin-bottom-0 margin-top-50 clearDataOnChange">
+                                    <thead>
+                                        <tr>
+                                            <th>Program Name</th>
+                                            <th>Program Dates</th>
+                                            <th>Program Location</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyProgramDetails"></tbody>
+
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="divTotalProgramReport" style="width: 100%;">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        PopulateProgramDropDown();
+    });
+
+    function PopulateProgramDropDown() {
+        var listName = "NewInductionProgram";
+        var url = _spPageContextInfo.webAbsoluteUrl;
+        var UserEmail = LoginUserEmail();
+        getProgram(UserEmail, listName, url, function (data) {
+            var TodayDate = new Date();
+            var day = TodayDate.getDate();
+            var mm = TodayDate.getMonth() + 1;
+            var Year = TodayDate.getFullYear();
+            var items = data.d.results;
+            var pgmFinalData = []; var j = 0;
+            var arrPGM = [];
+            var arrPGMUnique = [];
+            for (var k = 0; k < items.length; k++) {
+                var ChkProgramEndDate = new Date(items[k].ProgramEndDate.split("/").reverse().join("-"));
+                if (new Date(items[k].ProgramEndDate.split("/").reverse().join("-")) <= TodayDate || ChkProgramEndDate.setHours(0, 0, 0, 0) == TodayDate.setHours(0, 0, 0, 0)) {
+                    var NameProgram = items[k].ProgramName;
+                    if (pgmFinalData[j++] != NameProgram) {
+                        pgmFinalData[j++] = NameProgram;
+                    }
+                }
+            }
+            var uniqueProgramNames = '';
+            var result = [];
+            $.each(pgmFinalData, function (index, pgmFinalData) {
+                if ($.inArray(pgmFinalData, result) == -1) {
+                    result.push(pgmFinalData);
+                }
+            });
+            console.log(ChkProgramEndDate);
+            //var programBind = GroupByProgramData(pgmFinalData, 'ProgramName');
+            var inputElement = '<select id="ProgramNameDynDropDown" class="form-control"><option  value="">--Select Program--</option>';
+            // Add all the new items
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] != undefined) {
+                    var itemId = result[i],
+                        itemVal = result[i];
+                    inputElement += '<option value="' + itemVal + '"selected>' + itemId + '</option>';
+                }
+            }
+            inputElement += '</select>';
+            $('#ddlProgramName').append(inputElement);
+            $("#ProgramNameDynDropDown").each(function () {
+                $('option', this).each(function () {
+
+                    if ($(this).text() == '--Select Program--') {
+                        $(this).attr('selected', 'selected')
+                    };
+                });
+            });
+            $('#ProgramNameDynDropDown').on('change', function () {
+                var selectedProgramName = $(this).val();
+                var UserEmailID = LoginUserEmail();
+                $("#divTotalProgramReport").empty();
+                $('.clearDataOnChange').find("tr:not(:first)").remove();
+                $.blockUI({ message: '<div style="font-size:20px">Please Wait...</div>', });
+                setTimeout(function () {
+                    getProgramLocation(selectedProgramName);
+                    getTotlaUserEmployeeDetails(selectedProgramName, UserEmailID);
+                    $.unblockUI({
+                        onUnblock: function () {
+                            console.log('');
+                        }
+                    });
+                }, 200);
+            });
+
+        }, function (data) {
+            alert("An error occured while getting ConfigParameters. Please try again");
+        });
+    }
+
+
+    function getProgram(UserEmail, listName, siteurl, success, failure) {
+        var TodayDate = new Date();
+        var day = TodayDate.getDate();
+        var mm = TodayDate.getMonth() + 1;
+        var Year = TodayDate.getFullYear();
+        var UrlOf = siteurl + "/_vti_bin/listdata.svc/NewInductionProgram";
+        var urlTest = siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=CreatedByUser eq %27" + UserEmail + "%27 and Status eq 'Active'";
+        //$.ajax({
+        // url: siteurl + "/_vti_bin/listdata.svc/" + listName + "?$filter=month(PgmEndDate)%20le%20"+mm+"%20and%20day(PgmEndDate)%20le%20"+day+"%20and%20year(PgmEndDate)%20le%20"+Year+"",
+        $.ajax({
+            url: urlTest,
+            //siteurl + "/_api/web/lists/getbytitle('" + listName + "')/items?$filter=CreatedByUser eq %27" + UserEmail + "%27",
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data) {
+                success(data);
+            },
+            error: function (data) {
+                failure(data);
+            }
+        });
+    }
+    function GroupByProgramData(items, propertyName) {
+        var result = [];
+        $.each(items, function (index, item) {
+            if ($.inArray(item[propertyName], result) == -1) {
+                result.push(item[propertyName]);
+            }
+        });
+        return result;
+    }
+
+</script>
+<script>
+    function getTotlaUserEmployeeDetails(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('FeedBackTransactionDetails')/items?$filter=ProgramName%20eq%20%27" + selectedProgramName + "%27 and CanDoBetter ne null";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (data) {
+                if (data.d.results.length > 0) {
+                    //construct HTML Table from the JSON Data
+                    $('#divTotalProgramReport').append(GenerateTableFromJson(data.d.results));
+                    //Bind the HTML data with Jquery DataTable
+                    var oTable = $('#tblTotlaNoEmployees').dataTable({
+                        "iDisplayLength": 10,
+                        "aLengthMenu": [
+                        [10, 20, 50, 100],
+                        [10, 20, 50, 100]
+                        ],
+                        "sPaginationType": "full_numbers"
+                    });
+                } else {
+                    $('#btntotalProgramReport').hide();
+                    //$("#divTotalProgramReport").empty();
+                    $('#divTotalProgramReport').append("<span>No Records Found.</span>");
+                }
+            },
+            error: function (data) {
+                $('#divTotalProgramReport').append("<span>Error Retreiving Records. Error : " + JSON.stringify(data) + "</span>");
+            }
+        });
+        function GenerateTableFromJson(objArray) {
+            $('tbodyProgramDetails').empty();
+            var ProgramSDate = $('#txtProgramStartDate').val();
+            var ProgramEDate = $('#txtProgramEndDate').val();
+            var ProgramLocation = $('#txtProgramLocation').val();
+            if (ProgramSDate != '') {
+                $('#tbodyProgramDetails').append('<tr><td>' + selectedProgramName + '</td><td>From ' + ProgramSDate + ' To ' + ProgramEDate + ' </td><td>' + ProgramLocation + '</td></tr>');
+            }
+            var tableContent = '<table id="tblTotlaNoEmployees" style="width:100%" class="table table-striped table-bordered dt-responsive nowrap">'
+                + '<thead><tr>' + '<td>Slno</td>' + '<td>Speaker Name</td>' + '<td>Speaker Department</td>' + '<td>User Name</td>' + '<td>Comments</td>' + '</tr></thead><tbody>';
+            //$("#txtTotalInvities").empty();
+            //var count = objArray.length;
+            //$("#txtTotalInvities").val(count);
+            $('#btntotalProgramReport').show();
+            tableContent += '<tr>';
+            var slno = 0;
+            if (objArray.length > 0) {
+                for (var i = 0; i < objArray.length; i++) {
+                    if (objArray[i].Status == 'Completed' &&
+                        objArray[i].CanDoBetter != null) {
+                        slno = slno + 1;
+                        tableContent += '<td>' + slno + '</td>';
+                        tableContent += '<td>' + objArray[i].SpeakerName + '</td>';
+                        if (objArray[i].SpeakerDepartment != null) {
+                            tableContent += '<td>' + objArray[i].SpeakerDepartment + '</td>';
+                        }
+                        else {
+                            tableContent += '<td>NA</td>';
+                        }
+                        tableContent += '<td>' + objArray[i].EmployeeName + '</td>';
+                        if (objArray[i].CanDoBetter != '' || objArray[i].CanDoBetter != null) {
+                            tableContent += '<td>' + objArray[i].CanDoBetter + '</td>';
+                        }
+                        //var UserBaseLocation = GetUserBaseLocation(objArray[i].EmployeeEmailId);
+                        //if (UserBaseLocation != '') {
+                        //    tableContent += '<td>' + UserBaseLocation + '</td>';
+                        //}
+                        //else {
+                        //    tableContent += '<td>NA</td>';
+                        //}
+
+                        tableContent += '</tr>';
+                    }
+                }
+                return tableContent;
+            }
+        }
+    }
+
+</script>
+<script>
+    function getProgramLocation(selectedProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramStatus%20eq%20%27Completed%27and%20ProgramName%20eq%20%27" + selectedProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    if (d.d.results[arrK].ProgramName == selectedProgramName) {
+                        var PgrmLocation = d.d.results[arrK].ProgramLocation;
+                        var PgrmStartDate = d.d.results[arrK].ProgramStartDate;
+                        var PgrmEndDate = d.d.results[arrK].ProgramEndDate;
+                        $("#txtProgramLocation").val(PgrmLocation);
+                        $("#txtProgramStartDate").val(PgrmStartDate);
+                        $("#txtProgramEndDate").val(PgrmEndDate);
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+
+</script>
+<script>
+    var currentuserEmailID = "";
+    function LoginUserEmail() {
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserEmailID;
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ProgramName = $('#ddlProgramName').val();
+        $("#btntotalProgramReport").click(function () {
+            $('#tblFinalReport').show();
+            $('.dataTables_length,.dataTables_filter,.dataTables_info,.dataTables_paginate').remove();
+            $("#tblFinalReport").battatech_excelexport({
+                containerid: "tblFinalReport"
+                , datatype: 'table'
+                , worksheetName: ProgramName + ' ' + ' MIS Report'
+            });
+        });
+    });
+</script>
+<script>
+    function GetUserBaseLocation(UserEamilID) {
+        var BaseLocation1 = '';
+        var BaseLocation2 = '';
+        var BaseLocation3 = '';
+        var BaseLocationFinal = '';
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v=%27i:0%23.f|membership|" + UserEamilID + "%27",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                if (d.d.DisplayName == 'undefined' || d.d.DisplayName == null || d.d.DisplayName == '') {
+                    BaseLocationFinal = '';
+                }
+                else {
+                    var BaseLocation1 = d.d.UserProfileProperties.results[61].Value;
+                    var BaseLocation2 = d.d.UserProfileProperties.results[62].Value;
+                    var BaseLocation3 = d.d.UserProfileProperties.results[55].Value;
+                    if (BaseLocation1 != null && BaseLocation1 != '') {
+                        BaseLocationFinal = BaseLocation1;
+                    }
+                    else if (BaseLocation2 != null && BaseLocation2 != '') {
+                        BaseLocationFinal = BaseLocation2;
+                    }
+                    else if (BaseLocation3 != null && BaseLocation3 != '') {
+                        BaseLocationFinal = BaseLocation3;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return BaseLocationFinal;
+    }
+</script>

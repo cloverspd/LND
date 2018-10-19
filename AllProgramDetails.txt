@@ -1,0 +1,1135 @@
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/jquery.dataTables.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/dataTables.responsive.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/responsive.bootstrap.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/js/datatables.scroller.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/exportToExcelJS/jquery.table2excel.js"></script>
+<script src="/sites/Anugamdev/SiteAssets/AnugamStyles/exportToExcelJS/jquery.battatech.excelexport.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/css/main.css" rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css"
+      rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+      rel="stylesheet">
+<link href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="/sites/Anugamdev/SiteAssets/AnugamStyles/Datepicker/css/datepicker.min.css" />
+
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.flash.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.html5.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.print.min.js"></script>
+
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+<style>
+    .requiredfieldsstyle {
+        padding-left: 15px !important;
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    .opacity-0 {
+        opacity: 0;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #337ab7 !important;
+        border-color: #2e6da4 !important;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px !important;
+        margin-bottom: 0 !important;
+        font-size: 14px !important;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+</style>
+
+
+<div>
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1>
+            MIS Reports For Programs
+        </h1>
+    </div>
+    <div class="col-md-12 padding-0">
+        <div class="col-md-12 padding-0 margin-top-15">
+            <div id="divErrorMessage" class="requiredfieldsstyle"></div>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>
+                    Program Start Date
+                </label>
+                <input type="text" class="form-control has-feedback-left Required clearTextboxData"
+                       id="txtStartDate" placeholder="MM-DD-YYYY" aria-describedby="inputSuccess2Status4">
+                <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+                <span id="Span2" class="sr-only">(success)</span>
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Program End Date
+                </label>
+                <input type="text" class="form-control has-feedback-left Required clearTextboxData"
+                       id="txtEndDate" placeholder="MM-DD-YYYY" aria-describedby="inputSuccess2Status4">
+                <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+                <span id="Span1" class="sr-only">(success)</span>
+            </div>
+            <div class="col-md-2">
+                <label class="opacity-0">
+                    Dummy
+                </label>
+                <input type="button" class="btn btn-primary btn-block btnValidations" id="btnSubmit"
+                       value="Submit" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 padding-0 margin-top-15" id="divProgramDetials">
+        <div class="col-md-12 padding-0">
+            <label>
+                Program Details
+            </label>
+        </div>
+        <div class="col-md-12 padding-0">
+            <table id="tableallProgram" class="table table-bordered table-striped table2excel">
+                <thead>
+                    <tr>
+                        <th>
+                            S.No.
+                        </th>
+                        <th>
+                            Program Name
+                        </th>
+                        <th>
+                            Program Co-ordinator
+                        </th>
+                        <th>
+                            Program Location
+                        </th>
+                        <th>
+                            Program From Date
+                        </th>
+                        <th>
+                            Program End Date
+                        </th>
+                        <th>
+                            Campus Hires
+                        </th>
+                        <th>
+                            Non Campus Hires
+                        </th>
+                        <th>
+                            Participants Invited
+                        </th>
+                        <th>
+                            Declined
+                        </th>
+                        <th>
+                            Canceled
+                        </th>
+                        <th>
+                            Confirmed
+                        </th>
+                        <th>
+                            Attended (Average of no. of days, Rounded)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyProgramBind"></tbody>
+            </table>
+        </div>
+        <button type="button" id="btnExport" style="display:none;">Export</button>
+    </div>
+</div>
+<div id="throbber" style="display:none;">
+    <img alt="Please wait..." src="https://bajajelect.sharepoint.com/sites/HR-TrainingManagementSystem/SiteAssets/AnugamStyles/img/712_1.gif">
+</div>
+
+<script>
+
+    $('#txtStartDate').daterangepicker({
+        singleDatePicker: true,
+        format: 'DD/MM/YYYY',
+        calender_style: "picker_3"
+    }, function (start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+        CheckDateValidation();
+    });
+
+    $('#txtEndDate').daterangepicker({
+        singleDatePicker: true,
+        format: 'DD/MM/YYYY',
+        calender_style: "picker_3"
+    }, function (start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+        CheckDateValidation();
+    });
+    function CheckDateValidation() {
+        var StartDate = new Date($("#txtStartDate").val().split("/").reverse().join("-"));
+        var EndDate = new Date($("#txtEndDate").val().split("/").reverse().join("-"));
+        if (StartDate != "" && EndDate != "") {
+        if(StartDate != "")
+        {
+         $('#divErrorMessage').empty();
+            $('#txtStartDate').css('border-color', '');
+            }
+            if(EndDate != "")
+            {
+                     $('#divErrorMessage').empty();
+            $('#txtEndDate').css('border-color', '');
+            }
+            if (EndDate < StartDate) {
+                $('#txtEndDate').css('border-color', 'red');
+                $('#divErrorMessage').css('color', 'red');
+                $('#divErrorMessage').append("Start Date Sholud Be Grether Than End Date");
+                $('#actEndDate').val('');
+            }
+        }
+    }
+
+</script>
+<script>
+
+    $('#btnSubmit').click(function () {
+        CheckDateValidation();
+        if ($('#txtStartDate').val() == "mm/DD/yyyy" || $('#txtStartDate').val() == "") {
+            $('#txtStartDate').css('border-color', 'red');
+            $('#divErrorMessage').css('color', 'red');
+            $('#divErrorMessage').append("Please Enter Start Date");
+            validate = false;
+        }
+        else if ($('#txtEndDate').val() == "mm/DD/yyyy" || $('#txtEndDate').val() == "") {
+            $('#txtEndDate').css('border-color', 'red');
+            $('#divErrorMessage').css('color', 'red');
+            $('#divErrorMessage').append("Please Enter End Date");
+            validate = false;
+        }
+        var txtProgramStartDate = document.getElementById("txtStartDate").value;
+        var txtProgramEndDate = document.getElementById("txtEndDate").value;
+        var StartDate = new Date(txtProgramStartDate.split("/").reverse().join("-"));
+        var EndDate = new Date(txtProgramEndDate.split("/").reverse().join("-"));
+                      
+                        
+                                               
+                                                
+        GetAllProgramDetails(StartDate, EndDate);
+         
+
+    });
+    
+    
+
+
+function groupBy(items,propertyName)
+{
+    var result = [];
+    $.each(items, function(index, item) {
+       if ($.inArray(item[propertyName], result)==-1) {
+          result.push(item[propertyName]);
+       }
+    });
+    return result;
+}
+
+
+function getListItems(url, listname, query, complete, failure) {
+    $.ajax({
+        url: url + "/_api/web/lists/getbytitle('" + listname + "')/items" + query,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" },
+        success: function (data) {
+            complete(data.d); 
+        },
+        error: function (data) {
+            failure(data);
+        }
+    });
+}
+
+    function GetAllProgramDetails(StartDate, EndDate) {
+        jQuery.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('Invitation')/items?$top=5000&$orderby= Created desc",
+            type: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                 // $.blockUI({ message: '<div style="font-size:20px">Please Wait...</div>', });
+                 
+                  $.blockUI.defaults.css = {
+										padding: 0,
+							            margin: 0,
+							            width: '30%',
+							            top: '40%',
+							            left: '35%',
+							            textAlign: 'center',
+							            cursor: 'wait'};
+
+                $.blockUI({message: $('#throbber')});
+
+                  
+                  setTimeout(function () {
+                  
+                  var MISReportEmployees = groupBy(d.d.results,'ProgramName');
+
+                  
+                //$.each(MISReportEmployees , function (index, results) {
+                 var j = 0;
+                                           $("#tbodyProgramBind").empty();
+                                           var countPgm = ''; var countPSD = ''; var countPED = ''; var countPVe = ''; var Creator = '';
+                if (MISReportEmployees.length > 0)
+                {
+                
+                 for (var j20 = 0; j20 < MISReportEmployees.length; j20++) {
+                 
+                var taskNames = GetProgramDetails(MISReportEmployees[j20]);
+                
+                 if (taskNames.length > 0) {
+                $.each(taskNames, function (index, results) {
+                $('#btnExport').show();
+
+                 var abcd_1=taskNames[0].ProgramStartDate;
+        var parts_1= abcd_1.split('/');
+		var dmyDate_1 = parts_1[1] + '/' + parts_1[0] + '/' + parts_1[2];
+
+                
+                 var abcd_2=taskNames[0].ProgramEndDate;
+        var parts_2= abcd_2.split('/');
+		var dmyDate_2 = parts_2[1] + '/' + parts_2[0] + '/' + parts_2[2];
+
+                    var PgmSdate = new Date(abcd_1.split("/").reverse().join("-"));
+                    var PgmEdate = new Date(abcd_2.split("/").reverse().join("-"));
+                    
+                    if (StartDate <= PgmSdate && EndDate >= PgmEdate) {
+                       // arr[i++] = index;
+                       
+					j++;
+                    var ProgramName = taskNames[0].ProgramName;
+	                var ProgramStartDate = taskNames[0].ProgramStartDate;
+                    var ProgramEndDate = taskNames[0].ProgramEndDate;
+                    var ProgramLocation = taskNames[0].ProgramLocation;
+                    var CreatorName = taskNames[0].CreatedByUser;
+                    var TotalPrgDate1 = taskNames[0].TotalPrgDate;
+                    
+                    countPgm = ProgramName;
+                     countPSD = ProgramStartDate;
+                     countPED = ProgramEndDate;
+                      countPVe = ProgramLocation;
+                      Creator = CreatorName;
+ 						var TotalInvities = getTotalInvities(ProgramName);
+                        //var CreatorName = getCreatedUserName(Creator);
+                        var CreatorName = GetParticipantMangEmailid(Creator);
+                        var Confirmed = GetConfirmedCount(ProgramName);
+                        var Canceled = getCanceledUser(ProgramName);
+                        var Absencent = getAbsenceUser(ProgramName);
+                        var Declined = getDeclinedUser(ProgramName);
+                        var ctNotResponded = NotResponded(ProgramName);
+                        var cCampusHire = getCampusHire(ProgramName);
+                        var cNonCampusHire = getNonCampusHire(ProgramName);
+                        var avgMisReportCount = getMISReprotCount(ProgramName);
+                        var avg =Math.round((avgMisReportCount/TotalPrgDate1) * 10 ) / 10;
+                        var fixed = avg.toFixed(2);
+	$("#tbodyProgramBind").append("<tr class='getAllCoutnData'><td>" + j + "</td><td>" + ProgramName + "</td><td>" + CreatorName + "</td><td width='10%'>" + ProgramLocation + "</td><td>" + ProgramStartDate + "</td><td>" + ProgramEndDate + "</td><td>" + cCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + DeclinedCount + "</td><td>" + CanceledCount + "</td><td>" + Confirmed + "</td><td>" + fixed + "</td></tr>");
+
+                    
+
+                    }
+                    
+                    });
+                    
+                    }
+                    
+                    }
+                    
+                    }
+                //});
+               // var j = 0;
+               // $("#tbodyProgramBind").empty();
+               // var countPgm = ''; var countPSD = ''; var countPED = ''; var countPVe = ''; var Creator = '';
+                
+                //var MISDupEmpRemv  = groupBy(taskNames,'EmpCode');
+                
+               // for (var k = 0; k < arr.length; k++) {
+               //     $('#btnExport').show();
+               //     var arrKValue = arr[k];
+               //     var ProgramName = taskNames[arrKValue].ProgramName;
+               //     var ProgramStartDate = taskNames[arrKValue].ProgramStartDate;
+               //     var ProgramEndDate = taskNames[arrKValue].ProgramEndDate;
+               //     var ProgramLocation = taskNames[arrKValue].ProgramLocation;
+              //      var CreatorName = taskNames[arrKValue].CreatedByUser;
+                    //if(ProgramName=="PGM_Report Count")
+                    //    {}
+               //     if (countPgm != ProgramName) {
+                        //&& countPSD != ProgramStartDate && countPED != ProgramEndDate
+                 //       j++;
+                  //      countPgm = ProgramName;
+                   //     countPSD = ProgramStartDate;
+                    //    countPED = ProgramEndDate;
+                     //   countPVe = ProgramLocation;
+                      //  Creator = CreatorName;
+                       // var TotalInvities = getTotalInvities(ProgramName);
+                        //var CreatorName = getCreatedUserName(Creator);
+                       // var CreatorName = GetParticipantMangEmailid(Creator);
+                      //  var Confirmed = GetConfirmedCount(ProgramName);
+                       // var Canceled = getCanceledUser(ProgramName);
+                        //var Absencent = getAbsenceUser(ProgramName);
+                        //var Declined = getDeclinedUser(ProgramName);
+                        //var ctNotResponded = NotResponded(ProgramName);
+                        //var cCampusHire = getCampusHire(ProgramName);
+                        //var cNonCampusHire = getNonCampusHire(ProgramName);
+                        //var avgMisReportCount = getMISReprotCount(ProgramName);
+                        //$("#tbodyProgramBind").append("<tr class='getAllCoutnData'><td>" + j + "</td><td>" + ProgramName + "</td><td>" + CreatorName + "</td><td width='10%'>" + ProgramLocation + "</td><td>" + ProgramStartDate + "</td><td>" + ProgramEndDate + "</td><td>" + cCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + DeclinedCount + "</td><td>" + CanceledCount + "</td><td>" + Confirmed + "</td><td>" + avgMisReportCount + "</td></tr>");
+                        //"<input type='button' class='clsTotalInvities' title=" + j + " value=" + TotalInvities + "></td><td><input type='button' class='clsConfirmed' title=" + j + " value=" + Confirmed + "></td>><td><input type='button' class='clsCanceled' title=" + j + " value=" + Canceled + "></td><td><input type='button' class='clsAbsencent' title=" + j + " value=" + Absencent + "></td><td><input type='button' class='clsDeclined' title=" + j + " value=" + Declined + "></td><td><input type='button' class='clsNotResponded' title=" + j + " value=" + ctNotResponded + "></td></tr>")";
+                        //    + "<tr id='trDynamic" + j + "' style='display:none' class='trclasDynamic'><td colspan='11'><table id='tbltblEmployeeDetailsDynamic" + j + "' class='table table-bordered table-striped classEmployeeDetailsDynamic'></table></td>");
+
+                        //var arrNotRespondedEmployee = GetNotRespondedEmp(ProgramName);
+                        //for (var aNotRes = 0; aNotRes < arrNotRespondedEmployee.length; aNotRes++) {
+                        //    var empName = arrNotRespondedEmployee[aNotRes].EmployeeName;
+                        //    var empID = arrNotRespondedEmployee[aNotRes].EmployeeEmailId;
+                        //    var empCode = arrNotRespondedEmployee[aNotRes].EmployeeCode;
+                        //    var No = aNotRes + 1;
+                        //    var slNo = j + "." + No;
+                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classNotResponded'><td width='10%'>" + slNo + "</td><td>Not Responded Emp</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
+                        //}
+                        //var arrConfirmationEmp = ConfirmationEmployee(ProgramName);
+                        //for (var aCon = 0; aCon < arrConfirmationEmp.length; aCon++) {
+                        //    var empName = arrConfirmationEmp[aCon].EmployeeName;
+                        //    var empID = arrConfirmationEmp[aCon].EmployeeEmailId;
+                        //    var empCode = arrConfirmationEmp[aCon].EmployeeCode;
+                        //    var No = aCon + 1;
+                        //    var slNo = j + "." + No;
+                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classConfirmed' id='classConfirmed" + j + "'><td width='10%'>" + slNo + "</td><td>Confirmed Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
+
+                        //}
+                        //var DeclinedEmp = DeclinedEmployees(ProgramName);
+                        //for (var aDeclian = 0; aDeclian < DeclinedEmp.length; aDeclian++) {
+                        //    var empName = DeclinedEmp[aDeclian].EmployeeName;
+                        //    var empID = DeclinedEmp[aDeclian].EmployeeEmailId;
+                        //    var empCode = DeclinedEmp[aDeclian].EmployeeCode;
+                        //    var No = aDeclian + 1;
+                        //    var slNo = j + "." + No;
+                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classDeclined' id='classDeclined" + j + "'><td width='10%'>" + slNo + "</td><td>Declined Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
+                        //}
+                        //var TotalInvities = TotalInvitiesEmployees(ProgramName);
+                        //for (var aTotal = 0; aTotal < TotalInvities.length; aTotal++) {
+                        //    var empName = TotalInvities[aTotal].EmployeeName;
+                        //    var empID = TotalInvities[aTotal].EmployeeEmailId;
+                        //    var empCode = TotalInvities[aTotal].EmployeeCode;
+                        //    var No = aTotal + 1;
+                        //    var slNo = j + "." + No;
+                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classTotalInvities' id='classTotalInvities" + j + "'><td width='10%'>" + slNo + "</td><td>Total Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
+
+                        //}
+                        //var AbsentEmp = AbsencentEmployees(ProgramName);
+                        //for (var aAbsent = 0; aAbsent < AbsentEmp.length; aAbsent++) {
+                        //    var empName = AbsentEmp[aAbsent].EmployeeName;
+                        //    var empID = AbsentEmp[aAbsent].EmployeeEmailId;
+                        //    var empCode = AbsentEmp[aAbsent].EmployeeCode;
+                        //    var No = aAbsent + 1;
+                        //    var slNo = j + "." + No;
+                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classAbsent'><td width='10%'>" + slNo + "</td><td>Absent Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
+
+                        //}
+                        //var CancelledEmployee = CanceledEmployees(ProgramName);
+                        //for (var aCancelled = 0; aCancelled < CancelledEmployee.length; aCancelled++) {
+                        //    var empName = CancelledEmployee[aCancelled].EmployeeName;
+                        //    var empID = CancelledEmployee[aCancelled].EmployeeEmailId;
+                        //    var empCode = CancelledEmployee[aCancelled].EmployeeCode;
+                        //    var No = aCancelled + 1;
+                        //    var slNo = j + "." + No;
+                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classCancelled'><td width='10%'>" + slNo + "</td><td>Cancelled Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
+
+                        //}
+
+                   // }
+                //}
+                
+                $.unblockUI({
+                        onUnblock: function () {
+                         console.log('');
+                        }
+                    });
+                }, 200);
+            },
+            error: function () { console.log('fail'); }
+        });
+
+    }
+</script>
+
+
+<script>
+    var avgMisUserCount = '';
+    function getMISReprotCount(ProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('MISReportForInvities')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27 and Attendance eq 'Y'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    avgMisUserCount = d.d.results.length;
+                }
+                else
+                {
+                avgMisUserCount =0
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return avgMisUserCount;
+    }
+    function getCreatedUserName(Creator) {
+        $.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v=%27i:0%23.f|membership|" + Creator + "%27",
+            type: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            },
+            success: function (d) {
+                CreatorName = d.d.DisplayName;
+            },
+            error: function () { console.log('fail'); }
+        });
+        return CreatorName;
+    }
+    var ConfirmCount; var CanceledCount; var AbsenceCount; var DeclinedCount; var totalInvities;
+    function getTotalInvities(ProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    totalInvities = d.d.results.length;
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return totalInvities;
+    }
+    function GetConfirmedCount(ProgramName) {
+        var ConfirmCount;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=Confirmation%20eq%20%27Yes%27and%20ProgramName%20eq%20%27" + ProgramName + "%27 and CanceledDate eq null";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    ConfirmCount = d.d.results.length;
+                }
+                else {
+                    ConfirmCount = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return ConfirmCount;
+    }
+    function getCanceledUser(ProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/GetByTitle('Invitation')/items?$filter=ProgramName eq %27" + ProgramName + "%27 and CanceledDate ne null and Confirmation eq 'No'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    CanceledCount = d.d.results.length;
+                }
+                else {
+                    CanceledCount = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return CanceledCount;
+    }
+    function getAbsenceUser(ProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=Attendance%20eq%20%27No%27%20and%20ProgramName%20eq%20%27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    AbsenceCount = d.d.results.length;
+                }
+                else {
+                    AbsenceCount = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return AbsenceCount;
+    }
+    function getDeclinedUser(ProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=Confirmation%20eq%20%27No%27and%20ProgramName%20eq%20%27" + ProgramName + "%27 and CanceledDate eq null";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    DeclinedCount = d.d.results.length;
+                }
+                else {
+                    DeclinedCount = 0;
+                }
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return DeclinedCount;
+    }
+    var CountNotResponded;
+    function NotResponded(ProgramName) {
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName eq %27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.Confirmation == "" || results.Confirmation == null && results.ProgramStatus == "" || results.ProgramStatus == null) {
+                        arr[i++] = index;
+
+                    }
+                });
+                if (arr.length > 0) {
+                    CountNotResponded = arr.length;
+                }
+                else {
+                    CountNotResponded = 0;
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return CountNotResponded;
+    }
+    function getCampusHire(ProgramName) {
+        var CampusHire = '';
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName eq %27" + ProgramName + "%27 and EmployeeType eq 'Yes'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.EmployeeType == "Yes") {
+                        arr[i++] = index;
+                    }
+                });
+                if (arr.length > 0) {
+                    CampusHire = arr.length;
+                }
+                else {
+                    CampusHire = 0;
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return CampusHire;
+    }
+    function getNonCampusHire(ProgramName) {
+        var NonCampusHire = '';
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName eq %27" + ProgramName + "%27 and EmployeeType eq 'No'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.EmployeeType == "No") {
+                        arr[i++] = index;
+                    }
+                });
+                if (arr.length > 0) {
+                    NonCampusHire = arr.length;
+                }
+                else {
+                    NonCampusHire = 0;
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return NonCampusHire;
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnExport").click(function () {
+            $('.trclasDynamic').css('display', '');
+            $('.classTotalInvities').css('display', '');
+            $('.classConfirmed').css('display', '');
+            $('.classCancelled').css('display', '');
+            $('.classAbsent').css('display', '');
+            $('.classDeclined').css('display', '');
+            $('.classNotResponded').css('display', '');
+            $('.getAllCoutnData').css('display', '');
+            $("#tableallProgram").battatech_excelexport({
+                containerid: "tableallProgram"
+                , datatype: 'table'
+            });
+        });
+        $(document).on('click', '.clsTotalInvities', function () {
+            var title = $(this).attr('title');
+
+            var id = 'trDynamic' + title;
+            var cid = 'classTotalInvities' + title;
+            $('#' + id).css('display', '');
+            $('.classTotalInvities').css('display', '');
+            $('.classConfirmed').css('display', 'none');
+            $('.classCancelled').css('display', 'none');
+            $('.classAbsent').css('display', 'none');
+            $('.classDeclined').css('display', 'none');
+            $('.classNotResponded').css('display', 'none');
+        });
+        $(document).on('click', '.clsConfirmed', function () {
+
+            var title = $(this).attr('title');
+
+            var id = 'trDynamic' + title;
+            var cid = 'classConfirmed' + title;
+            $('#' + id).css('display', '');
+            $('.classConfirmed').css('display', '');
+            $('.classCancelled').css('display', 'none');
+            $('.classAbsent').css('display', 'none');
+            $('.classDeclined').css('display', 'none');
+            $('.classNotResponded').css('display', 'none');
+            $('.classTotalInvities').css('display', 'none');
+        });
+        $(document).on('click', '.clsCanceled', function () {
+
+            var title = $(this).attr('title');
+
+            var id = 'trDynamic' + title;
+            var cid = 'classCancelled' + title;
+            $('#' + id).css('display', '');
+            $('.classTotalInvities').css('display', 'none');
+            $('.classConfirmed').css('display', 'none');
+            $('.classCancelled').css('display', '');
+            $('.classAbsent').css('display', 'none');
+            $('.classDeclined').css('display', 'none');
+            $('.classNotResponded').css('display', 'none');
+        });
+        $(document).on('click', '.clsAbsencent', function () {
+
+            var title = $(this).attr('title');
+
+            var id = 'trDynamic' + title;
+            var cid = 'classAbsent' + title;
+            $('#' + id).css('display', '');
+            $('.classTotalInvities').css('display', 'none');
+            $('.classConfirmed').css('display', 'none');
+            $('.classCancelled').css('display', 'none');
+            $('.classAbsent').css('display', '');
+            $('.classDeclined').css('display', 'none');
+            $('.classNotResponded').css('display', 'none');
+        });
+        $(document).on('click', '.clsDeclined', function () {
+
+            var title = $(this).attr('title');
+
+            var id = 'trDynamic' + title;
+            var cid = 'classTotalInvities' + title;
+            $('#' + id).css('display', '');
+            $('.classTotalInvities').css('display', 'none');
+            $('.classConfirmed').css('display', 'none');
+            $('.classCancelled').css('display', 'none');
+            $('.classAbsent').css('display', 'none');
+            $('.classDeclined').css('display', '');
+            $('.classNotResponded').css('display', 'none');
+        });
+        $(document).on('click', '.clsNotResponded', function () {
+
+            var title = $(this).attr('title');
+
+            var id = 'trDynamic' + title;
+            var cid = 'classTotalInvities' + title;
+            $('#' + id).css('display', '');
+            $('.classTotalInvities').css('display', 'none');
+            $('.classConfirmed').css('display', 'none');
+            $('.classCancelled').css('display', 'none');
+            $('.classAbsent').css('display', 'none');
+            $('.classDeclined').css('display', 'none');
+            $('.classNotResponded').css('display', '');
+        });
+    });
+</script>
+
+
+<script>
+    function GetNotRespondedEmp(ProgramName) {
+        var arrGetNotRespondedEmp = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName eq %27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    if (results.Confirmation == "" || results.Confirmation == null && results.ProgramStatus == "" || results.ProgramStatus == null) {
+                        arr[i++] = index;
+
+                    }
+                });
+                if (arr.length > 0) {
+                    for (var i = 0; i < arr.length; i++) {
+                        var arrK = arr[i];
+                        var EmployeeEmailId = d.d.results[arrK].EmployeeEmailId;
+                        var EmployeeCode = d.d.results[arrK].EmployeeCode;
+                        var EmployeeName = d.d.results[arrK].EmployeeName;
+                        arrGetNotRespondedEmp.push({ EmployeeEmailId: EmployeeEmailId, EmployeeCode: EmployeeCode, EmployeeName: EmployeeName });
+                    }
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return arrGetNotRespondedEmp;
+    }
+
+    function ConfirmationEmployee(ProgramName) {
+        var arrConfirmationEmployee = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=Confirmation%20eq%20%27Yes%27and%20ProgramName%20eq%20%27" + ProgramName + "%27 and CanceledDate eq null";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                if (d.d.results.length > 0) {
+                    for (var i = 0; i < arr.length; i++) {
+                        var arrK = arr[i];
+                        var EmployeeName = d.d.results[arrK].EmployeeName;
+                        var EmployeeCode = d.d.results[arrK].EmployeeCode;
+                        var EmployeeEmailId = d.d.results[arrK].EmployeeEmailId;
+                        arrConfirmationEmployee.push({
+                            EmployeeName: EmployeeName, EmployeeCode: EmployeeCode, EmployeeEmailId: EmployeeEmailId
+                        });
+
+                    }
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return arrConfirmationEmployee;
+    }
+    function DeclinedEmployees(ProgramName) {
+        var arrDeclinedEmployees = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=Confirmation%20eq%20%27No%27and%20ProgramName%20eq%20%27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                if (d.d.results.length > 0) {
+                    for (var i = 0; i < arr.length; i++) {
+                        var arrK = arr[i];
+                        var EmployeeName = d.d.results[arrK].EmployeeName;
+                        var EmployeeCode = d.d.results[arrK].EmployeeCode;
+                        var EmployeeEmailId = d.d.results[arrK].EmployeeEmailId;
+                        arrDeclinedEmployees.push({
+                            EmployeeName: EmployeeName, EmployeeCode: EmployeeCode, EmployeeEmailId: EmployeeEmailId
+                        });
+
+                    }
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return arrDeclinedEmployees;
+    }
+    function TotalInvitiesEmployees(ProgramName) {
+        var arrTotalInvities = [];
+        var RestUrl = RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName%20eq%20%27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                if (d.d.results.length > 0) {
+                    for (var i = 0; i < arr.length; i++) {
+                        var arrK = arr[i];
+                        var EmployeeName = d.d.results[arrK].EmployeeName;
+                        var EmployeeCode = d.d.results[arrK].EmployeeCode;
+                        var EmployeeEmailId = d.d.results[arrK].EmployeeEmailId;
+                        arrTotalInvities.push({
+                            EmployeeName: EmployeeName, EmployeeCode: EmployeeCode, EmployeeEmailId: EmployeeEmailId
+                        });
+
+                    }
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return arrTotalInvities;
+    }
+    function CanceledEmployees(ProgramName) {
+        var arrCanceledEmployees = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/GetByTitle('Invitation')/items?$filter=ProgramName eq %27" + ProgramName + "%27 and CanceledDate ne null";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                if (d.d.results.length > 0) {
+                    for (var i = 0; i < arr.length; i++) {
+                        var arrK = arr[i];
+                        var EmployeeName = d.d.results[arrK].EmployeeName;
+                        var EmployeeCode = d.d.results[arrK].EmployeeCode;
+                        var EmployeeEmailId = d.d.results[arrK].EmployeeEmailId;
+                        arrCanceledEmployees.push({
+                            EmployeeName: EmployeeName, EmployeeCode: EmployeeCode, EmployeeEmailId: EmployeeEmailId
+                        });
+
+                    }
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return arrCanceledEmployees;
+    }
+    function AbsencentEmployees(ProgramName) {
+        var arrAbsencentEmployeess = [];
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=Attendance%20eq%20%27No%27%20and%20ProgramName%20eq%20%27" + ProgramName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                if (d.d.results.length > 0) {
+                    for (var i = 0; i < arr.length; i++) {
+                        var arrK = arr[i];
+                        var EmployeeName = d.d.results[arrK].EmployeeName;
+                        var EmployeeCode = d.d.results[arrK].EmployeeCode;
+                        var EmployeeEmailId = d.d.results[arrK].EmployeeEmailId;
+                        arrAbsencentEmployeess.push({
+                            EmployeeName: EmployeeName, EmployeeCode: EmployeeCode, EmployeeEmailId: EmployeeEmailId
+                        });
+
+                    }
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return arrAbsencentEmployeess;
+    }
+
+</script>
+
+<script>
+function GetParticipantMangEmailid(Creator)
+{
+var MangEmailid=''
+//var MangEmailId=''
+
+ $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/siteusers/getbyemail(@v)?@v='" + Creator + "'",
+                type: "GET",
+                async: false,
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose",
+                    "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                },
+                success: function (d) {
+                   
+                        MangEmailid=d.d.Title;
+                        //alert(MangEmailid)
+                        
+                       
+					   MangEmailid= MangEmailid;
+					   //alert(MangEmailid);
+					   //var substr = MangEmailid.substring(MangEmailid.indexOf('membership|'));
+					   //alert(substr);
+                    
+                },
+                error: function () { console.log('fail'); }
+            });
+            
+            return MangEmailid;
+            
+            }
+
+</script>
+
+
+<script>
+  function GetProgramDetails(ProgramName) {
+        var MISUsers = [];
+
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('Invitation')/items?$filter=ProgramName eq '" + ProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                MISUsers = [];
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    var ProgramName = d.d.results[arrK].ProgramName;
+                    var ProgramStartDate = d.d.results[arrK].ProgramStartDate;
+                    var ProgramEndDate = d.d.results[arrK].ProgramEndDate;
+                    var ProgramLocation = d.d.results[arrK].ProgramLocation;
+                    var CreatedByUser = d.d.results[arrK].CreatedByUser;
+                    var TotalPrgDate = d.d.results[arrK].TotalPrgDate;
+                    
+                    MISUsers.push({
+                        ProgramName: ProgramName, ProgramStartDate: ProgramStartDate, ProgramEndDate: ProgramEndDate,
+                        ProgramLocation: ProgramLocation, CreatedByUser: CreatedByUser, TotalPrgDate: TotalPrgDate
+                    });
+                    break;
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return MISUsers;
+    }
+</script>

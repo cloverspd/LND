@@ -1,0 +1,1288 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link href="/sites/AnugamDev/SiteAssets/AnugamStyles/Datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/sites/AnugamDev/SiteAssets/AnugamStyles/Datatable/css/responsive.bootstrap.min.css" rel="stylesheet">
+
+<link href="/sites/AnugamDev/SiteAssets/AnugamStyles/Datepicker/css/custom.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" rel="stylesheet">
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+
+<style>
+    .clear {
+        clear: both;
+    }
+
+    .opacity-0 {
+        opacity: 0;
+    }
+
+    .padding-0 {
+        padding: 0 !important;
+    }
+
+    .margin-0 {
+        margin: 0 !important;
+    }
+
+    .margin-top-0 {
+        margin-top: 0 !important;
+    }
+
+    .margin-bottom-0 {
+        margin-bottom: 0 !important;
+    }
+
+    .margin-top-5 {
+        margin-top: 5px !important;
+    }
+
+    .margin-top-10 {
+        margin-top: 10px !important;
+    }
+
+    .margin-top-15 {
+        margin-top: 15px !important;
+    }
+
+    .margin-bottom-10 {
+        margin-bottom: 10px !important;
+    }
+
+    .form-control-style-1 {
+        background-color: #d5ecd5 !important;
+        border: 1px solid #a9d4a9 !important;
+    }
+
+    .border-style-1 {
+        border: 1px solid #e3e3e3;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .errorBorder-color {
+        padding: 0px !important;
+        color: red;
+        font-size: 19px;
+        margin-left: 33px;
+    }
+
+    .daterangepicker.dropdown-menu {
+        top: 240px !important;
+    }
+
+    .requiredfieldsstyle {
+        padding-left: 15px !important;
+        font-size: 12px;
+        font-style: italic;
+        color: red;
+    }
+</style>
+
+<style>
+#main_div
+{
+margin-left: -180px !Important;
+}
+#lft_div
+{
+display:none !Important;
+}
+</style>
+
+<div id="mob_main_div">
+
+<div id="main_div">
+
+    <div class="col-md-12 padding-0 page-content-header-style-1">
+        <h1 style="font-size:25px !Important; margin-left: 27px !Important;
+    margin-bottom: 0px !Important;
+    margin-right: 0px !Important;
+    margin-top: 0px !Important;">
+            Program Confirmation
+        </h1>
+    </div>
+    <button type="button" class="dashboard-button" onclick="goToLink();" id="Tesging" style="display:none;">Go To Link</button>
+    <div class="col-md-12 padding-0 margin-top-15">
+        <div id="divErrorMessage" class="requiredfieldsstyle"></div>
+    </div>
+    <div class="col-md-12 padding-0-xs">
+        <div class="col-md-12 margin-top-15">
+            <label>Program Name</label>
+            <p class="form-control form-control-style-1" id="ProgramName"></p>
+        </div>
+        <div class="col-md-12 margin-top-15 padding-0">
+            <div class="col-md-4">
+                <label>Program Location</label>
+                <p class="form-control form-control-style-1" id="programLocation"></p>
+            </div>
+            <div class="col-md-4">
+                <label>Start Date</label>
+                <input type="text" readonly="readonly" class="form-control form-control-style-1 margin-bottom-10" id="programSdate" />
+            </div>
+            <div class="col-md-4">
+                <label>End Date</label>
+                <input type="text" readonly="readonly" class="form-control form-control-style-1 margin-bottom-10" id="programEdate" />
+            </div>
+            <div class="col-md-4">
+                <label>Employee Name</label>
+                <p class="form-control form-control-style-1" id="EmployeeName"></p>
+            </div>
+            <div class="col-md-4">
+                <label>Ecode</label>
+                <p class="form-control form-control-style-1" id="Employeecode"></p>
+            </div>
+            <div class="col-md-4">
+                <label>Branch Location</label>
+                <input id="EmpLocation" type="text" class="form-control form-control-style-1" readonly="readonly">
+                <!--<p class="form-control form-control-style-1" id=""></p>-->
+            </div>
+        </div>
+        <div class="col-md-12 padding-0 margin-top-15" style="display:none">
+            <div class="col-md-12">
+                <label>
+                    Program Details <span id="TotalCout"></span>
+                </label>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Slno
+                            </th>
+                            <th>
+                                Program Name
+                            </th>
+                            <th>
+                                Program Location
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblProgramBind"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12 padding-0 margin-top-15" style="display:none">
+            <div class="col-md-12">
+                <label>
+                    Activity Details <span id="Span1"></span>
+                </label>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Slno
+                            </th>
+                            <th>
+                                Activity Name
+                            </th>
+                            <th>
+                                Duration
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblConfigParametersBind"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12 margin-top-15">
+            <div class="col-md-12 border-style-1">
+                <div class="col-md-8">
+                    <label class="margin-bottom-0">Please confirm your presence for the program</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="confirm" id="rbntconfirmYes" value="Yes"> Yes
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="confirm" id="rbntconfirmNo" value="No"> No
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 margin-top-10  border-style-1" id="StayBaselocation" style="display:none">
+                <div class="col-md-8">
+                    <label class="margin-bottom-0">Please let us know if you require stay to be arranged by company</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12 padding-0">
+                        <label class="radio-inline">
+                            <input type="radio" name="stay" id="rbtnStayYes" value="Yes"> Yes
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="stay" id="rbtnStayNo" value="No"> No
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-10" id="StayReason" style="display:none">
+            <div class="col-md-12">
+                <textarea class="form-control" placeholder="if No - Reason" id="Reasons" maxlength="150"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-0 margin-top-10" id="DateFields" style="display:none">
+            <div class="col-md-3">
+                <label>Arrival Date</label>
+                <fieldset>
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="col-md-12 padding-0 xdisplay_inputx form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" id="ArrivalDate" placeholder="DD/MM/YYYY" aria-describedby="inputSuccess2Status4">
+                                <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+                                <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-md-3">
+                <label>Arrival Time</label>
+                <div class="input-group bootstrap-timepicker timepicker">
+                    <input id="ArrivalTime" type="text" class="form-control input-small">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Departure Date</label>
+                <fieldset>
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="col-md-12 padding-0 xdisplay_inputx form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" id="DepartureDate" placeholder="DD/MM/YYYY" aria-describedby="inputSuccess2Status4">
+                                <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+                                <span id="Span2" class="sr-only">(success)</span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-md-3">
+                <label>Departure Time</label>
+                <div class="input-group bootstrap-timepicker timepicker">
+                    <input id="DepartureTime" type="text" class="form-control input-small">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div>
+            </div>
+        </div>
+
+<div id="main"></div>
+        <div class="col-md-12 padding-0 margin-top-5">
+            <div class="col-md-2">
+                <button class="btn btn-success btn-block" id="btnSubmit" type="button">SUBMIT</button>
+            </div>
+            
+            <div id="div_progress_bar" style="display:none">
+            Please wait......
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://bajajelect.sharepoint.com/sites/AnugamDev/SiteAssets/JS/date.js"></script>
+<script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/sites/AnugamDev/SiteAssets/AnugamStyles/Datepicker/js/moment.min.js"></script>
+<script src="/sites/AnugamDev/SiteAssets/AnugamStyles/Datepicker/js/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.js"></script>
+
+
+<script type="text/javascript" src="/Sites/AnugamDev/SiteAssets/AnugamStyles/EventsJSFiles/ics.deps.min.js"></script>
+
+<!-- bootstrap-daterangepicker -->
+
+
+
+<script>
+    $(document).ready(function () {
+        dateValidation();
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+         $('.ui-dialog').css('margin-left', '951px');
+       }
+
+       
+
+    });
+    function dateValidation() {
+        var pgmSDate = $('#programSdate').val().split("/").reverse().join("-");
+        var pgmEDate = $('#programEdate').val().split("/").reverse().join("-");
+        var pSD = new Date(pgmSDate);
+        var pSE = new Date(pgmEDate);
+        var minPgmSDate = new Date(Date.parse(new Date(pSD.getFullYear(), pSD.getMonth(), pSD.getDate() - 1)));
+        var minPgmEDate = new Date(Date.parse(new Date(pSE.getFullYear(), pSE.getMonth(), pSE.getDate() + 1)));
+        console.log(minPgmSDate); console.log(minPgmEDate);
+        console.log(pSD); console.log(pSE);
+        $('#ArrivalDate').daterangepicker({
+            singleDatePicker: true,
+            minDate: minPgmSDate,
+            maxDate: pSD,
+            format: 'DD/MM/YYYY',
+            calender_style: "picker_3"
+        });
+        $('#DepartureDate').daterangepicker({
+            singleDatePicker: true,
+            minDate: pSE,
+            maxDate: minPgmEDate,
+            format: 'DD/MM/YYYY',
+            calender_style: "picker_3"
+        });
+    }
+</script>
+<!-- /bootstrap-daterangepicker -->
+
+<script type="text/javascript">
+    $('#ArrivalTime,#DepartureTime').timepicker();
+    function goToLink() {
+        alert("Your response is noted");
+        window.location.href = 'https://bajajelect.sharepoint.com/';
+    }
+    
+     function GetProgramDetails(selectedProgramName) {
+        var isExists = false;
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "//_api/web/lists/getbytitle('ProgramMaster')/items?$filter=Title eq '" + selectedProgramName + "' and InductionProgram eq %27Yes%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                if (d.d.results.length > 0) {
+                    isExists = true;
+                }
+            },
+            error: function (d) {
+                failure(data);
+            }
+        });
+        return isExists;
+    }
+
+</script>
+
+<script>
+function GetProgramDetails_1(selectedProgramName) {
+         //var CurrentLoginUser = LoginUserEmail();
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('NewInductionProgram')/items?$top=1000&$filter=ProgramStatus eq 'Active' and Status eq 'Active' and  ProgramName eq '" + selectedProgramName + "'";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var k = 0; k < arr.length; k++) {
+                    var arrK = arr[k];
+                    
+                    if(arr.length == 1)
+                    {
+
+						if(arrK <= 0)
+						{
+                        ActivityStartDate = d.d.results[arrK].ActivityStartDate;
+                        ActivityStartTime = d.d.results[arrK].ActivityStartTime;
+                        ActivityEndDate = d.d.results[arrK].ActivityEndDate;
+                        ActivityEndTime = d.d.results[arrK].ActivityEndTime;
+
+                        }
+                        
+                      }
+                      
+                    if(arr.length > 1)
+                    {
+                    
+                    if(arrK <= 0)
+{
+                        ActivityStartDate = d.d.results[arrK].ActivityStartDate;
+                        ActivityStartTime = d.d.results[arrK].ActivityStartTime;
+                        
+                       
+                        }
+                        else if(arrK > 0)
+                        {
+                        
+                        ActivityEndDate = d.d.results[arrK].ActivityEndDate;
+                        ActivityEndTime = d.d.results[arrK].ActivityEndTime;
+                                                
+                        }
+
+
+					}
+                      
+                      
+                  }
+                
+            },
+            error: function () { console.log('fail'); }
+        });
+    }
+
+</script>
+
+
+<script>
+
+    var ProgramInvitationID = "";
+
+    $(document).ready(function () {
+        //GetUserProfileData();
+        //GetInvitationDataOnload();
+        //GetProgramMasterData();
+    });
+</script>
+<script>
+    //function GetUserProfileData(){
+
+    var UserOffice = "";
+    var UserOfficeNew = "";
+    var EmailOfUser = "";
+    var ProgramName = "";
+    var UserLoginEmailId = "";
+    var PStartDate = ""; var PEtartDate = ""; var ProgramLocation = "";
+    $.ajax({
+        async: false,
+        url: _spPageContextInfo.webServerRelativeUrl + "//_api/SP.UserProfiles.PeopleManager/GetMyProperties",
+        method: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose"
+        },
+        success: function (d) {
+            //UserOffice = d.d.Office;
+            UserOfficeNew = d.d.UserProfileProperties.results[62].Value;
+            UserOffice = d.d.UserProfileProperties.results[61].Value;
+            EmailOfUser = d.d.Email;
+            UserLoginEmailId = d.d.UserProfileProperties.results[19].Value.toUpperCase();
+        },
+        error: function (err) {
+            alert(JSON.stringify(err));
+        }
+    });
+    //}
+    //function GetInvitationDataOnload()
+    //{
+    function getQueryStrings() {
+        var assoc = {};
+        var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+        var queryString = location.search.substring(1);
+        var keyValues = queryString.split('&');
+
+        for (var i in keyValues) {
+            var key = keyValues[i].split('=');
+            if (key.length > 1) {
+                assoc[decode(key[0])] = decode(key[1]);
+            }
+        }
+        return assoc;
+    }
+    var qs = getQueryStrings();
+    var ProgramID = qs["IDD"];
+
+    //var urlPID = window.location.href;
+    //var ProgramID = urlPID.substring(urlPID.lastIndexOf('=') + 1);
+    var appWebUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
+
+    $.ajax({
+        async: false,
+        url: appWebUrl + "//_api/web/lists/getbytitle('Invitation')/items(" + ProgramID + ")",
+        type: "GET",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "content-type": "application/json;odata=verbose",
+            "x-requestdigest": $("#__requestdigest").val(),
+        },
+        success: function (d) {
+            var arr = [];
+            i = 0;
+            var UserWithoutDomain = EmailOfUser.substring(0, EmailOfUser.lastIndexOf("@"));
+            var res = UserWithoutDomain.toUpperCase();
+            var eCode = d.d.EmployeeEmailId;
+            var EcodeUpper = eCode.toUpperCase();
+            var todayDate = new Date();
+            var ProgramSDate = new Date(d.d.ProgramStartDate.split("/").reverse().join("-"));
+            
+            
+             var ProgramEDate = new Date(d.d.ProgramEndDate.split("/").reverse().join("-"));
+             
+             var today = new Date();
+		     var dd = today.getDate();
+			 var mm = today.getMonth()+1; //January is 0!
+			
+			 var yyyy = today.getFullYear();
+			 if(dd<10){
+			    dd=dd;
+			 } 
+			 if(mm<10){
+			    mm=mm;
+			 } 
+			 var today = new Date(mm+'/'+dd+'/'+yyyy);
+			
+
+              var formatted = (ProgramEDate.getMonth() + 1) + "/" + ProgramEDate.getDate()  + "/" +  ProgramEDate.getFullYear();
+              
+        	  var formt=new Date(formatted);
+        	  
+        	  
+        	  //Confirm Date Start
+			var PrgrmName=d.d.ProgramName;
+			var get_confirmDt = GetConfirmDate(PrgrmName);
+			if(get_confirmDt != 0 && get_confirmDt !='' && get_confirmDt != null)
+			{
+			  var ConfirmDt = new Date(get_confirmDt.split("/").reverse().join("-"));
+              var formatted_1 = (ConfirmDt.getMonth() + 1) + "/" + ConfirmDt.getDate()  + "/" +  ConfirmDt.getFullYear();
+              
+        	  var formt_1=new Date(formatted_1);
+        	  }
+
+			//ENd
+
+
+
+            if (d.d.ProgramStatus == "Completed") {
+                alert("Your response has been already noted");
+                window.location.href = "https://bajajelect.sharepoint.com/";
+            }
+            else if(today>formt)
+            {
+            alert('Program is already expired!!!');
+             window.location.href = "https://bajajelect.sharepoint.com/";
+
+            }
+            else if(today>formt_1)
+            {
+             alert('Last date to submit your confirmation has gone past');
+             window.location.href = "https://bajajelect.sharepoint.com/";
+             //window.location.href = "https://bajajelect.sharepoint.com/";
+            }
+
+           // else
+           // {
+          //   alert('Application is under maintainence please submit the confirmation after some time!!!');
+          //   window.location.href = "https://bajajelect.sharepoint.com/";
+
+           // }
+            
+            if (d.d.ID == ProgramID && d.d.ProgramStatus != "Completed" && EcodeUpper == EmailOfUser.toUpperCase() || EcodeUpper == UserLoginEmailId) {
+                ProgramName = d.d.ProgramName;
+                ProgramInvitationID = d.d.ProgramNameId;
+                var EmployeeCode = d.d.EmployeeCode;
+                var empCode = EmployeeCode.toString();
+                var EmployeeName = d.d.EmployeeName;
+                var EmpLocation = d.d.EmpLocation;
+                //ProgramSdate = d.d.EmpLocation;
+                //ProgramSdate = d.d.EmpLocation;
+                $("#ProgramName").append(ProgramName);
+                $("#ProgramName").val(ProgramName);
+                $("#EmployeeName").append(EmployeeName);
+                if (UserOffice != "" && UserOffice != null) {
+                    $("#EmpLocation").val(UserOffice);
+                }
+                else if (UserOfficeNew != "" && UserOfficeNew != null) {
+                    $("#EmpLocation").val(UserOfficeNew);
+                }
+                $("#Employeecode").append(empCode);
+            }
+        },
+        error: function () { console.log('fail'); }
+    });
+    //}
+    //function GetProgramMasterData()
+    //{
+    if (ProgramInvitationID != "") {
+        var appWebUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
+
+        $.ajax({
+            async: false,
+            url: appWebUrl + "//_api/web/lists/getbytitle('NewInductionProgram')/items?$top=1000&?filter=ProgramName eq " + ProgramInvitationID + " ",
+            type: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "x-requestdigest": $("#__requestdigest").val(),
+            },
+            success: function (d) {
+                var arr = [];
+                i = 0;
+                $.each(d.d.results, function (index, results) {
+                    arr[i++] = index;
+                });
+                for (var j = 0; j < arr.length; j++) {
+                    var arrConfigK = arr[j];
+                    if (d.d.results[arrConfigK].ProgramName == ProgramInvitationID) {
+                        PStartDate = d.d.results[arrConfigK].ProgramStartDate;
+                        PEtartDate = d.d.results[arrConfigK].ProgramEndDate;
+                        ProgramLocation = d.d.results[arrConfigK].ProgramLocation;
+                        $("#programLocation").append(ProgramLocation);
+                        $("#programSdate").val(PStartDate);
+                        $("#programEdate").val(PEtartDate);
+                        dateValidation();
+                        //$("#tblProgramBind").append("<tr><td>1</td><td>" + ProgramInvitationID + "</td><td>" + ProgramLocation + "</td><td>" + PStartDate + "</td><td>" + PEtartDate + "</td></tr>");
+                        break;
+                    }
+                }
+            },
+            error: function () { console.log('fail'); }
+        });
+
+    }
+    //}
+    //var Stay="NA";var ArrivalDate="NA";var ArrivalTime="NA";var DepartureDate="NA";var DepartureTime="NA";var Reasons="NA";
+    
+    
+    function GetConfirmDate(PrgrmName) {
+     
+        var ConfmDt = "";
+
+        var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/getbytitle('ProgramMaster')/items?$filter=Title%20eq%20%27" + PrgrmName + "%27";
+        $.ajax({
+            url: RestUrl,
+            method: "GET",
+            async: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+            },
+            success: function (d) {
+                  if (d.d.results.length > 0) {
+                  var arr = [];
+                  i = 0;
+                  $.each(d.d.results, function (index, results) {
+                  arr[i++] = index;
+                  });
+	              for (var k = 0; k < arr.length; k++) {
+	              var arrK = arr[k];
+				  ConfmDt = d.d.results[arrK].ConfirmDate;
+	              }
+                }
+                else
+                {
+                ConfmDt = 0;
+               }
+            },
+            error: function () { console.log('fail'); }
+        });
+        return ConfmDt;
+    }
+
+    
+    var Mum = "mumbai branch"; var MHo = "mumbai ho"; var Sio = "sion"; var Thane = "thane"; var Off45 = "45 office"; var off51 = "51 office";
+    var FOffice = "fort office";
+    var isExists = true;
+    var TestUserProfile = UserOffice;
+    var FinalTest = TestUserProfile.toLowerCase();
+    //var siowildCard =FinalTest.incSio);
+    var siowildCard = FinalTest.indexOf(Sio);
+  
+     var selectedProgramName=$("#ProgramName").val();
+     InductionPrgrm = GetProgramDetails(selectedProgramName);
+     
+     
+    if (InductionPrgrm == true) {
+        isExists = false;
+    }
+    if (isExists == true) {
+        document.getElementById("StayBaselocation").style.display = "none";
+        document.getElementById("StayReason").style.display = "none";
+        document.getElementById("DateFields").style.display = "none";
+    }
+    $("#rbntconfirmYes").click(function () {
+        if (this.value == 'Yes' && isExists == true) {
+            document.getElementById("StayBaselocation").style.display = "block";
+            document.getElementById("StayReason").style.display = "none";
+            document.getElementById("DateFields").style.display = "none";
+            $('#divErrorMessage').empty();
+          //  $('input[id="rbtnStayYes"]').prop('checked', false);
+        }
+        else if (this.value == 'Yes' && isExists == false) {
+            document.getElementById("StayBaselocation").style.display = "block";
+            document.getElementById("StayReason").style.display = "none";
+            document.getElementById("DateFields").style.display = "none";
+            $('#divErrorMessage').empty();
+            // $('input[id="rbtnStayYes"]').prop('checked', false);
+        }
+         $('input[id="rbtnStayYes"]').prop('checked', false);
+         $('input[id="rbtnStayNo"]').prop('checked', false);
+    });
+    $("#rbntconfirmNo").click(function () {
+        if (this.value == 'No' && isExists == true) {
+            document.getElementById("StayBaselocation").style.display = "none";
+            document.getElementById("StayReason").style.display = "none";
+            document.getElementById("DateFields").style.display = "none";
+            $('#divErrorMessage').empty();
+        }
+        else if (this.value == 'No' && isExists == false) {
+            document.getElementById("StayBaselocation").style.display = "none";
+            document.getElementById("StayReason").style.display = "none";
+            document.getElementById("DateFields").style.display = "none";
+            $('#divErrorMessage').empty();
+        }
+           $('input[id="rbtnStayYes"]').prop('checked', false);
+         $('input[id="rbtnStayNo"]').prop('checked', false);
+
+    });
+    $("#rbtnStayYes").click(function () {
+        if (this.value == 'Yes' && (isExists == false || isExists == true)) {
+            document.getElementById("StayBaselocation").style.display = "block";
+            document.getElementById("StayReason").style.display = "none";
+            document.getElementById("DateFields").style.display = "block";
+            $('#divErrorMessage').empty();
+            alert('Your stay request will be considered only if you are an outstation employee');
+        }
+    });
+    $("#rbtnStayNo").click(function () {
+        if (this.value == 'No' && (isExists == false || isExists == true)) {
+            document.getElementById("StayBaselocation").style.display = "block";
+            document.getElementById("StayReason").style.display = "none";
+            document.getElementById("DateFields").style.display = "none";
+            $('#divErrorMessage').empty();
+        }
+    });
+    var testDay = new Date(PStartDate.split("/").reverse().join("-"));
+    var BackDateDate = new Date(testDay.getFullYear(), testDay.getMonth(), testDay.getDate() - 1);
+    var FDate = new Date(PEtartDate.split("/").reverse().join("-"));
+    var FeatureDate = new Date(FDate.getFullYear(), FDate.getMonth(), FDate.getDate() + 1);
+    var FDateNew = new Date(FeatureDate);
+    $("#btnSubmit").click(function () {
+    
+      GetProgramDetails_1(selectedProgramName);
+    
+        var time = ActivityEndTime; //$('#ArrivalTime').val();
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/\s(.*)$/)[1].toLowerCase();
+        if (AMPM == "pm" && hours < 12) hours = hours + 12;
+        if (AMPM == "am" && hours == 12) hours = hours - 12;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toString();
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        
+        
+         var time_1 = ActivityStartTime; //$('#ArrivalTime').val();
+        var hours_1 = Number(time_1.match(/^(\d+)/)[1]);
+        var minutes_1 = Number(time_1.match(/:(\d+)/)[1]);
+        var AMPM_1 = time_1.match(/\s(.*)$/)[1].toLowerCase();
+        if (AMPM_1 == "pm" && hours_1 < 12) hours_1 = hours_1 + 12;
+        if (AMPM_1 == "am" && hours_1 == 12) hours_1 = hours_1 - 12;
+        var sHours_1 = hours_1.toString();
+        var sMinutes_1 = minutes_1.toString();
+        if (hours_1 < 10) sHours_1 = "0" + sHours_1;
+        if (minutes_1 < 10) sMinutes_1 = "0" + sMinutes_1;
+
+      
+      //start
+      var abcd_1=ActivityStartDate;
+        var parts_1= abcd_1.split('/');
+		var dmyDate_1 = parts_1[1] + '/' + parts_1[0] + '/' + parts_1[2];
+
+		var d1_1 = Date.parse(dmyDate_1);
+       
+		d1_1.setHours(d1_1.getHours() + sHours_1);
+		d1_1.setMinutes(d1_1.getMinutes() + sMinutes_1);
+		var actStrtDate_1= d1_1;
+		
+		
+		  var abcd_2=ActivityEndDate;
+        var parts_2= abcd_2.split('/');
+		var dmyDate_2 = parts_2[1] + '/' + parts_2[0] + '/' + parts_2[2];
+
+		var d1_2 = Date.parse(dmyDate_2);
+       
+		d1_2.setHours(d1_2.getHours() + sHours);
+		d1_2.setMinutes(d1_2.getMinutes() + sMinutes);
+		var actEndDt_1= d1_2;
+		
+		
+		
+		
+
+//end
+	    var StrArrTime = new Date($('#ArrivalDate').val().split("/").reverse().join("-") + ' ' + sHours + ':' + sMinutes);
+        var ttsttime = StrArrTime;
+        
+        
+        var progrmEndTimevalidation1 = new Date(ActivityStartDate.split("/").reverse().join("-"));
+        
+         // var formatted1 = progrmEndTimevalidation1.getDate() + "/" + progrmEndTimevalidation1 .getMonth() + "/" +  progrmEndTimevalidation1.getFullYear();
+
+       // var gettest = new Date(formatted1 + ' ' + sHours + ':' + sMinutes);
+        
+       // var gettest1 = formatted1 + ' ' + sHours + ':' + sMinutes;
+       
+       //var tst1=ActivityStartDate;
+        //var parts_3= tst1.split('/');
+//var dmyDate_3 = parts_3[0] + '/' + parts_3[1] + '/' + parts_3[2];
+
+ //var tst2=ActivityEndDate;
+   //     var parts_4= tst2.split('/');
+//var dmyDate_4 = parts_4[0] + '/' + parts_4[1] + '/' + parts_4[2];
+
+
+       
+        
+        var ICHSDate = new Date(ActivityStartDate.split("/").reverse().join("-") + ' ' + sHours + ':' + sMinutes);
+        var ichsdt = ICHSDate;
+        
+        var ICHEDate = new Date(ActivityEndDate.split("/").reverse().join("-") + ' ' + sHours_1 + ':' + sMinutes_1);
+        var ichedt = ICHEDate;
+        
+
+        
+        var endArrTime = new Date(PStartDate.split("/").reverse().join("-") + ' ' + '8:00');
+        var StrArrTime = new Date($('#ArrivalDate').val().split("/").reverse().join("-") + ' ' + hours + ':' + minutes);
+        var endArrTime = new Date(PStartDate.split("/").reverse().join("-") + ' ' + '8:00');
+        
+        var pgetime = $('#DepartureTime').val();
+        var pghours = Number(pgetime.match(/^(\d+)/)[1]);
+        var pgminutes = Number(pgetime.match(/:(\d+)/)[1]);
+        var pgAMPM = pgetime.match(/\s(.*)$/)[1].toLowerCase();
+        if (pgAMPM == "pm" && pghours < 12) pghours = pghours + 12;
+        if (pgAMPM == "am" && pghours == 12) pghours = pghours - 12;
+        var pgsHours = pghours.toString();
+        var pgsMinutes = pgminutes.toString();
+        if (pghours < 10) pgsHours = "0" + pgsHours;
+        if (pgminutes < 10) pgsMinutes = "0" + pgsMinutes;
+
+        var pgesHours = pghours.toString();
+        var pgesMinutes = pgminutes.toString();
+        if (pgesMinutes < 10) pgesHours = "0" + pgesHours;
+        if (pgesMinutes < 10) pgesMinutes = "0" + pgesMinutes;
+        
+        var pickerenddeptTime = new Date($('#DepartureDate').val().split("/").reverse().join("-") + ' ' + pgesHours + ':' + pgesMinutes);
+        var ttettime = pickerenddeptTime;
+        
+        var pgrmendArrTime = new Date(PEtartDate.split("/").reverse().join("-") + ' ' + '12:00');
+        var FinPrgmDDate = new Date(pgrmendArrTime.getFullYear(), pgrmendArrTime.getMonth(), pgrmendArrTime.getDate() + 1);
+        var hrs = FinPrgmDDate.setHours(FinPrgmDDate.getHours() + 12)
+        var Testim = new Date(FinPrgmDDate);
+        var Finn = new Date(Testim);
+
+        var progrmEndTimevalidation = new Date(PEtartDate.split("/").reverse().join("-"));
+        // var StdepDatetime=new Date($('#DepartureDate').val());
+        if (StrArrTime >= BackDateDate || StrArrTime >= endArrTime) {
+           // $("#divErrorMessage").empty();
+           // $("#divErrorMessage").append("Arrival date should be a day less or equal to program start date");
+            //alert("Arrival Date sholud be a day less or equal to program start date");
+            //return false;
+        }
+
+        //if(progrmEndTimevalidation <new Date(PEtartDate) || progrmEndTimevalidation>FeatureDate){
+        //if( Finn > pickerenddeptTime  progrmEndTimevalidation > pickerenddeptTime){
+        if (FeatureDate <= pickerenddeptTime || pickerenddeptTime >= Finn) {
+            //$("#divErrorMessage").empty();
+            //$("#divErrorMessage").append("Departure date should be a day after or equal to program end date");
+            // alert("Departure Date sholud be a day after or equal to  Program end date");
+            //return false;
+        }
+        $("#divErrorMessage").empty();
+        var confirm = $('input[name=confirm]:radio:checked').val();
+        var Stay = $('input[name=stay]:radio:checked').val();
+        if ($('input[name=confirm]:checked').length <= 0) {
+            $("#divErrorMessage").empty();
+
+            $("#divErrorMessage").append("Please confirm your presence for the program");
+            //alert("Please confirm your presence for the Induction program");
+            return false;
+        }
+
+        if ($('input[name=stay]:checked').length <= 0 && confirm == "Yes" && (isExists == true || isExists == false)) {
+            $("#divErrorMessage").empty();
+            $("#divErrorMessage").append("Please let us know if you require stay to be arranged by company");
+            //alert("Please let us know if you require stay to be arranged by company");
+            return false;
+        }
+
+       // if ($('#Reasons').val() == "" && confirm == "No" && (isExists == true || isExists == false)) {
+       //     $("#divErrorMessage").empty();
+       //     $("#divErrorMessage").append("Please enter the reasons");
+            //alert('Please enter the reasons');
+       //     return false;
+      //  }
+       // if ($('#Reasons').val() == "" && confirm == "No" && isExists == false) {
+            //$("#divErrorMessage").empty();
+            //$("#divErrorMessage").append("Please enter the reasons");
+            //alert('Please enter the reasons');
+            //return false;
+       // }
+
+        //if ($('#Reasons').val() == "" && Stay == "No") {
+        //    $("#divErrorMessage").append("");
+       //     $("#divErrorMessage").append("Please enter the reasons");
+            //alert('Please enter the reasons');
+       //     return false;
+      //  }
+        if ($('#ArrivalDate').val() == "" && Stay == "Yes" && isExists == true) {
+            $("#divErrorMessage").empty();
+            $("#divErrorMessage").append("Please pick the arrival date");
+            //alert('Please pick the Arrival Date');
+            return false;
+        }
+        if ($('#DepartureDate').val() == "" && Stay == "Yes" && isExists == true) {
+            $("#divErrorMessage").empty();
+            $("#divErrorMessage").append("Please pick the departure date");
+            //alert('Please pick the Departure Date');
+            return false;
+        }
+        if ($('#ArrivalDate').val() == "" && Stay == "Yes" && isExists == false && confirm == "Yes") {
+            $("#divErrorMessage").empty();
+            $("#divErrorMessage").append("Please pick the arrival date");
+            //alert('Please pick the Arrival Date');
+            return false;
+        }
+        if ($('#DepartureDate').val() == "" && Stay == "Yes" && isExists == false && confirm == "Yes") {
+            $("#divErrorMessage").empty();
+            $("#divErrorMessage").append("Please pick the departure date");
+
+            //alert('Please pick the Departure Date');
+            return false;
+        }
+        var qs = getQueryStrings();
+        var ProgramID = qs["IDD"];
+        var Confirm = $('input[name=confirm ]:radio:checked').val();
+        var Stay = $('input[name=stay]:radio:checked').val();
+        //var Reasons = document.getElementById("Reasons").value;
+        var ArrivalDate = document.getElementById("ArrivalDate").value;
+        var ArrivalTime = document.getElementById("ArrivalTime").value;
+        var DepartureDate = document.getElementById("DepartureDate").value;
+        var DepartureTime = document.getElementById("DepartureTime").value;
+        var BaseLocation = $('#EmpLocation').val();
+        if (Stay == "" || Stay == null || Stay == "undefined") {
+            Stay = "NA";
+        }
+        //'Reasons': Reasons,
+        var appWebUrl = _spPageContextInfo.webAbsoluteUrl;
+        $.ajax({
+            async: false,
+            url: appWebUrl + "/_api/web/lists/getbytitle('Invitation')/items(" + ProgramID + ")",
+            type: "POST",
+            data: JSON.stringify({
+                '__metadata': { 'type': 'SP.Data.InvitationListItem' },
+                'ArrivalDate': ArrivalDate,
+                'ArrivalTime': ArrivalTime,
+                'DepartureDate': DepartureDate,
+                'DepartureTime': DepartureTime,
+                'Confirmation': Confirm,
+                'StayArrangedByCompany': Stay,
+                
+                'ProgramStatus': "Completed",
+                'EmpBaseLocation': BaseLocation
+            }),
+            headers: {
+                "Accept": "application/json;odata=verbose",
+                "content-type": "application/json; odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                "X-HTTP-Method": "MERGE",
+                "If-Match": "*"
+            },
+            success: function (data) {
+            
+               if (Confirm == "Yes") {
+               $("#div_progress_bar").show();
+               $("#btnSubmit").hide();
+                    //var cal_single = ics();
+                  //  var PSDate = dateConvert(PStartDate);
+                   // var PEDate = addAdyToEndDate(PEtartDate);
+                   // cal_single.addEvent(ProgramName, ProgramName, ProgramLocation, ichsdt, ichedt);
+                   // cal_single.addEvent(ProgramName, ProgramName, ProgramLocation, actStrtDate_1, actEndDt_1);
+                  //  document.location.href = cal_single.download();
+                   
+                   //$(".addeventatc").trigger("click");
+                   
+                    //alert("Your response is noted");
+       
+       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+         $('.ui-dialog').css('margin-left', '951px');
+       }
+
+
+                   ConfirmDialog('Your response is noted.Do you want to download the calendar?');
+                   
+                   
+                    
+                   
+                   
+                }
+                else if(Confirm == "No")
+                {
+                goToLink();
+                }
+            
+            
+            
+
+             $("#div_progress_bar").hide();
+              //$("#btnSubmit").show();
+            },
+            error: function (err) {
+                alert("Error while adding item: " + JSON.stringify(err));
+            }
+        });
+        function success() {
+            
+        }
+
+    });
+    
+    function closeWin() { 
+    window.location.href = 'https://bajajelect.sharepoint.com/';
+//    window.top.close();
+    
+}
+   
+    function dateConvert(inputDate) {
+        var FinalDatae = '';
+        var date = inputDate;
+        var d = new Date(date.split("/").reverse().join("-"));
+
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var yy = d.getFullYear();
+        FinalDatae = mm + "/" + dd + "/" + yy;
+        return FinalDatae;
+    }
+
+    function addAdyToEndDate(inputDate) {
+        var date = inputDate; var FinalDatae = '';
+        var d = new Date(date.split("/").reverse().join("-"));
+
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var yy = d.getFullYear();
+        var finalDate = mm + "/" + dd + "/" + yy;
+        var fDate = new Date(finalDate);
+        var ccDate = new Date(fDate.setDate(fDate.getDate() + 1));
+
+        var dd1 = ccDate.getDate();
+        var mm1 = ccDate.getMonth() + 1;
+        var yy1 = ccDate.getFullYear();
+        FinalDatae = mm1 + "/" + dd1 + "/" + yy1;
+
+        return FinalDatae;
+    }
+</script>
+
+<script>
+
+</script>
+
+<script>
+var selectedProgramName1=$("#ProgramName").val();
+var selectedProgramLoc=$("#programLocation").val();
+ GetProgramDetails_1(selectedProgramName1);
+    
+        var time = ActivityEndTime; //$('#ArrivalTime').val();
+        //alert(ActivityEndTime);
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/\s(.*)$/)[1].toLowerCase();
+        if (AMPM == "pm" && hours < 12) hours = hours + 12;
+        if (AMPM == "am" && hours == 12) hours = hours - 12;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toString();
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        
+        
+         var time_1 = ActivityStartTime; //$('#ArrivalTime').val();
+                // alert(time_1);
+        var hours_1 = Number(time_1.match(/^(\d+)/)[1]);
+        var minutes_1 = Number(time_1.match(/:(\d+)/)[1]);
+        var AMPM_1 = time_1.match(/\s(.*)$/)[1].toLowerCase();
+        if (AMPM_1 == "pm" && hours_1 < 12) hours_1 = hours_1 + 12;
+        if (AMPM_1 == "am" && hours_1 == 12) hours_1 = hours_1 - 12;
+        var sHours_1 = hours_1.toString();
+        var sMinutes_1 = minutes_1.toString();
+        if (hours_1 < 10) sHours_1 = "0" + sHours_1;
+        if (minutes_1 < 10) sMinutes_1 = "0" + sMinutes_1;
+        
+          var abcd_11=ActivityStartDate;
+        var parts_11= abcd_11.split('/');
+		var dmyDate_11 = parts_11[1] + '/' + parts_11[0] + '/' + parts_11[2] + '' + sHours_1 + ':' +  sMinutes_1;
+
+		//var d1_1 = Date.parse(dmyDate_1);03/23/2018 08:00 AM
+       
+	//	d1_1.setHours(d1_1.getHours() + sHours);
+//		d1_1.setMinutes(d1_1.getMinutes() + sMinutes);
+//		var actStrtDate_1= d1_1;
+		
+		
+		  var abcd_22=ActivityEndDate;
+        var parts_22= abcd_22.split('/');
+		var dmyDate_22 = parts_22[1] + '/' + parts_22[0] + '/' + parts_22[2] + '' + sHours + ':' +  sMinutes;
+
+//		var d1_2 = Date.parse(dmyDate_2);03/23/2018 10:00 AM
+       
+//		d1_2.setHours(d1_2.getHours() + sHours_1);
+//		d1_2.setMinutes(d1_2.getMinutes() + sMinutes_1);
+//		var actEndDt_1= d1_2;
+
+
+
+var div_test='<div title="Add to Calendar" class="addeventatc" id="addeventatc_id" data-direct="outlook"  style="margin-left: 993px;background-color:orange;display:none">'
+    div_test += 'Add to Calendar'
+    div_test += '<span class="start">' + dmyDate_11 + '</span>'
+    div_test += '<span class="end">' + dmyDate_22 + '</span>'
+    div_test += '<span class="timezone">india</span>'
+    div_test += '<span class="title">'+ selectedProgramName1  +'</span>'
+    div_test += '<span class="description">'+ selectedProgramName1  +'</span>'
+    div_test += '<span class="location">'+ ProgramLocation  +'</span>'
+    div_test += '<span class="alarm_reminder">1440</span>'
+        div_test += '<span class="calname">'+ selectedProgramName1  +'</span>'
+
+
+div_test += '</div>'
+
+$('#main').append(div_test)
+</script>
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ 
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+<script>
+function ConfirmDialog(message) {
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+         $('.ui-dialog').css('margin-left', '951px');
+         
+       }
+    $('<div></div>').appendTo('body')
+    .html('<div><h6 style="font-size: 15px;margin-left: 8px;">'+message+'?</h6></div>')
+    .dialog({
+        modal: true, title: 'Confirmation', zIndex: 10000, autoOpen: true,
+        width: 'auto', resizable: false, dialogClass: 'dlgfixed',
+    	position: "center",
+        buttons: {
+            Yes: function () {
+                // $(obj).removeAttr('onclick');                                
+                // $(obj).parents('.Parent').remove();
+
+               // $('body').append('<h1>Your response noted : <i>Yes</i></h1>');
+               
+               $("#addeventatc").show();
+               
+               $("div.addeventatc").trigger("click");
+
+ $("#addeventatc").hide();
+ 
+                $(this).dialog("close");
+                
+                setTimeout(function(){ 
+    closeWin()
+}, 10000);
+                
+                //window.location.href = 'https://bajajelect.sharepoint.com/SitePages/Home.aspx';
+            },
+            No: function () {                                                                 
+                //$('body').append('<h1>Confirm Dialog Result: <i>No</i></h1>');
+
+                $(this).dialog("close");
+                
+                setTimeout(function(){ 
+    closeWin()
+}, 5000);
+                
+                //window.location.href = 'https://bajajelect.sharepoint.com/SitePages/Home.aspx';
+            }
+        },
+        close: function (event, ui) {
+            $(this).remove();
+        }
+    });
+};
+
+//$(".dlgfixed").center(false);
+</script>
+<style>
+
+.ui-dialog  
+{
+	border-style: outset;border-width: 2px;border-color: gray;left:0px;top:0px; margin-left: 567px; margin-top: -401px; width: 300px !important; height: auto; display: block; position: relative; background-color: #ffffff;
+}
+
+
+.ui-dialog-buttonset
+{
+margin-left: 73px;
+margin-top: -45px;
+}
+
+
+.ui-dialog-titlebar-close
+{
+display:none;
+}
+
+.ui-dialog-title
+{
+font-weight: bold;
+text-align: center;
+font-size: 17px;
+margin-left: 73px;
+}
+
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: .8em;
+}
+
+.ui-widget-content {
+    background: CC99FF;
+  /*Change the dialog border color here*/
+    border: 1px solid #5cb85c;
+    color: #222222;
+}
+
+.ui-widget-header {
+  /*Change the Header color here*/
+    background: #5cb85c;
+    border: 0;
+    color: #fff;
+    font-weight: normal;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    padding: 0.1em .5em;
+    position: relative;
+        font-size: 1em;
+}
+
+</style>
+
+
