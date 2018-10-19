@@ -28,6 +28,9 @@
 <script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/AnugamStyles/DataTable/js/buttons.print.min.js"></script>
 
 <script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/Webparts/alluploadreferences/jquery.blockUI.js"></script>
+
+<script src="https://bajajelect.sharepoint.com/sites/AnugamUAT/SiteAssets/JS/date.format.js"></script>
+
 <style>
     .requiredfieldsstyle {
         padding-left: 15px !important;
@@ -68,11 +71,57 @@
     }
 </style>
 
+<style>
+table.paleBlueRows {
+  font-family: "Times New Roman", Times, serif;
+  border: 1px solid #FFFFFF;
+  width: 350px;
+  height: 200px;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.paleBlueRows td, table.paleBlueRows th {
+  border: 1px solid #FFFFFF;
+  padding: 3px 2px;
+}
+table.paleBlueRows tbody td {
+  font-size: 15px;
+}
+table.paleBlueRows tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.paleBlueRows thead {
+  background: #0B6FA4;
+  border-bottom: 5px solid #FFFFFF;
+}
+table.paleBlueRows thead th {
+  font-size: 17px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #FFFFFF;
+}
+table.paleBlueRows thead th:first-child {
+  border-left: none;
+}
+
+table.paleBlueRows tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+  background: #D0E4F5;
+  border-top: 3px solid #444444;
+}
+table.paleBlueRows tfoot td {
+  font-size: 14px;
+}
+</style>
+
 
 <div>
     <div class="col-md-12 padding-0 page-content-header-style-1">
-        <h1>
-            MIS Reports For Programs
+        <h1 style="font-size:25px !Important; margin-left: 12px !Important;">
+            <b>Functional Admin View</b>
         </h1>
     </div>
     <div class="col-md-12 padding-0">
@@ -82,18 +131,18 @@
         <div class="col-md-12 margin-top-15 padding-0">
             <div class="col-md-4">
                 <label>
-                    Program Start Date
+                    Program Start Date<b><span style="color:red;font-size:20px">*</span></b>
                 </label>
-                <input type="text" class="form-control has-feedback-left Required clearTextboxData"
+                <input type="text" class="form-control has-feedback-left Required clearTextboxData" readonly="true"
                        id="txtStartDate" placeholder="MM-DD-YYYY" aria-describedby="inputSuccess2Status4">
                 <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
                 <span id="Span2" class="sr-only">(success)</span>
             </div>
             <div class="col-md-4">
                 <label>
-                    Program End Date
+                    Program End Date<b><span style="color:red;font-size:20px">*</span></b>
                 </label>
-                <input type="text" class="form-control has-feedback-left Required clearTextboxData"
+                <input type="text" class="form-control has-feedback-left Required clearTextboxData" readonly="true"
                        id="txtEndDate" placeholder="MM-DD-YYYY" aria-describedby="inputSuccess2Status4">
                 <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
                 <span id="Span1" class="sr-only">(success)</span>
@@ -102,19 +151,19 @@
                 <label class="opacity-0">
                     Dummy
                 </label>
-                <input type="button" class="btn btn-primary btn-block btnValidations" id="btnSubmit"
+                <input type="button" class="btn btn-primary btn-block btnValidations" style="margin-top:8px" id="btnSubmit"
                        value="Submit" />
             </div>
         </div>
     </div>
-    <div class="col-md-12 padding-0 margin-top-15" id="divProgramDetials">
+    <div class="col-md-12 padding-0 margin-top-15" id="divProgramDetials" style="display:none">
         <div class="col-md-12 padding-0">
             <label>
                 Program Details
             </label>
         </div>
         <div class="col-md-12 padding-0">
-            <table id="tableallProgram" class="table table-bordered table-striped table2excel">
+            <table id="tableallProgram" class="paleBlueRows">
                 <thead>
                     <tr>
                         <th>
@@ -164,81 +213,59 @@
         <button type="button" id="btnExport" style="display:none;">Export</button>
     </div>
 </div>
+
 <div id="throbber" style="display:none;">
-    <img alt="Please wait..." src="https://bajajelect.sharepoint.com/sites/HR-TrainingManagementSystem/SiteAssets/AnugamStyles/img/712_1.gif">
-</div>
+<img src="https://bajajelect.sharepoint.com/sites/HR-TrainingManagementSystem/SiteAssets/AnugamStyles/img/712_1.gif" /><br/></br><h3><b style="color:#0072c6 !Important;font-size:32px">Please Wait...</b><h3></div>
 
 <script>
 
-    $('#txtStartDate').daterangepicker({
+    var date = new Date();
+	var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+	var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+	var date_11 = dateFormat(firstDay, 'dd/mm/yyyy');
+	var date_12 = dateFormat(lastDay, 'dd/mm/yyyy');
+	
+	//alert(date_11)
+	
+	$('#txtStartDate').daterangepicker({
         singleDatePicker: true,
+        startDate: date_11,
         format: 'DD/MM/YYYY',
         calender_style: "picker_3"
     }, function (start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        CheckDateValidation();
-    });
-
+        //CheckDateValidation();
+    }).val(date_11);
+    
+    
     $('#txtEndDate').daterangepicker({
         singleDatePicker: true,
+        startDate: date_12,
         format: 'DD/MM/YYYY',
         calender_style: "picker_3"
     }, function (start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        CheckDateValidation();
-    });
+        //CheckDateValidation();
+    }).val(date_12);
     function CheckDateValidation() {
-        var StartDate = new Date($("#txtStartDate").val().split("/").reverse().join("-"));
-        var EndDate = new Date($("#txtEndDate").val().split("/").reverse().join("-"));
-        if (StartDate != "" && EndDate != "") {
-        if(StartDate != "")
-        {
-         $('#divErrorMessage').empty();
-            $('#txtStartDate').css('border-color', '');
-            }
-            if(EndDate != "")
-            {
-                     $('#divErrorMessage').empty();
-            $('#txtEndDate').css('border-color', '');
-            }
-            if (EndDate < StartDate) {
-                $('#txtEndDate').css('border-color', 'red');
-                $('#divErrorMessage').css('color', 'red');
-                $('#divErrorMessage').append("Start Date Sholud Be Grether Than End Date");
-                $('#actEndDate').val('');
-            }
-        }
+        
     }
 
 </script>
 <script>
 
     $('#btnSubmit').click(function () {
-        CheckDateValidation();
-        if ($('#txtStartDate').val() == "mm/DD/yyyy" || $('#txtStartDate').val() == "") {
-            $('#txtStartDate').css('border-color', 'red');
-            $('#divErrorMessage').css('color', 'red');
-            $('#divErrorMessage').append("Please Enter Start Date");
-            validate = false;
-        }
-        else if ($('#txtEndDate').val() == "mm/DD/yyyy" || $('#txtEndDate').val() == "") {
-            $('#txtEndDate').css('border-color', 'red');
-            $('#divErrorMessage').css('color', 'red');
-            $('#divErrorMessage').append("Please Enter End Date");
-            validate = false;
-        }
-        var txtProgramStartDate = document.getElementById("txtStartDate").value;
-        var txtProgramEndDate = document.getElementById("txtEndDate").value;
-        var StartDate = new Date(txtProgramStartDate.split("/").reverse().join("-"));
-        var EndDate = new Date(txtProgramEndDate.split("/").reverse().join("-"));
-                      
-                        
-                                               
-                                                
-        GetAllProgramDetails(StartDate, EndDate);
+    
+        var txtProgramStartDate_var = document.getElementById("txtStartDate").value;
+        var txtProgramEndDate_var = document.getElementById("txtEndDate").value;
+        //var StartDate = new Date(txtProgramStartDate.split("/").reverse().join("-"));
+        //var EndDate = new Date(txtProgramEndDate.split("/").reverse().join("-"));
          
-
-    });
+        GetAllProgramDetails(txtProgramStartDate_var, txtProgramEndDate_var);
+        //console.log()
+        
+        });
     
     
 
@@ -269,9 +296,12 @@ function getListItems(url, listname, query, complete, failure) {
     });
 }
 
-    function GetAllProgramDetails(StartDate, EndDate) {
+    function GetAllProgramDetails(txtProgramStartDate_var , txtProgramEndDate_var) {
+    
+    //console.log(txtProgramStartDate_var.toISOString());
+    //console.log(txtProgramEndDate_var.toISOString());
         jQuery.ajax({
-            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('Invitation')/items?$top=5000&$orderby= Created desc",
+            url: _spPageContextInfo.webAbsoluteUrl + "//_api/web/lists/getbytitle('ProgramMaster')/items?$top=1000&$filter=ProgramStartDate ge'" + txtProgramStartDate_var + "' and ProgramEndDate le'" + txtProgramEndDate_var + "'&$orderby= Created desc",
             type: "GET",
             headers: {
                 "accept": "application/json;odata=verbose",
@@ -281,85 +311,132 @@ function getListItems(url, listname, query, complete, failure) {
             success: function (d) {
                 var arr = [];
                 i = 0;
-                 // $.blockUI({ message: '<div style="font-size:20px">Please Wait...</div>', });
-                 
-                  $.blockUI.defaults.css = {
-										padding: 0,
-							            margin: 0,
-							            width: '30%',
-							            top: '40%',
-							            left: '35%',
-							            textAlign: 'center',
-							            cursor: 'wait'};
+                var abc=0;
+                
+			    var validate =true;
+			    
+			    var StartDate = new Date($("#txtStartDate").val().split("/").reverse().join("-"));
+		        var EndDate = new Date($("#txtEndDate").val().split("/").reverse().join("-"));
+		        if (StartDate != "" && EndDate != "") {
+		        
+		        if(StartDate != "")
+		        {
+		         $('#divErrorMessage').empty();
+		            $('#txtStartDate').css('border-color', '');
+		            }
+		            if(EndDate != "")
+		            {
+		                     $('#divErrorMessage').empty();
+		            $('#txtEndDate').css('border-color', '');
+		            }
+		
+		            if (EndDate < StartDate) {
+		                $('#txtEndDate').css('border-color', 'red');
+		                $('#divErrorMessage').css('color', 'red');
+		                $('#divErrorMessage').append("Start Date Sholud Be Greater Than End Date");
+		                $('#actEndDate').val('');
+		                validate = false;
+		            }
+		        }
+			        if ($('#txtStartDate').val() == "mm/DD/yyyy" || $('#txtStartDate').val() == "") {
+			            $('#txtStartDate').css('border-color', 'red');
+			            $('#divErrorMessage').css('color', 'red');
+			            $('#divErrorMessage').append("Please Enter Start Date");
+			            validate = false;
+			        }
+			        else if ($('#txtEndDate').val() == "mm/DD/yyyy" || $('#txtEndDate').val() == "") {
+			            $('#txtEndDate').css('border-color', 'red');
+			            $('#divErrorMessage').css('color', 'red');
+			            $('#divErrorMessage').append("Please Enter End Date");
+			            validate = false;
+			        }
+			        
+			        if(validate != false)
+			        {
+			        
+               $.blockUI.defaults.css = {		
+											padding: 0,		
+								            margin: 0,		
+								            width: '30%',		
+								            top: '40%',		
+								            left: '35%',		
+								            textAlign: 'center',
+								            cursor: 'wait'};
+								            
+		       $.blockUI.defaults.overlayCSS.backgroundColor = '#fff';
+		       $.blockUI.defaults.overlayCSS.opacity = 0.9;
+		       $.blockUI.defaults.overlayCSS.cursor = 'pointer';
 
                 $.blockUI({message: $('#throbber')});
+
 
                   
                   setTimeout(function () {
                   
-                  var MISReportEmployees = groupBy(d.d.results,'ProgramName');
+					                                  
+                  var MISReportEmployees = groupBy(d.d.results,'Title');
 
-                  
-                //$.each(MISReportEmployees , function (index, results) {
-                 var j = 0;
-                                           $("#tbodyProgramBind").empty();
-                                           var countPgm = ''; var countPSD = ''; var countPED = ''; var countPVe = ''; var Creator = '';
+                  var j = 0;
+                  $("#tbodyProgramBind").empty();
+                  var countPgm = ''; var countPSD = ''; var countPED = ''; var countPVe = ''; var Creator = '';
                 if (MISReportEmployees.length > 0)
                 {
                 
+				$("#divProgramDetials").show();
                  for (var j20 = 0; j20 < MISReportEmployees.length; j20++) {
                  
                 var taskNames = GetProgramDetails(MISReportEmployees[j20]);
                 
                  if (taskNames.length > 0) {
-                $.each(taskNames, function (index, results) {
-                $('#btnExport').show();
+	                $.each(taskNames, function (index, results) {
+	                $('#btnExport').show();
+	
+	                 var abcd_1=taskNames[0].ProgramStartDate;
+			         var parts_1= abcd_1.split('/');
+					 var dmyDate_1 = parts_1[1] + '/' + parts_1[0] + '/' + parts_1[2];
+	
+	                
+	                 var abcd_2=taskNames[0].ProgramEndDate;
+	                 var parts_2= abcd_2.split('/');
+	                 var dmyDate_2 = parts_2[1] + '/' + parts_2[0] + '/' + parts_2[2];
 
-                 var abcd_1=taskNames[0].ProgramStartDate;
-        var parts_1= abcd_1.split('/');
-		var dmyDate_1 = parts_1[1] + '/' + parts_1[0] + '/' + parts_1[2];
-
-                
-                 var abcd_2=taskNames[0].ProgramEndDate;
-        var parts_2= abcd_2.split('/');
-		var dmyDate_2 = parts_2[1] + '/' + parts_2[0] + '/' + parts_2[2];
-
-                    var PgmSdate = new Date(abcd_1.split("/").reverse().join("-"));
-                    var PgmEdate = new Date(abcd_2.split("/").reverse().join("-"));
+                     var PgmSdate = new Date(abcd_1.split("/").reverse().join("-"));
+                     var PgmEdate = new Date(abcd_2.split("/").reverse().join("-"));
                     
                     if (StartDate <= PgmSdate && EndDate >= PgmEdate) {
-                       // arr[i++] = index;
-                       
+                                             
 					j++;
+					
+			        
+			        var CreatorName = taskNames[0].CreatedByUser;
+                    //console.log(CreatorName);
+					abc++;
                     var ProgramName = taskNames[0].ProgramName;
 	                var ProgramStartDate = taskNames[0].ProgramStartDate;
                     var ProgramEndDate = taskNames[0].ProgramEndDate;
                     var ProgramLocation = taskNames[0].ProgramLocation;
-                    var CreatorName = taskNames[0].CreatedByUser;
+                    
                     var TotalPrgDate1 = taskNames[0].TotalPrgDate;
                     
                     countPgm = ProgramName;
-                     countPSD = ProgramStartDate;
-                     countPED = ProgramEndDate;
-                      countPVe = ProgramLocation;
-                      Creator = CreatorName;
- 						var TotalInvities = getTotalInvities(ProgramName);
-                        //var CreatorName = getCreatedUserName(Creator);
-                        var CreatorName = GetParticipantMangEmailid(Creator);
-                        var Confirmed = GetConfirmedCount(ProgramName);
-                        var Canceled = getCanceledUser(ProgramName);
-                        var Absencent = getAbsenceUser(ProgramName);
-                        var Declined = getDeclinedUser(ProgramName);
-                        var ctNotResponded = NotResponded(ProgramName);
-                        var cCampusHire = getCampusHire(ProgramName);
-                        var cNonCampusHire = getNonCampusHire(ProgramName);
-                        var avgMisReportCount = getMISReprotCount(ProgramName);
-                        var avg =Math.round((avgMisReportCount/TotalPrgDate1) * 10 ) / 10;
-                        var fixed = avg.toFixed(2);
-	$("#tbodyProgramBind").append("<tr class='getAllCoutnData'><td>" + j + "</td><td>" + ProgramName + "</td><td>" + CreatorName + "</td><td width='10%'>" + ProgramLocation + "</td><td>" + ProgramStartDate + "</td><td>" + ProgramEndDate + "</td><td>" + cCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + DeclinedCount + "</td><td>" + CanceledCount + "</td><td>" + Confirmed + "</td><td>" + fixed + "</td></tr>");
-
-                    
-
+                    countPSD = ProgramStartDate;
+                    countPED = ProgramEndDate;
+                    countPVe = ProgramLocation;
+                    Creator = CreatorName;
+ 					var TotalInvities = getTotalInvities(ProgramName);
+                    var CreatorName1 = GetParticipantMangEmailid(Creator);
+                    //console.log(CreatorName1);
+                    var Confirmed = GetConfirmedCount(ProgramName);
+                    var Canceled = getCanceledUser(ProgramName);
+                    var Absencent = getAbsenceUser(ProgramName);
+                    var Declined = getDeclinedUser(ProgramName);
+                    var ctNotResponded = NotResponded(ProgramName);
+                    var cCampusHire = getCampusHire(ProgramName);
+                    var cNonCampusHire = getNonCampusHire(ProgramName);
+                    var avgMisReportCount = getMISReprotCount(ProgramName);
+                    var avg =Math.round((avgMisReportCount/TotalPrgDate1) * 10 ) / 10;
+                    var fixed = avg.toFixed(2);
+	               $("#tbodyProgramBind").append("<tr class='getAllCoutnData'><td>" + j + "</td><td>" + ProgramName + "</td><td>" + CreatorName1 + "</td><td width='10%'>" + ProgramLocation + "</td><td>" + ProgramStartDate + "</td><td>" + ProgramEndDate + "</td><td>" + cCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + DeclinedCount + "</td><td>" + CanceledCount + "</td><td>" + Confirmed + "</td><td>" + fixed + "</td></tr>");
                     }
                     
                     });
@@ -369,114 +446,24 @@ function getListItems(url, listname, query, complete, failure) {
                     }
                     
                     }
-                //});
-               // var j = 0;
-               // $("#tbodyProgramBind").empty();
-               // var countPgm = ''; var countPSD = ''; var countPED = ''; var countPVe = ''; var Creator = '';
+                    
+					if(abc <= 0)
+                    {
+                    alert('No records found');
+                    window.location.reload();
+                    }
                 
-                //var MISDupEmpRemv  = groupBy(taskNames,'EmpCode');
-                
-               // for (var k = 0; k < arr.length; k++) {
-               //     $('#btnExport').show();
-               //     var arrKValue = arr[k];
-               //     var ProgramName = taskNames[arrKValue].ProgramName;
-               //     var ProgramStartDate = taskNames[arrKValue].ProgramStartDate;
-               //     var ProgramEndDate = taskNames[arrKValue].ProgramEndDate;
-               //     var ProgramLocation = taskNames[arrKValue].ProgramLocation;
-              //      var CreatorName = taskNames[arrKValue].CreatedByUser;
-                    //if(ProgramName=="PGM_Report Count")
-                    //    {}
-               //     if (countPgm != ProgramName) {
-                        //&& countPSD != ProgramStartDate && countPED != ProgramEndDate
-                 //       j++;
-                  //      countPgm = ProgramName;
-                   //     countPSD = ProgramStartDate;
-                    //    countPED = ProgramEndDate;
-                     //   countPVe = ProgramLocation;
-                      //  Creator = CreatorName;
-                       // var TotalInvities = getTotalInvities(ProgramName);
-                        //var CreatorName = getCreatedUserName(Creator);
-                       // var CreatorName = GetParticipantMangEmailid(Creator);
-                      //  var Confirmed = GetConfirmedCount(ProgramName);
-                       // var Canceled = getCanceledUser(ProgramName);
-                        //var Absencent = getAbsenceUser(ProgramName);
-                        //var Declined = getDeclinedUser(ProgramName);
-                        //var ctNotResponded = NotResponded(ProgramName);
-                        //var cCampusHire = getCampusHire(ProgramName);
-                        //var cNonCampusHire = getNonCampusHire(ProgramName);
-                        //var avgMisReportCount = getMISReprotCount(ProgramName);
-                        //$("#tbodyProgramBind").append("<tr class='getAllCoutnData'><td>" + j + "</td><td>" + ProgramName + "</td><td>" + CreatorName + "</td><td width='10%'>" + ProgramLocation + "</td><td>" + ProgramStartDate + "</td><td>" + ProgramEndDate + "</td><td>" + cCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + cNonCampusHire + "</td><td>" + DeclinedCount + "</td><td>" + CanceledCount + "</td><td>" + Confirmed + "</td><td>" + avgMisReportCount + "</td></tr>");
-                        //"<input type='button' class='clsTotalInvities' title=" + j + " value=" + TotalInvities + "></td><td><input type='button' class='clsConfirmed' title=" + j + " value=" + Confirmed + "></td>><td><input type='button' class='clsCanceled' title=" + j + " value=" + Canceled + "></td><td><input type='button' class='clsAbsencent' title=" + j + " value=" + Absencent + "></td><td><input type='button' class='clsDeclined' title=" + j + " value=" + Declined + "></td><td><input type='button' class='clsNotResponded' title=" + j + " value=" + ctNotResponded + "></td></tr>")";
-                        //    + "<tr id='trDynamic" + j + "' style='display:none' class='trclasDynamic'><td colspan='11'><table id='tbltblEmployeeDetailsDynamic" + j + "' class='table table-bordered table-striped classEmployeeDetailsDynamic'></table></td>");
-
-                        //var arrNotRespondedEmployee = GetNotRespondedEmp(ProgramName);
-                        //for (var aNotRes = 0; aNotRes < arrNotRespondedEmployee.length; aNotRes++) {
-                        //    var empName = arrNotRespondedEmployee[aNotRes].EmployeeName;
-                        //    var empID = arrNotRespondedEmployee[aNotRes].EmployeeEmailId;
-                        //    var empCode = arrNotRespondedEmployee[aNotRes].EmployeeCode;
-                        //    var No = aNotRes + 1;
-                        //    var slNo = j + "." + No;
-                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classNotResponded'><td width='10%'>" + slNo + "</td><td>Not Responded Emp</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
-                        //}
-                        //var arrConfirmationEmp = ConfirmationEmployee(ProgramName);
-                        //for (var aCon = 0; aCon < arrConfirmationEmp.length; aCon++) {
-                        //    var empName = arrConfirmationEmp[aCon].EmployeeName;
-                        //    var empID = arrConfirmationEmp[aCon].EmployeeEmailId;
-                        //    var empCode = arrConfirmationEmp[aCon].EmployeeCode;
-                        //    var No = aCon + 1;
-                        //    var slNo = j + "." + No;
-                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classConfirmed' id='classConfirmed" + j + "'><td width='10%'>" + slNo + "</td><td>Confirmed Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
-
-                        //}
-                        //var DeclinedEmp = DeclinedEmployees(ProgramName);
-                        //for (var aDeclian = 0; aDeclian < DeclinedEmp.length; aDeclian++) {
-                        //    var empName = DeclinedEmp[aDeclian].EmployeeName;
-                        //    var empID = DeclinedEmp[aDeclian].EmployeeEmailId;
-                        //    var empCode = DeclinedEmp[aDeclian].EmployeeCode;
-                        //    var No = aDeclian + 1;
-                        //    var slNo = j + "." + No;
-                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classDeclined' id='classDeclined" + j + "'><td width='10%'>" + slNo + "</td><td>Declined Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
-                        //}
-                        //var TotalInvities = TotalInvitiesEmployees(ProgramName);
-                        //for (var aTotal = 0; aTotal < TotalInvities.length; aTotal++) {
-                        //    var empName = TotalInvities[aTotal].EmployeeName;
-                        //    var empID = TotalInvities[aTotal].EmployeeEmailId;
-                        //    var empCode = TotalInvities[aTotal].EmployeeCode;
-                        //    var No = aTotal + 1;
-                        //    var slNo = j + "." + No;
-                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classTotalInvities' id='classTotalInvities" + j + "'><td width='10%'>" + slNo + "</td><td>Total Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
-
-                        //}
-                        //var AbsentEmp = AbsencentEmployees(ProgramName);
-                        //for (var aAbsent = 0; aAbsent < AbsentEmp.length; aAbsent++) {
-                        //    var empName = AbsentEmp[aAbsent].EmployeeName;
-                        //    var empID = AbsentEmp[aAbsent].EmployeeEmailId;
-                        //    var empCode = AbsentEmp[aAbsent].EmployeeCode;
-                        //    var No = aAbsent + 1;
-                        //    var slNo = j + "." + No;
-                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classAbsent'><td width='10%'>" + slNo + "</td><td>Absent Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
-
-                        //}
-                        //var CancelledEmployee = CanceledEmployees(ProgramName);
-                        //for (var aCancelled = 0; aCancelled < CancelledEmployee.length; aCancelled++) {
-                        //    var empName = CancelledEmployee[aCancelled].EmployeeName;
-                        //    var empID = CancelledEmployee[aCancelled].EmployeeEmailId;
-                        //    var empCode = CancelledEmployee[aCancelled].EmployeeCode;
-                        //    var No = aCancelled + 1;
-                        //    var slNo = j + "." + No;
-                        //    $("#tbltblEmployeeDetailsDynamic" + j + "").append("<tr style='display:none' class='classCancelled'><td width='10%'>" + slNo + "</td><td>Cancelled Employee</td><td>" + empName + "</td><td>" + empID + "</td><td>" + empCode + "</td></tr>");
-
-                        //}
-
-                   // }
-                //}
-                
-                $.unblockUI({
+                    
+                     $.unblockUI({
                         onUnblock: function () {
                          console.log('');
                         }
                     });
-                }, 200);
+                }, 600);
+                
+                }
+        
+             
             },
             error: function () { console.log('fail'); }
         });
@@ -570,6 +557,32 @@ function getListItems(url, listname, query, complete, failure) {
         });
         return ConfirmCount;
     }
+    
+    var currentuserEmailID = "";
+    var currentuserAccount = "";
+    function LoginUserEmail() {
+
+        $.ajax({
+            async: false,
+            url: _spPageContextInfo.webServerRelativeUrl +
+                 "//_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=email,AccountName",
+            method: "GET",
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (d) {
+                currentuserEmailID = d.d.Email;
+                currentuserAccount = d.d.AccountName;
+                currentuserAccount = currentuserAccount.split("|").pop();
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+        return currentuserAccount;
+    }
+
     function getCanceledUser(ProgramName) {
         var RestUrl = _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists/GetByTitle('Invitation')/items?$filter=ProgramName eq %27" + ProgramName + "%27 and CanceledDate ne null and Confirmation eq 'No'";
         $.ajax({
@@ -1008,7 +1021,6 @@ function getListItems(url, listname, query, complete, failure) {
                         arrCanceledEmployees.push({
                             EmployeeName: EmployeeName, EmployeeCode: EmployeeCode, EmployeeEmailId: EmployeeEmailId
                         });
-
                     }
                 }
             },
@@ -1060,7 +1072,6 @@ function getListItems(url, listname, query, complete, failure) {
 function GetParticipantMangEmailid(Creator)
 {
 var MangEmailid=''
-//var MangEmailId=''
 
  $.ajax({
                 url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/siteusers/getbyemail(@v)?@v='" + Creator + "'",
@@ -1072,16 +1083,8 @@ var MangEmailid=''
                     "X-RequestDigest": $("#__REQUESTDIGEST").val()
                 },
                 success: function (d) {
-                   
-                        MangEmailid=d.d.Title;
-                        //alert(MangEmailid)
-                        
-                       
-					   MangEmailid= MangEmailid;
-					   //alert(MangEmailid);
-					   //var substr = MangEmailid.substring(MangEmailid.indexOf('membership|'));
-					   //alert(substr);
-                    
+                        MangEmailid=d.d.Title;                     
+					   MangEmailid= MangEmailid;                    
                 },
                 error: function () { console.log('fail'); }
             });
@@ -1132,4 +1135,95 @@ var MangEmailid=''
         });
         return MISUsers;
     }
+</script>
+
+<script>
+function GetCreatedByLoginName(CreatorName)
+{
+var CreatdBylginName=''
+
+ $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/siteusers?$filter=email eq '" + CreatorName + "'",
+                type: "GET",
+                async: false,
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose",
+                    "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                },
+                success: function (d) {
+                   
+                        CreatdBylginName = d.d.results[0].LoginName;
+                       
+					   CreatdBylginName = CreatdBylginName.split("|").pop();
+					                     
+                },
+                error: function () { console.log('fail'); }
+            });
+            
+            return CreatdBylginName;
+            
+            }
+
+</script>
+
+<script>
+function GetParticipantEmailid(usrloginame)
+{
+var Emailid=''
+
+ $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v=%27i:0%23.f|membership|" + mangemlid + "%27",
+                type: "GET",
+                async: false,
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose",
+                    "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                },
+                success: function (d) {
+                    if (d.d.DisplayName == 'undefined' || d.d.DisplayName == null || d.d.DisplayName == '') {
+                       Emailid=csvInvitaionEmailId;
+                    }
+                    else {
+                      
+                        Emailid= d.d.Email;
+                    }
+                },
+                error: function () { console.log('fail'); }
+            });
+            
+            return Emailid;
+            
+            }
+
+</script>
+<script>
+function GetParticipantMangEmailid_1(usrloginame)
+{
+var MangEmailid=''
+
+ $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v,propertyName='Manager')?@v=%27i:0%23.f|membership|" + usrloginame + "%27",
+                type: "GET",
+                async: false,
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose",
+                    "X-RequestDigest": $("#__REQUESTDIGEST").val()
+                },
+                success: function (d) {
+                   
+                        MangEmailid=d.d.GetUserProfilePropertyFor;
+                       
+					   MangEmailid= MangEmailid.split("|").pop();
+					                     
+                },
+                error: function () { console.log('fail'); }
+            });
+            
+            return MangEmailid;
+            
+            }
+
 </script>
